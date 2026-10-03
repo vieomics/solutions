@@ -2,7 +2,7 @@
 .pixi/
 
 # Nextflow
-work/
+work*/
 .nextflow/
 .nextflow.log*
 .nextflow/cache/

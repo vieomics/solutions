@@ -73,6 +73,22 @@ pixi run apptainer --version
   export NXF_APPTAINER_CACHEDIR=/path/to/shared/sif-cache
   ```
 
+### Resource policy
+
+`conf/resources.config` enforces a **2 GB RAM per CPU** ratio and sets
+`process_medium` to **16:32** (host: 79 CPUs / 256 GB):
+
+| label | CPUs | RAM |
+|---|---|---|
+| default | 1 | 2 GB |
+| process_single | 1 | 2 GB |
+| process_low | 2 | 4 GB |
+| process_medium | 16 | 32 GB |
+| process_high | 16 | 32 GB |
+
+It is passed with `-c`, so it overrides the nf-core defaults (which use
+1 CPU : 6 GB for `process_single`).
+
 ### 5. Executor notes
 
 - On a machine with SLURM, Nextflow will pick up the local configuration if one
@@ -93,6 +109,7 @@ pixi run apptainer --version
 pixi run fetchngs
 # equivalent to:
 pixi run nextflow run nf-core/fetchngs -r 1.13.0 -profile apptainer \
+    -c conf/fetchngs.config -c conf/resources.config \
     --input ids.csv --outdir results/fetchngs -resume
 ```
 
@@ -110,6 +127,7 @@ python3 bin/fetchngs_to_bacass.py \
 pixi run bacass
 # equivalent to:
 pixi run nextflow run nf-core/bacass -r 2.6.1 -profile apptainer \
+    -c conf/resources.config \
     --input bacass_samplesheet.tsv --outdir results/bacass \
     --assembly_type short --assembler unicycler \
     --annotation_tool prokka --skip_kraken2 -resume
