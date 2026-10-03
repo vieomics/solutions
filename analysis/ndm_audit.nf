@@ -29,9 +29,8 @@ process NDM_AUDIT {
 
     script:
     """
-    cp ${ref} ndm_ref.fasta
-    bwa index ndm_ref.fasta >/dev/null 2>&1
-    bwa mem -t ${task.cpus} ndm_ref.fasta ${r1} ${r2} 2>/dev/null \\
+    bwa index ${ref} >/dev/null 2>&1
+    bwa mem -t ${task.cpus} ${ref} ${r1} ${r2} 2>/dev/null \\
         | samtools sort -@ ${task.cpus} -o ${sample}.bam
     samtools index ${sample}.bam
     samtools depth -a ${sample}.bam > ${sample}.depth
