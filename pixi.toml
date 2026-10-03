@@ -19,7 +19,7 @@ bacass = "nextflow run nf-core/bacass -r 2.6.1 -profile apptainer,test_full -c c
 fetch-images = "bash bin/fetch_images.sh"
 
 [feature.analysis.dependencies]
-amrfinderplus = "*"
+ncbi-amrfinderplus = "*"
 mob_suite = "*"
 kleborate = "*"
 
