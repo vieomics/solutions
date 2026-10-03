@@ -110,7 +110,14 @@ pixi run fetchngs
 # equivalent to:
 pixi run nextflow run nf-core/fetchngs -r 1.13.0 -profile apptainer \
     -c conf/fetchngs.config -c conf/resources.config \
+    --download_method sratools \
     --input ids.csv --outdir results/fetchngs -resume
+```
+
+> **Why `sratools`?** ENA's HTTP/FTP mirror (`ftp.sra.ebi.ac.uk`) throttled to
+> <1 MB/s and stalled on the compute nodes, while the NCBI SRA mirror (S3)
+> measured ~10 MB/s. `sratools` downloads the same runs via NCBI
+> (`prefetch` + `fasterq-dump`) and still verifies the FASTQs.
 ```
 
 ### Convert the samplesheet for bacass
