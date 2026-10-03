@@ -1,6 +1,9 @@
 # Pixi environment
 .pixi/
 
+# Apptainer image cache
+.apptainer-cache/
+
 # Local credentials (never commit)
 conf/*.local.config
 
