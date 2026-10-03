@@ -3,7 +3,5 @@
     "outdir": "results/bacass",
     "assembly_type": "short",
     "assembler": "unicycler",
-    "annotation_tool": "prokka",
-    "kraken2db": "s3://omicslab/data/references/databases/kraken2/k2_standard_8gb_20210517.tar.gz",
-    "kmerfinderdb": "s3://omicslab/data/references/databases/kmerfinder/20190108_stable_dirs.tar.gz"
+    "skip_annotation": true
 }
