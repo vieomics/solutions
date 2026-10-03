@@ -1,8 +1,12 @@
+# Pixi environment
+.pixi/
+
 # Nextflow
 work/
 .nextflow/
 .nextflow.log*
 .nextflow/cache/
+logs/
 
 # Pipeline results and reference downloads
 results/
