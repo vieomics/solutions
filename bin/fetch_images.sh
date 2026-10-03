@@ -22,6 +22,7 @@ IMAGES=(
     # assembly + assembly QC
     "community.wave.seqera.io-library-unicycler-0.5.1--b9d21c454db1e56b.img"
     "community.wave.seqera.io-library-quast-5.3.0--755a216045b6dbdd.img"
+    "community.wave.seqera.io-library-busco_sepp-f2dbc18a2f7a5b64.img"
     # contamination checks
     "community.wave.seqera.io-library-kraken2_coreutils_pigz-920ecc6b96e2ba71.img"
     "quay.io-biocontainers-kmerfinder-3.0.2--hdfd78af_0.img"
