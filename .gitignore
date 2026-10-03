@@ -1,0 +1,16 @@
+# Nextflow
+work/
+.nextflow/
+.nextflow.log*
+.nextflow/cache/
+
+# Pipeline results and reference downloads
+results/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+*.swp
