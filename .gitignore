@@ -1,6 +1,9 @@
 # Pixi environment
 .pixi/
 
+# Local credentials (never commit)
+conf/*.local.config
+
 # Nextflow
 work*/
 .nextflow/
