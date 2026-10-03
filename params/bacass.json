@@ -1,0 +1,8 @@
+{
+    "input": "bacass_samplesheet.tsv",
+    "outdir": "results/bacass",
+    "assembly_type": "short",
+    "assembler": "unicycler",
+    "annotation_tool": "prokka",
+    "skip_kraken2": true
+}
