@@ -10,5 +10,5 @@ nextflow = ">=25.10"
 apptainer = ">=1.3"
 
 [tasks]
-fetchngs = "nextflow run nf-core/fetchngs -r 1.13.0 -profile apptainer --input ids.csv --outdir results/fetchngs -resume"
+fetchngs = "nextflow run nf-core/fetchngs -r 1.13.0 -profile apptainer -c conf/fetchngs.config --input ids.csv --outdir results/fetchngs -resume"
 bacass = "nextflow run nf-core/bacass -r 2.6.1 -profile apptainer --input bacass_samplesheet.tsv --outdir results/bacass --assembly_type short --assembler unicycler --annotation_tool prokka --skip_kraken2 -resume"

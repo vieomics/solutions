@@ -4,6 +4,7 @@
 #        watch -n 30 bash bin/progress.sh   (live-ish tracking)
 set -uo pipefail
 cd "$(dirname "$0")/.."
+LOG="${1:-logs/fetchngs.log}"
 
 strip_ansi() { sed -r 's/\x1B\[[0-9;]*[A-Za-z]//g; s/\x1B\[[0-9;]*m//g'; }
 
@@ -16,7 +17,7 @@ squeue -u "${USER}" -o "%.8i %.20j %.2t %.10M %.6D %R" 2>/dev/null \
 
 echo
 echo "--- Nextflow log (last 12 lines) ---"
-[ -f logs/fetchngs.log ] && tail -n 12 logs/fetchngs.log | strip_ansi
+[ -f "$LOG" ] && tail -n 12 "$LOG" | strip_ansi
 
 echo
 echo "--- FASTQ files in work/ (in progress + completed tasks) ---"
