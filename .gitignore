@@ -4,6 +4,9 @@
 # Apptainer image cache
 .apptainer-cache/
 
+# Analysis test area
+analysis/test/
+
 # Local credentials (never commit)
 conf/*.local.config
 

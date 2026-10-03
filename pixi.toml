@@ -17,3 +17,11 @@ NXF_APPTAINER_CACHEDIR = ".apptainer-cache"
 fetchngs = "nextflow run nf-core/fetchngs -r 1.13.0 -profile apptainer -c conf/fetchngs.config -c conf/resources.config --download_method sratools --input ids.csv --outdir results/fetchngs -resume"
 bacass = "nextflow run nf-core/bacass -r 2.6.1 -profile apptainer,test_full -c conf/resources.config -params-file params/bacass.json -resume"
 fetch-images = "bash bin/fetch_images.sh"
+
+[feature.analysis.dependencies]
+amrfinderplus = "*"
+mob_suite = "*"
+kleborate = "*"
+
+[environments]
+analysis = ["analysis"]
