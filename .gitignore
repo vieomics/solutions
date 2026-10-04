@@ -7,6 +7,8 @@
 # Analysis test area
 analysis/test/
 analysis/ndm_audit/
+analysis/assemblies/
+analysis/postasm/
 
 # Local credentials (never commit)
 conf/*.local.config
