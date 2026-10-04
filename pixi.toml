@@ -22,6 +22,16 @@ fetch-images = "bash bin/fetch_images.sh"
 ncbi-amrfinderplus = "*"
 mob_suite = "*"
 kleborate = "*"
+bwa = "*"
+samtools = "*"
+blast = "*"
+spades = "*"
+isescan = "*"
+seqkit = "*"
+
+[feature.plots.dependencies]
+matplotlib = "*"
 
 [environments]
 analysis = ["analysis"]
+plots = ["plots"]
