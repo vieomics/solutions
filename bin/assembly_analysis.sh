@@ -22,7 +22,7 @@ mob_recon --infile "$ASM" --outdir "$OUT/${SAMPLE}.mob_recon" --force >/dev/null
 
 # 3) Species-specific typing
 if [ "$SPECIES" = "klebsiella" ]; then
-    kleborate -a "$ASM" -o "$OUT/${SAMPLE}.kleborate.txt" --preset kpsc >/dev/null 2>&1 || true
+    kleborate -a "$ASM" -o "$OUT/${SAMPLE}.kleborate" --preset kpsc >/dev/null 2>&1 || true
 fi
 
 # 4) IS context (IS26 / ISAba125 extracted from ISfinder)
