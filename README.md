@@ -165,8 +165,8 @@ Read-level audit of the reported `blaNDM` truncations, distinguishing:
 - **H3** mobile remnant or second (silent) copy
 - **H4** intact but silenced allele (promoter disruption)
 
-**Findings report: [`docs/REPORT.md`](docs/REPORT.md)** — read-level reanalysis of all 5
-isolates, IS26-mediated junction mechanism, public recurrence search, and the
-diagnostic implications.
+**Findings write-up: [`docs/blog.md`](docs/blog.md)** — read-level reanalysis of all
+5 isolates, IS26-mediated junction mechanism, ST16 clonal context, and the
+diagnostic implications. Figures in `docs/figures/`.
 
 Follow-up: public `blaNDM` junction recurrence and co-selection mining.
