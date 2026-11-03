@@ -1,0 +1,2 @@
+ID	R1	R2	LongFastQ	Fast5	GenomeSize
+ERR14693663	s3://omicslab/data/datasets/gianglabs/PRJEB86571/ERX14095154_ERR14693663_1.fastq.gz	s3://omicslab/data/datasets/gianglabs/PRJEB86571/ERX14095154_ERR14693663_2.fastq.gz	NA	NA	NA
