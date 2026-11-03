@@ -1,0 +1,6 @@
+sample	r1	r2
+ERX14095156	results/fetchngs/fastq/ERX14095156_ERR14693665_1.fastq.gz	results/fetchngs/fastq/ERX14095156_ERR14693665_2.fastq.gz
+ERX14095152	results/fetchngs_rest/fastq/ERX14095152_ERR14693661_1.fastq.gz	results/fetchngs_rest/fastq/ERX14095152_ERR14693661_2.fastq.gz
+ERX14095153	results/fetchngs_rest/fastq/ERX14095153_ERR14693662_1.fastq.gz	results/fetchngs_rest/fastq/ERX14095153_ERR14693662_2.fastq.gz
+ERX14095154	results/fetchngs_rest/fastq/ERX14095154_ERR14693663_1.fastq.gz	results/fetchngs_rest/fastq/ERX14095154_ERR14693663_2.fastq.gz
+ERX14095155	results/fetchngs_rest/fastq/ERX14095155_ERR14693664_1.fastq.gz	results/fetchngs_rest/fastq/ERX14095155_ERR14693664_2.fastq.gz

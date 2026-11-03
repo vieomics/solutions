@@ -1,0 +1,10 @@
+{
+    "input": "bacass_samplesheet.tsv",
+    "outdir": "results/bacass",
+    "assembly_type": "short",
+    "assembler": "unicycler",
+    "skip_annotation": true,
+    "unicycler_args": "",
+    "kraken2db": "https://s3-hcm-r2.s3cloud.vn/omicslab/data/references/databases/kraken2/k2_standard_8gb_20210517.tar.gz",
+    "kmerfinderdb": "https://s3-hcm-r2.s3cloud.vn/omicslab/data/references/databases/kmerfinder/20190108_stable_dirs.tar.gz"
+}
