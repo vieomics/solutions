@@ -19,6 +19,7 @@ solutions/
     ├── bin/
     ├── conf/
     ├── docs/
+    ├── manifests/
     ├── params/
     ├── samplesheets/
     ├── pixi.toml

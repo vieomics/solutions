@@ -30,3 +30,6 @@ __pycache__/
 # OS / editors
 .DS_Store
 *.swp
+
+# Rendered OmicsLab manifests (contain per-user versioning IDs)
+manifests/generated/

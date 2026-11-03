@@ -155,21 +155,33 @@ tag, pinned commit and resources stay identical; only `params.input` and the job
 name change.
 
 This repository ships one-row samplesheets for the five ENA runs under
-`samplesheets/omicslab/`. The full walkthrough is in
+`samplesheets/omicslab/`, plus a portable launch manifest at
+`manifests/bacass.omxa.json`. The full walkthrough is in
 [`docs/omicslab-multijob.md`](docs/omicslab-multijob.md).
 
-Quick start, after `omx auth login` and with a completed bacass job to copy:
+Quick start, after `omx auth login`:
 
 ```bash
 export WORKSPACE=<omicslab-workspace-id>
-export SOURCE_JOB=<completed-bacass-job-id>
+export VERSIONING_ID=<your-github-credential-id>   # or: omx use --versioning <id>
 
 bin/submit_bacass_jobs.sh \
   ERR14693661 ERR14693662 ERR14693663 ERR14693664 ERR14693665
 ```
 
-Each job is named `bacass-<sample>` and writes to its own
-`s3://<workspace-bucket>/data/bacass/<job-id>` prefix.
+No source job from another workspace is needed. The helper launches the first
+sample from the portable manifest, then reruns that new job for the other
+samples with only `params.input` and the job name changed. Use `DRY_RUN=1` to
+print the commands first. Each job is named `bacass-<sample>` and writes to its
+own `s3://<workspace-bucket>/data/bacass/<job-id>` prefix.
+
+If you already have a good bacass job in your workspace, skip the manifest
+bootstrap and reuse it directly:
+
+```bash
+SOURCE_JOB=<job-id> bin/submit_bacass_jobs.sh \
+  ERR14693661 ERR14693662 ERR14693663 ERR14693664 ERR14693665
+```
 
 ---
 
@@ -179,6 +191,7 @@ Each job is named `bacass-<sample>` and writes to its own
 ids.csv                      # ENA run accessions (PRJEB86571)
 bacass_samplesheet.tsv       # combined samplesheet (local fetchngs paths)
 samplesheets/omicslab/       # one-row bacass sheets for the five ENA runs
+manifests/bacass.omxa.json   # portable per-sample launch manifest template
 analysis/                    # read-level blaNDM audit pipeline
 bin/                         # converters, plotting and submission helpers
 conf/                        # Nextflow configs
