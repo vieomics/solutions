@@ -26,11 +26,59 @@ The 47-run manifest is [`ids.csv`](ids.csv); the one-run test manifest is
 
 ## Download on Google Colab
 
+### Option A — SRA Toolkit (recommended)
+
+Install `sra-tools` with micromamba:
+
+```python
+!wget -qO- https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+!./bin/micromamba create -y -p /content/sratools -c conda-forge -c bioconda sra-tools
+
+import os
+os.environ["PATH"] = "/content/sratools/bin:" + os.environ["PATH"]
+```
+
+Download the SRA Toolkit script:
+
+```python
+!wget -q https://raw.githubusercontent.com/vieomics/solutions/topic/melioidosis-north-central-vietnam/melioidosis-north-central-vietnam/bin/download_sra_fastq.sh
+!chmod +x download_sra_fastq.sh
+```
+
+One-run test:
+
+```python
+!OUTDIR=/content/data/PRJNA1180080 \
+  PREFETCH_JOBS=1 CONVERT_JOBS=1 THREADS=4 \
+  bash download_sra_fastq.sh SRR31184429
+```
+
+All 47 runs:
+
+```python
+!OUTDIR=/content/data/PRJNA1180080 \
+  PREFETCH_JOBS=4 CONVERT_JOBS=2 THREADS=4 \
+  bash download_sra_fastq.sh
+```
+
+The script runs `prefetch` → `vdb-validate` → `fasterq-dump`, gzips the FASTQs,
+and writes a bacass samplesheet. `.sra` files are deleted after conversion
+unless `KEEP_SRA=1`.
+
+Outputs:
+
+```text
+/content/data/PRJNA1180080/
+├── fastq/*.fastq.gz
+├── sra/          # removed after conversion by default
+└── PRJNA1180080.bacass.tsv
+```
+
+### Option B — ENA direct FASTQ (fallback)
+
 Use [`bin/download_ena_fastq.sh`](bin/download_ena_fastq.sh). It reads the ENA
 run report, downloads paired FASTQs with `aria2c` (or `wget`), verifies MD5s,
 and writes a bacass samplesheet.
-
-In a Colab bash cell:
 
 ```bash
 apt-get -qq update
@@ -39,24 +87,10 @@ apt-get -qq install -y aria2
 # One-run test
 OUTDIR=/content/data/PRJNA1180080 \
   bash download_ena_fastq.sh SRR31184429
-```
 
-All 47 runs:
-
-```bash
+# All 47 runs
 OUTDIR=/content/data/PRJNA1180080 JOBS=8 \
   bash download_ena_fastq.sh
-```
-
-Outputs:
-
-```text
-/content/data/PRJNA1180080/
-├── fastq/*.fastq.gz
-├── metadata/PRJNA1180080.ena.tsv
-├── metadata/PRJNA1180080.fastq_urls.txt
-├── metadata/PRJNA1180080.md5
-└── PRJNA1180080.bacass.tsv
 ```
 
 If `https://ftp.sra.ebi.ac.uk` is blocked in Colab, retry with
