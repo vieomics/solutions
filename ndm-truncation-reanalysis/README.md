@@ -2,8 +2,8 @@
 
 Reproducible assembly and read-level reanalysis of the five bacterial isolates
 with a discordant `blaNDM` PCR / ceftazidime-avibactam phenotype reported by
-Dung et al. 2025
-(*Ann Clin Microbiol Antimicrob*, doi:10.1186/s12941-025-00818-3).
+Dung et al. (2025) in *Annals of Clinical Microbiology and Antimicrobials* —
+[doi:10.1186/s12941-025-00818-3](https://doi.org/10.1186/s12941-025-00818-3).
 
 This is one self-contained solution in the
 [vieomics/solutions](../README.md) repository.

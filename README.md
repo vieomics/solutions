@@ -6,7 +6,7 @@ write-up.
 
 | Solution | What it covers |
 |---|---|
-| [ndm-truncation-reanalysis](ndm-truncation-reanalysis/) | Read-level reanalysis of the reported `blaNDM` truncations in Dung et al. 2025 (ENA PRJEB86571), with `nf-core/bacass` assembly and a per-sample OmicsLab job workflow. |
+| [ndm-truncation-reanalysis](ndm-truncation-reanalysis/) | Read-level reanalysis of the reported `blaNDM` truncations in Dung et al. (2025), *Annals of Clinical Microbiology and Antimicrobials* — [doi:10.1186/s12941-025-00818-3](https://doi.org/10.1186/s12941-025-00818-3). Includes `nf-core/bacass` assembly and a per-sample OmicsLab job workflow. |
 
 ## Layout
 
