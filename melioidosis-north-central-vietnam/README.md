@@ -63,6 +63,53 @@ If `https://ftp.sra.ebi.ac.uk` is blocked in Colab, retry with
 `SCHEME=ftp`. To use paper isolate names instead of SRR accessions, set
 `MAPPING_TSV` to a two-column TSV (`run_accession`, `isolate_name`).
 
+## Upload to OmicsLab from Colab
+
+Install the SDK/CLI and set the token and workspace:
+
+```python
+!pip install -q omicslab
+
+import os
+from getpass import getpass
+
+os.environ["OMICSLAB_TOKEN"] = getpass("OMICSLAB_TOKEN: ")
+os.environ["OMICSLAB_BASE_URL"] = "https://platform.omicslab.io/api/v1"
+
+WORKSPACE = "<workspace-id>"   # e.g. c29526fd-a388-41e8-a452-141e8bbcece0
+os.environ["WORKSPACE"] = WORKSPACE
+```
+
+Upload the FASTQ directory and samplesheet using **workspace-relative keys**
+(no `data/` prefix):
+
+```python
+!omx upload /content/data/PRJNA1180080/fastq \
+  datasets/gianglabs/47-samples/fastq \
+  -w "$WORKSPACE" --threads 8 -y
+
+!omx upload /content/data/PRJNA1180080/PRJNA1180080.bacass.tsv \
+  datasets/gianglabs/47-samples/samplesheets/PRJNA1180080.bacass.tsv \
+  -w "$WORKSPACE" -y
+```
+
+Verify the upload:
+
+```python
+!omx ls datasets/gianglabs/47-samples/fastq -w "$WORKSPACE" --json
+!omx ls datasets/gianglabs/47-samples/samplesheets -w "$WORKSPACE" --json
+```
+
+The corresponding full S3 URIs used in the bacass manifest are:
+
+```text
+s3://<bucket>/data/datasets/gianglabs/47-samples/fastq/...
+s3://<bucket>/data/datasets/gianglabs/47-samples/samplesheets/PRJNA1180080.bacass.tsv
+```
+
+Get `<bucket>` from `omx ws get "$WORKSPACE"`. For the current workspace it is
+`vieomics-prod`.
+
 ## Current status
 
 - [x] Paper and data availability reviewed.
