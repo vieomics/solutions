@@ -55,7 +55,22 @@ Run `nf-core/fetchngs` 1.13.0 for `SRR31184429` before attempting all 47.
   - output samplesheet has one row;
   - file count and approximate size match the ENA report.
 
-If the one-sample job succeeds, run all 47 with the same pipeline and method.
+The one-sample input is uploaded at:
+
+```text
+s3://vieomics-prod/data/datasets/gianglabs/47-samples/ids/SRR31184429.csv
+```
+
+The launch manifest is uploaded at:
+
+```text
+analysis/fetchngs/SRR31184429.omxa.json
+```
+
+The Studio credential broker blocks job launches from this environment, so the
+manifest must be launched from the OmicsLab platform UI or a terminal with
+job-launch permission. If the one-sample job succeeds, run all 47 with the same
+pipeline and method.
 
 ### 2.3 Comparative dataset — 1,468 runs
 
@@ -196,6 +211,9 @@ The full comparative run therefore needs a storage plan before launch.
   through pixi/conda and must be installed separately. fetchngs with
   `sratools` is the simpler first test.
 - **Storage:** full 1,468-genome run exceeds the current workspace quota.
+- **Studio job launch:** the credential broker in this environment blocks
+  `omx ws analysis launch`, `config launch`, and `rerun`. The manifest is
+  prepared and uploaded; the job can be triggered from the platform UI.
 
 ## 8. Acceptance criteria for the first PR
 

@@ -1,0 +1,23 @@
+{
+  "job_type": "analysis",
+  "name": "fetchngs-SRR31184429-test",
+  "git": "https://github.com/nf-core/fetchngs.git",
+  "tag": "1.13.0",
+  "commit_hash": "955c892d80927cee633765e6e390f9cc6b7235c9",
+  "versioning_id": "__VERSIONING_ID__",
+  "profile": "test_full",
+  "compute_type": "cloud",
+  "flavor_type": "code-a",
+  "region": "HCM03-1A",
+  "cpu": 4,
+  "memory": 8,
+  "disk": 100,
+  "time": 3600,
+  "params": {
+    "input": "s3://__BUCKET__/data/datasets/gianglabs/47-samples/ids/SRR31184429.csv",
+    "outdir": "s3://__BUCKET__/data/datasets/gianglabs/47-samples/fetchngs-test/$job_id",
+    "download_method": "sratools",
+    "skip_fastq_download": false,
+    "validate_params": true
+  }
+}

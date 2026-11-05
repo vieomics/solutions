@@ -29,9 +29,26 @@ The 47-run manifest is [`ids.csv`](ids.csv); the one-run test manifest is
 - [x] Paper and data availability reviewed.
 - [x] S1 Table inspected; 47 new runs confirmed.
 - [x] One-sample fetchngs test defined: `SRR31184429` (`Bp52_TY01`).
-- [ ] One-sample fetchngs job run on OmicsLab and output verified.
+- [x] One-sample input uploaded to workspace storage.
+- [x] One-sample fetchngs manifest uploaded to workspace storage.
+- [ ] One-sample fetchngs job launched on OmicsLab and output verified.
 - [ ] 47-sample bacass run.
 - [ ] Comparative 1,468-genome analysis.
+
+The manifest is ready at:
+
+```text
+analysis/fetchngs/SRR31184429.omxa.json
+```
+
+The Studio credential broker blocks job launches from this shell, so the job
+must be triggered from the OmicsLab platform UI (or from a terminal with job
+launch permission). The manifest already points at:
+
+```text
+input:  s3://vieomics-prod/data/datasets/gianglabs/47-samples/ids/SRR31184429.csv
+output: s3://vieomics-prod/data/datasets/gianglabs/47-samples/fetchngs-test/$job_id
+```
 
 ## Environment
 
@@ -45,6 +62,22 @@ pixi run fetchngs-single
 
 `fetchngs-single` downloads the one test run with `sratools`; `fetchngs`
 downloads all 47 runs.
+
+The platform manifest template is
+[`manifests/fetchngs.single.omxa.json`](manifests/fetchngs.single.omxa.json).
+Replace `__VERSIONING_ID__` and `__BUCKET__`, then upload and launch it from a
+terminal with job-launch permission:
+
+```bash
+omx ws analysis config upload manifests/fetchngs.single.omxa.json \
+  --key analysis/fetchngs/SRR31184429.omxa.json \
+  -w "$WORKSPACE"
+
+omx ws analysis config launch analysis/fetchngs/SRR31184429.omxa.json \
+  -w "$WORKSPACE" \
+  -n fetchngs-SRR31184429-test \
+  --cpu 4 --memory 8 --disk 100 --time 1h
+```
 
 ## Reproduction plan
 
