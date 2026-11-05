@@ -1,4 +1,4 @@
-# Bacterial genome assembly and NDM truncation investigation
+# NDM truncation reanalysis (Dung et al. 2025)
 
 Reproducible assembly and read-level reanalysis of the five bacterial isolates
 with a discordant `blaNDM` PCR / ceftazidime-avibactam phenotype reported by
@@ -38,7 +38,7 @@ pixi --version
 
 ```bash
 git clone git@github.com:vieomics/solutions.git
-cd solutions/bacteria-genome-assembly
+cd solutions/ndm-truncation-reanalysis
 ```
 
 ### 3. Create the environment

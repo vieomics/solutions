@@ -186,7 +186,7 @@ The helper does two things:
    samples, changing only the name and `params.input`.
 
 ```bash
-cd bacteria-genome-assembly
+cd ndm-truncation-reanalysis
 
 export WORKSPACE=<workspace-id>
 export VERSIONING_ID=<credential-id>
@@ -393,7 +393,7 @@ Everything the script does can be done by hand. The first sample is the
 manifest launch; the rest are reruns of it:
 
 ```bash
-cd bacteria-genome-assembly
+cd ndm-truncation-reanalysis
 SAMPLE=ERR14693661
 BUCKET=$(omx ws get "$WORKSPACE" | awk -F': ' '/^bucket_name:/ {print $2}')
 COMPUTE=$(omx ws get "$WORKSPACE" \

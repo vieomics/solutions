@@ -6,14 +6,14 @@ write-up.
 
 | Solution | What it covers |
 |---|---|
-| [bacteria-genome-assembly](bacteria-genome-assembly/) | Bacterial genome assembly with `nf-core/bacass`, read-level reanalysis of `blaNDM` truncations in ENA PRJEB86571, and a per-sample OmicsLab job workflow. |
+| [ndm-truncation-reanalysis](ndm-truncation-reanalysis/) | Read-level reanalysis of the reported `blaNDM` truncations in Dung et al. 2025 (ENA PRJEB86571), with `nf-core/bacass` assembly and a per-sample OmicsLab job workflow. |
 
 ## Layout
 
 ```text
 solutions/
 ├── README.md
-└── bacteria-genome-assembly/
+└── ndm-truncation-reanalysis/
     ├── README.md
     ├── analysis/
     ├── bin/
