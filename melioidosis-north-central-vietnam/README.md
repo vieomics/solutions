@@ -24,6 +24,45 @@ by MLST/cgMLST, whole-genome SNP phylogeny, and pan-genome analysis.
 The 47-run manifest is [`ids.csv`](ids.csv); the one-run test manifest is
 [`ids.single.csv`](ids.single.csv).
 
+## Download on Google Colab
+
+Use [`bin/download_ena_fastq.sh`](bin/download_ena_fastq.sh). It reads the ENA
+run report, downloads paired FASTQs with `aria2c` (or `wget`), verifies MD5s,
+and writes a bacass samplesheet.
+
+In a Colab bash cell:
+
+```bash
+apt-get -qq update
+apt-get -qq install -y aria2
+
+# One-run test
+OUTDIR=/content/data/PRJNA1180080 \
+  bash download_ena_fastq.sh SRR31184429
+```
+
+All 47 runs:
+
+```bash
+OUTDIR=/content/data/PRJNA1180080 JOBS=8 \
+  bash download_ena_fastq.sh
+```
+
+Outputs:
+
+```text
+/content/data/PRJNA1180080/
+├── fastq/*.fastq.gz
+├── metadata/PRJNA1180080.ena.tsv
+├── metadata/PRJNA1180080.fastq_urls.txt
+├── metadata/PRJNA1180080.md5
+└── PRJNA1180080.bacass.tsv
+```
+
+If `https://ftp.sra.ebi.ac.uk` is blocked in Colab, retry with
+`SCHEME=ftp`. To use paper isolate names instead of SRR accessions, set
+`MAPPING_TSV` to a two-column TSV (`run_accession`, `isolate_name`).
+
 ## Current status
 
 - [x] Paper and data availability reviewed.
