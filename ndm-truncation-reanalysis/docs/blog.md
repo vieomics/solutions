@@ -12,7 +12,8 @@ tell the difference.*
 
 ## Background
 
-Dung et al. (2025, *Ann Clin Microbiol Antimicrob*, doi:10.1186/s12941-025-00818-3)
+Dung et al. (2025, *Annals of Clinical Microbiology and Antimicrobials*,
+[doi:10.1186/s12941-025-00818-3](https://doi.org/10.1186/s12941-025-00818-3))
 reported `blaNDM`-positive but ceftazidime-avibactam (CAZ-AVI) susceptible isolates
 carrying a truncated `blaNDM`. The conclusion came from short-read genome
 assemblies plus BLASTn — without read-level validation.
