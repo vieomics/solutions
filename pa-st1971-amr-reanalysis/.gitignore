@@ -1,0 +1,11 @@
+# Generated data, databases, environments and results
+.pixi/
+data/
+db/
+results/
+logs/
+localDB/
+__pycache__/
+*.pyc
+.DS_Store
+*.swp

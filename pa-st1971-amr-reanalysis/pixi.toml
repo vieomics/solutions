@@ -1,0 +1,51 @@
+[workspace]
+authors = ["vieomics"]
+channels = ["conda-forge", "bioconda"]
+name = "pa-st1971-amr-reanalysis"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+# Tools used by every step (download, FASTA QC, summary tables).
+[feature.core.dependencies]
+seqkit = "==2.14.0"
+blast = "==2.17.0"
+curl = "*"
+coreutils = "*"
+gawk = "*"
+grep = "*"
+sed = "*"
+tar = "*"
+bzip2 = "*"
+
+# Paper versions: Bakta v1.10.3 and AMRFinderPlus v4.0.19.
+# Bakta bundles AMRFinderPlus, so both live in the same environment.
+[feature.annotation.dependencies]
+bakta = "==1.10.3"
+ncbi-amrfinderplus = "==4.0.19"
+
+# PubMLST scheme + sequence typing.
+[feature.typing.dependencies]
+mlst = "==2.35.0"
+
+# CARD-RGI is kept separate because its old biopython pin conflicts with
+# the annotation environment.
+[feature.resistome.dependencies]
+rgi = "==6.0.3"
+
+# Virulence factor screening with the VFDB database.
+[feature.virulence.dependencies]
+abricate = "==1.4.0"
+
+[environments]
+default = ["core"]
+annotation = ["annotation"]
+typing = ["typing"]
+resistome = ["resistome"]
+virulence = ["virulence"]
+
+[activation.env]
+THREADS = "16"
+
+[tasks]
+check = "bash bin/00_check_env.sh"
+all = "bash bin/run_all.sh"
