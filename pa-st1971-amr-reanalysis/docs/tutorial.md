@@ -38,6 +38,47 @@ pixi run -e annotation bash bin/03_annotate.sh
 `bakta_db download` will reuse/complete `db/bakta-light/db-light.tar.gz` or
 download it again; either way it is safe to rerun.
 
+### Manual download quick reference (raw values)
+
+Run these from `pa-st1971-amr-reanalysis/`. They are the same commands as
+below, but with no shell variables, so you can copy-paste them one at a time.
+
+```bash
+# 1. Genome (6.4 MB)
+mkdir -p data
+curl -fsSL --retry 5 --retry-delay 5 --retry-connrefused \
+  https://www.ebi.ac.uk/ena/browser/api/fasta/CP196749.1 \
+  -o data/CP196749.1.fasta
+echo "0a70bcde2b23a14b74033a6da8078b24  data/CP196749.1.fasta" | md5sum -c -
+
+# 2. Bakta light database (1,483,565,256 bytes)
+mkdir -p db/bakta-light
+pixi run -e annotation bakta_db download \
+  --output db/bakta-light --type light
+
+# 2b. Direct fallback if bakta_db stalls
+curl -fL --retry 5 --retry-delay 5 -C - \
+  https://zenodo.org/records/10522951/files/db-light.tar.gz \
+  -o db/bakta-light/db-light.tar.gz
+# expected md5: 31b3fbdceace50930f8607f8d664d3f4
+tar -xzf db/bakta-light/db-light.tar.gz \
+  -C db/bakta-light --strip-components=1
+
+# 3. AMRFinderPlus database
+mkdir -p db/amrfinder
+pixi run -e annotation amrfinder_update \
+  --database db/amrfinder --force_update
+
+# 4. CARD database (4.4 MB compressed)
+mkdir -p db/card
+curl -fsSL --retry 5 https://card.mcmaster.ca/latest/data \
+  -o db/card/card-data.tar.bz2
+tar -xjf db/card/card-data.tar.bz2 -C db/card
+```
+
+The genome is already downloaded and checksum-verified in this checkout.
+The Bakta light database is the first download to resume.
+
 ---
 
 ## 0. What the paper deposited
