@@ -1,7 +1,7 @@
-# Reference run
+# Reference results
 
 Successful end-to-end `nf-core/viralrecon` run used as the reference material
-for the blog.
+for the solution.
 
 | Item | Value |
 |---|---|
@@ -39,25 +39,21 @@ skip_consensus_plots  true
 kraken2_db            /dev/null
 ```
 
-## What is included
+## Viralrecon results
 
 | Path | Content |
 |---|---|
-| `variants/bcftools/consensus/bcftools/*.consensus.fa` | five consensus genomes |
-| `variants/bcftools/*.vcf.gz` | final and normalised variant calls |
-| `variants/bcftools/bcftools_stats/` | BCFtools variant statistics |
-| `variants/bowtie2/samtools_stats/` | mapping statistics |
-| `variants/bowtie2/log/` | Bowtie2 alignment logs |
-| `fastp/` | read trimming reports |
-| `multiqc/multiqc_report.html` | combined QC report |
-| `pipeline_info/` | Nextflow execution report, timeline, trace, DAG and parameters |
+| `viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa` | five consensus genomes |
+| `viralrecon/variants/bcftools/*.vcf.gz` | final and normalised variant calls |
+| `viralrecon/variants/bcftools/bcftools_stats/` | BCFtools variant statistics |
+| `viralrecon/variants/bowtie2/samtools_stats/` | mapping statistics |
+| `viralrecon/variants/bowtie2/log/` | Bowtie2 alignment logs |
+| `viralrecon/fastp/` | read trimming reports |
+| `viralrecon/multiqc/multiqc_report.html` | combined QC report |
+| `viralrecon/pipeline_info/` | Nextflow execution report, timeline, trace, DAG and parameters |
+| `figures/` | QC, genome coverage, mutation summary and phylogeny figures |
 
-The five BAM files (234 MB) are omitted from the repository. They remain in the
-workspace output prefix above.
-
-## Downstream public-genome analysis
-
-`downstream/` contains the 15-sequence comparison used for the phylogeny:
+## Downstream analysis
 
 | Path | Content |
 |---|---|
@@ -66,17 +62,11 @@ workspace output prefix above.
 | `downstream/hbv_alignment.fasta` | MAFFT alignment (15 sequences) |
 | `downstream/hbv_phylogeny.treefile` | IQ-TREE maximum-likelihood tree |
 | `downstream/hbv_phylogeny.iqtree` | model and support values |
-| `figures/phylogenetic_tree.png` | tree figure, coloured by genotype |
+| `downstream/coverage/*.depth.tsv` | per-base depth for the five samples |
+| `downstream/sample_summary.tsv` | mapping rate, mean depth, breadth, consensus N |
+| `downstream/variant_summary.tsv` | variants by coding region and SNP/indel class |
 
-Commands:
-
-```bash
-mafft --auto --reorder downstream/all_hbv_sequences.fasta > downstream/hbv_alignment.fasta
-iqtree2 -s downstream/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix downstream/hbv_phylogeny -redo
-```
-
-The tree is rooted at the midpoint for display. Study samples are in bold and
-use the genotype colours; public references are labelled by accession and
-country/year. The same figure is copied to `docs/figures/phylogenetic_tree.png`
-for the blog.
-
+The five BAM files (234 MB) are omitted from the repository. They remain in the
+workspace output prefix above. The figures in `figures/` were generated from
+these results; the tree figure is reproduced by the code block in the root
+README.

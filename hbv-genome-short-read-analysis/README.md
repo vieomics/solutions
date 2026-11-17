@@ -3,11 +3,9 @@
 Reproducible analysis of five Illumina HBV whole-genome sequencing runs from
 NCBI BioProject [PRJNA659786](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA659786)
 plus ten curated complete GenBank genomes. The deliverable includes a
-stock `nf-core/viralrecon` run, MAFFT alignment, IQ-TREE 2 phylogeny,
-recombination screening, variant tables, figures and a technical blog.
-
-The long-form write-up is in **[docs/blog.md](docs/blog.md)**. The integrated
-HTML report from the actual run is `results/analysis_summary.html`.
+stock `nf-core/viralrecon` run, MAFFT alignment, IQ-TREE 2 phylogeny and
+variant tables. The step-by-step guide is this README; the reference outputs
+are in `results/`.
 
 ## Prepared material in the public workspace
 
@@ -81,11 +79,7 @@ hbv-genome-short-read-analysis/
 │   └── genbank/                   # cached GenBank flat files
 ├── conf/
 │   └── viralrecon.platform.config # platform HBV reference
-├── results/                       # full run outputs (git-ignored)
-├── reference_results/             # successful platform run (consensus, variants, MultiQC)
-├── docs/
-│   ├── blog.md
-│   └── figures/                   # figures used in the blog
+├── results/                       # platform results + downstream analysis
 └── manifests/                     # summary tables + platform job manifest
 ```
 
@@ -223,12 +217,12 @@ import csv
 from pathlib import Path
 from Bio import SeqIO
 
-outdir = Path("reference_results/downstream")
+outdir = Path("results/downstream")
 outdir.mkdir(parents=True, exist_ok=True)
 
 # Five viralrecon consensus genomes plus ten public GenBank genomes.
 records = []
-for path in sorted(Path("reference_results/variants/bcftools/consensus/bcftools").glob("*.consensus.fa")):
+for path in sorted(Path("results/viralrecon/variants/bcftools/consensus/bcftools").glob("*.consensus.fa")):
     for record in SeqIO.parse(path, "fasta"):
         record.id = record.id.split()[0]
         record.description = ""
@@ -281,12 +275,12 @@ print(len(records), "sequences and", len(metadata), "metadata rows")
 **Step 2 — align and build the tree.**
 
 ```bash
-mafft --auto --reorder reference_results/downstream/all_hbv_sequences.fasta \
-  > reference_results/downstream/hbv_alignment.fasta
+mafft --auto --reorder results/downstream/all_hbv_sequences.fasta \
+  > results/downstream/hbv_alignment.fasta
 
-iqtree2 -s reference_results/downstream/hbv_alignment.fasta \
+iqtree2 -s results/downstream/hbv_alignment.fasta \
   -m MFP -B 1000 --alrt 1000 -nt AUTO -redo -quiet \
-  --prefix reference_results/downstream/hbv_phylogeny
+  --prefix results/downstream/hbv_phylogeny
 ```
 
 **Step 3 — draw the tree.**
@@ -411,14 +405,13 @@ def plot_tree(tree_path, metadata_path, outpath):
 
 
 plot_tree(
-    "reference_results/downstream/hbv_phylogeny.treefile",
-    "reference_results/downstream/all_hbv_metadata.tsv",
-    "reference_results/figures/phylogenetic_tree.png",
+    "results/downstream/hbv_phylogeny.treefile",
+    "results/downstream/all_hbv_metadata.tsv",
+    "results/figures/phylogenetic_tree.png",
 )
 ```
 
-The resulting figure is `reference_results/figures/phylogenetic_tree.png` and is also
-copied to `docs/figures/phylogenetic_tree.png` for the blog.
+The resulting figure is `results/figures/phylogenetic_tree.png`.
 
 Read the variants for one sample (change the sample name as needed):
 
@@ -442,20 +435,20 @@ variants["pos"].plot.hist(bins=50)
 plt.xlabel("Genome position")
 plt.ylabel("Variants")
 plt.tight_layout()
-plt.savefig("docs/figures/variants_B215.png", dpi=150)
+plt.savefig("results/figures/variants_B215.png", dpi=150)
 
 variants.to_html("results/analysis_summary.html", index=False)
 ```
 
 ## Reference run
 
-The successful end-to-end platform run is preserved in `reference_results/`
+The successful end-to-end platform run is preserved in `results/`
 (job `75c29039-842d-49cf-b025-19566e03f976`, Vieomics workspace). It contains
 the five consensus genomes, VCFs, BCFtools/SAMtools statistics, FastP reports,
 the MultiQC report and the Nextflow execution report. The public-genome
-phylogeny is in `reference_results/figures/phylogenetic_tree.png`, with the
-alignment and tree files under `reference_results/downstream/`. See
-`reference_results/README.md` for the exact parameters and output paths.
+phylogeny is in `results/figures/phylogenetic_tree.png`, with the
+alignment and tree files under `results/downstream/`. See
+`results/README.md` for the exact parameters and output paths.
 
 ## Key results from the committed run
 
@@ -519,9 +512,8 @@ and 1.4.0 (downstream), Bowtie2 2.5.4, BWA 0.7.19, SAMtools 1.21/1.25,
 BCFtools 1.22/1.25, MAFFT 7.526, IQ-TREE 2.4.0, PhiPack 1.1, MultiQC 1.31/1.35,
 Python 3.13, Biopython 1.88, pysam 0.24.1.
 
-## Blog and citations
+## Citations
 
-- [Technical blog](docs/blog.md)
 - nf-core/viralrecon: DOI 10.5281/zenodo.3901628
 - Nextflow: DOI 10.1038/nbt.3820
 - IQ-TREE 2: DOI 10.1093/molbev/msaa015

@@ -1,0 +1,6 @@
+Sample,# Input reads,# Trimmed reads (fastp),% Non-host reads (Kraken 2),% Mapped reads,# Mapped reads,# Trimmed reads (iVar),Coverage median,% Coverage > 1x,% Coverage > 10x,# SNPs,# INDELs,# Missense variants,# Ns per 100kb consensus,Pangolin lineage,Nextclade clade
+HBV_A_B215_2014,1459312,1255688,NA,84.32,1058770,1058770,NA,NA,NA,660,NA,NA,NA,NA,NA
+HBV_A_B3392_2014,971100,822416,NA,76.82,631763,631763,NA,NA,NA,571,NA,NA,NA,NA,NA
+HBV_A_B575_2014,1096290,908768,NA,71.21,647107,647107,NA,NA,NA,481,NA,NA,NA,NA,NA
+HBV_D_B2719_2015,1490392,1264560,NA,99.55,1258869,1258869,NA,NA,NA,123,NA,NA,NA,NA,NA
+HBV_D_B364_2014,1432724,1175552,NA,99.2,1166175,1166175,NA,NA,NA,107,NA,NA,NA,NA,NA

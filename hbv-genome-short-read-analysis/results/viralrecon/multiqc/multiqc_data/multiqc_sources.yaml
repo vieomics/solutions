@@ -1,0 +1,42 @@
+'PREPROCESS: fastp (adapter trimming)':
+  all_sections:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/4/HBV_A_B215_2014.fastp.json
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/7/HBV_A_B3392_2014.fastp.json
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/3/HBV_A_B575_2014.fastp.json
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/5/HBV_D_B2719_2015.fastp.json
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/6/HBV_D_B364_2014.fastp.json
+'VARIANTS: BCFTools':
+  stats:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/19/HBV_A_B215_2014.bcftools_stats.txt
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/21/HBV_A_B3392_2014.bcftools_stats.txt
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/22/HBV_A_B575_2014.bcftools_stats.txt
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/20/HBV_D_B2719_2015.bcftools_stats.txt
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/18/HBV_D_B364_2014.bcftools_stats.txt
+'VARIANTS: Bowtie 2':
+  all_sections:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/9/HBV_A_B215_2014.bowtie2.log
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/12/HBV_A_B3392_2014.bowtie2.log
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/8/HBV_A_B575_2014.bowtie2.log
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/10/HBV_D_B2719_2015.bowtie2.log
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/11/HBV_D_B364_2014.bowtie2.log
+'VARIANTS: SAMTools (MarkDuplicates)':
+  flagstat:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/14/HBV_A_B215_2014.sorted.bam.flagstat
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/15/HBV_A_B3392_2014.sorted.bam.flagstat
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/13/HBV_A_B575_2014.sorted.bam.flagstat
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/16/HBV_D_B2719_2015.sorted.bam.flagstat
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/17/HBV_D_B364_2014.sorted.bam.flagstat
+'VARIANTS: SAMTools (iVar)':
+  flagstat:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/14/HBV_A_B215_2014.sorted.bam.flagstat
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/15/HBV_A_B3392_2014.sorted.bam.flagstat
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/13/HBV_A_B575_2014.sorted.bam.flagstat
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/16/HBV_D_B2719_2015.sorted.bam.flagstat
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/17/HBV_D_B364_2014.sorted.bam.flagstat
+'VARIANTS: SAMTools (raw)':
+  flagstat:
+    HBV_A_B215_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/14/HBV_A_B215_2014.sorted.bam.flagstat
+    HBV_A_B3392_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/15/HBV_A_B3392_2014.sorted.bam.flagstat
+    HBV_A_B575_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/13/HBV_A_B575_2014.sorted.bam.flagstat
+    HBV_D_B2719_2015: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/16/HBV_D_B2719_2015.sorted.bam.flagstat
+    HBV_D_B364_2014: /home/omicslab/.omicslab/jobs/75c29039-842d-49cf-b025-19566e03f976/work/90/228dd5afda2773cf225998ea7cf426/17/HBV_D_B364_2014.sorted.bam.flagstat

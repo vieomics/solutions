@@ -1,0 +1,35 @@
+HBV_A_B215_2014:
+  Low Complexity: nan
+  Low Quality: '121434.0'
+  Passed Filter: '1255688.0'
+  Too Long: '0.0'
+  Too Many N: '0.0'
+  Too Short: '82190.0'
+HBV_A_B3392_2014:
+  Low Complexity: nan
+  Low Quality: '90178.0'
+  Passed Filter: '822416.0'
+  Too Long: '0.0'
+  Too Many N: '0.0'
+  Too Short: '58506.0'
+HBV_A_B575_2014:
+  Low Complexity: nan
+  Low Quality: '120976.0'
+  Passed Filter: '908768.0'
+  Too Long: '0.0'
+  Too Many N: '0.0'
+  Too Short: '66546.0'
+HBV_D_B2719_2015:
+  Low Complexity: nan
+  Low Quality: '155196.0'
+  Passed Filter: '1264560.0'
+  Too Long: '0.0'
+  Too Many N: '0.0'
+  Too Short: '70636.0'
+HBV_D_B364_2014:
+  Low Complexity: nan
+  Low Quality: '185874.0'
+  Passed Filter: '1175552.0'
+  Too Long: '0.0'
+  Too Many N: '0.0'
+  Too Short: '71298.0'

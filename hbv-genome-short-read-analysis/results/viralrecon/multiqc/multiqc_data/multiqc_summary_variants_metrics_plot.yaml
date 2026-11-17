@@ -1,0 +1,80 @@
+HBV_A_B215_2014:
+  '# INDELs': NA
+  '# Input reads': 1459312
+  '# Mapped reads': 1058770
+  '# Missense variants': NA
+  '# Ns per 100kb consensus': NA
+  '# SNPs': 660
+  '# Trimmed reads (fastp)': 1255688
+  '# Trimmed reads (iVar)': 1058770
+  '% Coverage > 10x': NA
+  '% Coverage > 1x': NA
+  '% Mapped reads': 84.32
+  '% Non-host reads (Kraken 2)': NA
+  Coverage median: NA
+  Nextclade clade: NA
+  Pangolin lineage: NA
+HBV_A_B3392_2014:
+  '# INDELs': NA
+  '# Input reads': 971100
+  '# Mapped reads': 631763
+  '# Missense variants': NA
+  '# Ns per 100kb consensus': NA
+  '# SNPs': 571
+  '# Trimmed reads (fastp)': 822416
+  '# Trimmed reads (iVar)': 631763
+  '% Coverage > 10x': NA
+  '% Coverage > 1x': NA
+  '% Mapped reads': 76.82
+  '% Non-host reads (Kraken 2)': NA
+  Coverage median: NA
+  Nextclade clade: NA
+  Pangolin lineage: NA
+HBV_A_B575_2014:
+  '# INDELs': NA
+  '# Input reads': 1096290
+  '# Mapped reads': 647107
+  '# Missense variants': NA
+  '# Ns per 100kb consensus': NA
+  '# SNPs': 481
+  '# Trimmed reads (fastp)': 908768
+  '# Trimmed reads (iVar)': 647107
+  '% Coverage > 10x': NA
+  '% Coverage > 1x': NA
+  '% Mapped reads': 71.21
+  '% Non-host reads (Kraken 2)': NA
+  Coverage median: NA
+  Nextclade clade: NA
+  Pangolin lineage: NA
+HBV_D_B2719_2015:
+  '# INDELs': NA
+  '# Input reads': 1490392
+  '# Mapped reads': 1258869
+  '# Missense variants': NA
+  '# Ns per 100kb consensus': NA
+  '# SNPs': 123
+  '# Trimmed reads (fastp)': 1264560
+  '# Trimmed reads (iVar)': 1258869
+  '% Coverage > 10x': NA
+  '% Coverage > 1x': NA
+  '% Mapped reads': 99.55
+  '% Non-host reads (Kraken 2)': NA
+  Coverage median: NA
+  Nextclade clade: NA
+  Pangolin lineage: NA
+HBV_D_B364_2014:
+  '# INDELs': NA
+  '# Input reads': 1432724
+  '# Mapped reads': 1166175
+  '# Missense variants': NA
+  '# Ns per 100kb consensus': NA
+  '# SNPs': 107
+  '# Trimmed reads (fastp)': 1175552
+  '# Trimmed reads (iVar)': 1166175
+  '% Coverage > 10x': NA
+  '% Coverage > 1x': NA
+  '% Mapped reads': 99.2
+  '% Non-host reads (Kraken 2)': NA
+  Coverage median: NA
+  Nextclade clade: NA
+  Pangolin lineage: NA

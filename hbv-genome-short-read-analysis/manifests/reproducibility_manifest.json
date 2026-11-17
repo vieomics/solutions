@@ -59,10 +59,8 @@
     "omx ws analysis config upload manifests/viralrecon.hbv.omxa.json --key analysis/PRJNA659786/viralrecon.omxa.json -w \"$WORKSPACE\"",
     "omx ws analysis config launch analysis/PRJNA659786/viralrecon.omxa.json -w \"$WORKSPACE\"",
     "omx download \"viralrecon/hbv/results\" results/viralrecon -w \"$WORKSPACE\" -y",
-    "cat results/viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa references/hbv_public_genomes.fasta > comparative/all_hbv_sequences.fasta",
-    "mafft --auto --reorder comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta",
-    "iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo",
-    "Phi -f alignment/hbv_alignment.fasta -t D -p 1000 -o -v > results/recombination/phipack.txt",
+    "mafft --auto --reorder results/downstream/all_hbv_sequences.fasta > results/downstream/hbv_alignment.fasta",
+    "iqtree2 -s results/downstream/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO -redo -quiet --prefix results/downstream/hbv_phylogeny",
     "bcftools query -f '%CHROM\\t%POS\\t%REF\\t%ALT\\t%QUAL\\t%FILTER\\t[%GT\\t%DP\\t%AD]\\n' results/viralrecon/variants/bcftools/HBV_A_B215_2014_norm.vcf.gz > variants_B215.tsv"
   ],
   "validation": {
