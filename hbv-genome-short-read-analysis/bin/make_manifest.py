@@ -11,7 +11,8 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
-from Bio import Phylo
+from Bio import Phylo, SeqIO
+from Bio.Seq import Seq
 
 
 def sha256(path: Path) -> str:
@@ -86,6 +87,32 @@ def main() -> int:
     tree_text = (results / "hbv_phylogeny.treefile").read_text()
     support_count = len(re.findall(r"\d+(?:\.\d+)?/\d+", tree_text))
     consensus_rows = list(csv.DictReader((results / "consensus" / "consensus_stats.tsv").open(), delimiter="\t"))
+    reference_record = SeqIO.read(root / "references" / "genbank" / "NC_003977.2.gb", "genbank")
+    reference_seq = str(reference_record.seq).upper()
+    region_defs = {
+        "P": [(2309, 3182), (1, 1625)],
+        "S": [(157, 837)],
+        "C": [(1816, 2454)],
+        "X": [(1376, 1840)],
+    }
+    products = {
+        "P": "polymerase",
+        "S": "small envelope protein",
+        "C": "pre-capsid protein",
+        "X": "X protein",
+    }
+    translation_checks = {}
+    for feature in reference_record.features:
+        if feature.type != "CDS":
+            continue
+        gene = feature.qualifiers.get("gene", [""])[0]
+        product = feature.qualifiers.get("product", [""])[0]
+        if gene in region_defs and product == products.get(gene):
+            expected = str(feature.qualifiers["translation"][0]).replace(" ", "")
+            observed = str(
+                Seq("".join(reference_seq[start - 1 : end] for start, end in region_defs[gene])).translate()
+            ).rstrip("*")
+            translation_checks[gene] = expected == observed
     figure_paths = [
         "results/figures/genome_coverage.png",
         "results/figures/phylogenetic_tree.png",
@@ -109,6 +136,8 @@ def main() -> int:
         "reference_accessions": [row["accession"] for row in public],
         "reference_lengths": {row["accession"]: row["sequence_length"] for row in public},
         "reference_n_bases": {row["accession"]: row["n_bases"] for row in public},
+        "cds_translations_match_genbank": translation_checks,
+        "cds_translation_check_passed": all(translation_checks.values()) and len(translation_checks) == 4,
     }
 
     commands = [
@@ -190,6 +219,8 @@ def main() -> int:
         f"- Consensus rows: {validation['consensus_rows']}",
         f"- Partial genomes (>5% N): {', '.join(validation['partial_genomes']) or 'none'}",
         f"- Figures generated: {validation['figures_present']}",
+        f"- CDS translations match GenBank annotation: {validation['cds_translation_check_passed']} "
+        f"({validation['cds_translations_match_genbank']})",
         "",
         "## Key observations",
         "",

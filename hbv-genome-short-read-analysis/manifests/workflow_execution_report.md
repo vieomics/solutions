@@ -1,6 +1,6 @@
 # Workflow execution report
 
-Generated: 2026-11-17T12:16:06.493448+00:00
+Generated: 2026-11-17T12:18:29.599363+00:00
 
 ## Dataset
 
@@ -26,6 +26,7 @@ The exact commands are stored in `reproducibility_manifest.json`; software versi
 - Consensus rows: 5
 - Partial genomes (>5% N): HBV_A_B575_2014, HBV_D_B364_2014
 - Figures generated: True
+- CDS translations match GenBank annotation: True ({'P': True, 'S': True, 'X': True, 'C': True})
 
 ## Key observations
 
