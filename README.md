@@ -6,6 +6,7 @@ write-up.
 
 | Solution | What it covers |
 |---|---|
+| [melioidosis-north-central-vietnam](melioidosis-north-central-vietnam/) | Reproduction plan for Norris et al. (2026), *PLOS Neglected Tropical Diseases* — [doi:10.1371/journal.pntd.0013945](https://doi.org/10.1371/journal.pntd.0013945). 47 new *Burkholderia pseudomallei* genomes plus the paper's 1,468-genome comparative set. |
 | [ndm-truncation-reanalysis](ndm-truncation-reanalysis/) | Read-level reanalysis of the reported `blaNDM` truncations in Dung et al. (2025), *Annals of Clinical Microbiology and Antimicrobials* — [doi:10.1186/s12941-025-00818-3](https://doi.org/10.1186/s12941-025-00818-3). Includes `nf-core/bacass` assembly and a per-sample OmicsLab job workflow. |
 
 ## Layout
@@ -13,6 +14,14 @@ write-up.
 ```text
 solutions/
 ├── README.md
+├── melioidosis-north-central-vietnam/
+│   ├── README.md
+│   ├── conf/
+│   ├── docs/
+│   ├── ids.csv
+│   ├── ids.single.csv
+│   ├── pixi.toml
+│   └── pixi.lock
 └── ndm-truncation-reanalysis/
     ├── README.md
     ├── analysis/

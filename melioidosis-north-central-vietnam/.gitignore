@@ -1,0 +1,35 @@
+# Pixi environment
+.pixi/
+
+# Apptainer image cache
+.apptainer-cache/
+
+# Analysis test area
+analysis/test/
+analysis/ndm_audit/
+analysis/assemblies/
+analysis/postasm/
+
+# Local credentials (never commit)
+conf/*.local.config
+
+# Nextflow
+work*/
+.nextflow/
+.nextflow.log*
+.nextflow/cache/
+logs/
+
+# Pipeline results and reference downloads
+results/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS / editors
+.DS_Store
+*.swp
+
+# Rendered OmicsLab manifests (contain per-user versioning IDs)
+manifests/generated/
