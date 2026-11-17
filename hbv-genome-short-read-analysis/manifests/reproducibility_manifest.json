@@ -55,26 +55,15 @@
   ],
   "commands": [
     "pixi install",
-    "bash bin/download_fastq.sh",
-    "pixi run python bin/fetch_public_references.py --outdir references",
-    "pixi run python bin/make_samplesheet.py",
-    "pixi run -e viralrecon nextflow run nf-core/viralrecon -r 2.6.0 -c conf/viralrecon.config --input samplesheet.csv --outdir results/viralrecon --platform illumina --protocol metagenomic --genome hbv --skip_assembly --skip_kraken2 --skip_pangolin --skip_nextclade --skip_snpeff --skip_variants_quast --skip_variants_long_table --skip_picard_metrics --skip_mosdepth --skip_consensus_plots --skip_asciigenome -resume",
-    "pixi run bash bin/run_circular.sh",
-    "pixi run python bin/combine_comparative.py",
-    "pixi run mafft --auto --reorder --thread 4 comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta",
-    "pixi run python bin/alignment_stats.py",
-    "pixi run iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo",
-    "pixi run python bin/root_tree.py --tree results/phylogeny/hbv_phylogeny.treefile --out results/phylogeny/hbv_phylogeny.rooted.treefile",
-    "pixi run python bin/extract_alignment_regions.py",
-    "pixi run iqtree2 -s alignment/regions/hbv_S.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/S/hbv_S -redo",
-    "pixi run iqtree2 -s alignment/regions/hbv_P.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/P/hbv_P -redo",
-    "pixi run Phi -f alignment/hbv_alignment.fasta -t D -p 1000 -o -v > results/recombination/phipack.txt",
-    "pixi run python bin/annotate_variants.py",
-    "pixi run python bin/combine_mapping_stats.py",
-    "pixi run bash bin/software_versions.sh",
-    "pixi run python bin/make_figures.py",
-    "pixi run python bin/make_report.py",
-    "pixi run python bin/make_manifest.py"
+    "pixi shell",
+    "omx ws analysis config upload manifests/viralrecon.hbv.omxa.json --key analysis/PRJNA659786/viralrecon.omxa.json -w \"$WORKSPACE\"",
+    "omx ws analysis config launch analysis/PRJNA659786/viralrecon.omxa.json -w \"$WORKSPACE\"",
+    "omx download \"viralrecon/hbv/results\" results/viralrecon -w \"$WORKSPACE\" -y",
+    "cat results/viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa references/hbv_public_genomes.fasta > comparative/all_hbv_sequences.fasta",
+    "mafft --auto --reorder comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta",
+    "iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo",
+    "Phi -f alignment/hbv_alignment.fasta -t D -p 1000 -o -v > results/recombination/phipack.txt",
+    "bcftools query -f '%CHROM\\t%POS\\t%REF\\t%ALT\\t%QUAL\\t%FILTER\\t[%GT\\t%DP\\t%AD]\\n' results/viralrecon/variants/bcftools/HBV_A_B215_2014_norm.vcf.gz > variants_B215.tsv"
   ],
   "validation": {
     "study_samples": 5,
@@ -141,46 +130,6 @@
     "cds_translation_check_passed": true
   },
   "inputs": {
-    "data/fastq/HBV_A_B215_2014_R1.fastq.gz": {
-      "sha256": "b579f5a327728c5b3e538dc55529dc5b689c56d1e513682c5447506a8d96bc5a",
-      "bytes": 37648405
-    },
-    "data/fastq/HBV_A_B215_2014_R2.fastq.gz": {
-      "sha256": "b004fdd9e36dd0a7fa8a3677b0ea997fde033259d365b13199cf7afe97ad1742",
-      "bytes": 39485909
-    },
-    "data/fastq/HBV_A_B3392_2014_R1.fastq.gz": {
-      "sha256": "7b0b54117e2d148080f17a778d34dcb21140d00144edc07c2a819afa6c5a97c2",
-      "bytes": 24833478
-    },
-    "data/fastq/HBV_A_B3392_2014_R2.fastq.gz": {
-      "sha256": "8ac5cb3dda50b6ddc65942155b26039b8db884aab63f699f72193817271ff5b4",
-      "bytes": 27661696
-    },
-    "data/fastq/HBV_A_B575_2014_R1.fastq.gz": {
-      "sha256": "523c42bc5f474f4d9cff7b3b476b7044cadc5c756fe3a8d7ae50b75cf76cf0a7",
-      "bytes": 27187392
-    },
-    "data/fastq/HBV_A_B575_2014_R2.fastq.gz": {
-      "sha256": "12d421a61ecd71349981485c56b49aec345317ca6456fa0ed561e0aafb924072",
-      "bytes": 30620507
-    },
-    "data/fastq/HBV_D_B2719_2015_R1.fastq.gz": {
-      "sha256": "00516672ddfca155f1c3e89de239242d2c5088682618638a921bfbee3747f40a",
-      "bytes": 39523678
-    },
-    "data/fastq/HBV_D_B2719_2015_R2.fastq.gz": {
-      "sha256": "6dc5e823ccb3b420fd1429860c7760b83f18c69e73d956829ff25ab8da9c0f68",
-      "bytes": 43336320
-    },
-    "data/fastq/HBV_D_B364_2014_R1.fastq.gz": {
-      "sha256": "e49b095ae45e9c5d793acea55073bb6ab78fda72f68d7345834b82ecd84697ff",
-      "bytes": 36593465
-    },
-    "data/fastq/HBV_D_B364_2014_R2.fastq.gz": {
-      "sha256": "d964c5f1af9683679058f3a4ea540670dbbb003a46465f03a0abf0383b047f2f",
-      "bytes": 41898434
-    },
     "references/hbv_reference.fasta": {
       "sha256": "24d387c17decaf9241e5335bbbce5614afec490817d119f8278affe559c88138",
       "bytes": 3293

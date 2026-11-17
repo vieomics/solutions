@@ -1,0 +1,54 @@
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+
+Read1 before filtering:
+total reads: 485550
+total bases: 58373207
+Q20 bases: 57431785(98.3872%)
+Q30 bases: 57187200(97.9682%)
+Q40 bases: 98425(0.168613%)
+
+Read2 before filtering:
+total reads: 485550
+total bases: 58434972
+Q20 bases: 56594970(96.8512%)
+Q30 bases: 56223314(96.2152%)
+Q40 bases: 61724(0.105629%)
+
+Read1 after filtering:
+total reads: 411208
+total bases: 51421292
+Q20 bases: 51295382(99.7551%)
+Q30 bases: 51236264(99.6402%)
+Q40 bases: 97994(0.190571%)
+
+Read2 after filtering:
+total reads: 411208
+total bases: 51320369
+Q20 bases: 51031956(99.438%)
+Q30 bases: 50940292(99.2594%)
+Q40 bases: 61609(0.120048%)
+
+Filtering result:
+reads passed filter: 822416
+reads failed due to low quality: 90178
+reads failed due to too many N: 0
+reads failed due to too short: 58506
+reads failed due to adapter dimer: 0
+reads with adapter trimmed: 19870
+bases trimmed due to adapters: 34771
+reads with polyX in 3' end: 818
+bases trimmed in polyX tail: 7592
+
+Duplication rate: 30.0295%
+
+Insert size peak (evaluated by paired-end reads): 95
+
+JSON report: HBV_A_B3392_2014.fastp.json
+HTML report: HBV_A_B3392_2014.fastp.html
+
+fastp --in1 HBV_A_B3392_2014_R1.fastq.gz --in2 HBV_A_B3392_2014_R2.fastq.gz --out1 HBV_A_B3392_2014_R1.fastp.fastq.gz --out2 HBV_A_B3392_2014_R2.fastp.fastq.gz --json HBV_A_B3392_2014.fastp.json --html HBV_A_B3392_2014.fastp.html --thread 6 --detect_adapter_for_pe --cut_front --cut_tail --trim_poly_x --cut_mean_quality 30 --qualified_quality_phred 30 --unqualified_percent_limit 10 --length_required 50 
+fastp v1.4.0, time used: 24 seconds

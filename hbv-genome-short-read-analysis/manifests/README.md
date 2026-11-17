@@ -15,3 +15,8 @@ workflow; `results/` is git-ignored by the repository convention.
 - `closest_references.tsv` — genotype-matched comparison reference per sample.
 - `mutation_summary.tsv` — variant counts by sample/region/effect.
 - `phipack.txt` — full PhiPack recombination screen output.
+- `viralrecon.hbv.omxa.json` — static platform analysis-job manifest for
+  nf-core/viralrecon. `kraken2_db` is set to `/dev/null` because the platform
+  SDK localises every `s3://` parameter before Nextflow starts, while nf-schema
+  still validates the unused default path when `skip_kraken2` is true. The
+  placeholder satisfies validation without staging the 8 GB default database.

@@ -3,44 +3,90 @@
 Reproducible analysis of five Illumina HBV whole-genome sequencing runs from
 NCBI BioProject [PRJNA659786](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA659786)
 plus ten curated complete GenBank genomes. The deliverable includes a
-stock `nf-core/viralrecon` run, a circular-genome HBV branch, MAFFT alignment,
-IQ-TREE 2 phylogeny, recombination screening, overlapping-ORF variant
-annotation, figures and a technical blog.
+stock `nf-core/viralrecon` run, MAFFT alignment, IQ-TREE 2 phylogeny,
+recombination screening, variant tables, figures and a technical blog.
 
 The long-form write-up is in **[docs/blog.md](docs/blog.md)**. The integrated
 HTML report from the actual run is `results/analysis_summary.html`.
+
+## Prepared material in the public workspace
+
+`s3://omicslab/data/analysis/PRJNA659786/` contains the read-only inputs used
+by the platform job and the downstream steps:
+
+| Workspace file | Source in this repo | Purpose |
+|---|---|---|
+| `samplesheet.csv` | `metadata/samplesheet.platform.csv` | five samples with S3 FASTQ paths |
+| `viralrecon.config` | `conf/viralrecon.platform.config` | HBV reference and module settings |
+| `viralrecon.omxa.json` | `manifests/viralrecon.hbv.omxa.json` | platform analysis-job manifest |
+| `references/hbv_reference.fasta` | `references/hbv_reference.fasta` | NC_003977.2 mapping reference |
+| `references/hbv_public_genomes.fasta` | `references/hbv_public_genomes.fasta` | ten curated GenBank genomes |
+| `references/hbv_metadata.tsv` | `references/hbv_metadata.tsv` | genotype, country and date metadata |
+| `references/genbank/` | `references/genbank/` | GenBank flat files |
+| `metadata/` | `metadata/` | selected runs and ENA metadata |
+
+Users can launch the job directly from the public inputs, or copy the material
+into their own workspace with download + upload:
+
+```bash
+omx download -r analysis/PRJNA659786 prepared \
+  -w c669cc81-d096-4679-a9a2-03329167b71f -y
+
+omx upload prepared analysis/PRJNA659786 -w "$WORKSPACE" -y
+```
+
+For the local downstream steps, download only the references and metadata:
+
+```bash
+omx download -r analysis/PRJNA659786/references references \
+  -w c669cc81-d096-4679-a9a2-03329167b71f -y
+omx download -r analysis/PRJNA659786/metadata metadata \
+  -w c669cc81-d096-4679-a9a2-03329167b71f -y
+```
+
+## Two ways to use this solution
+
+This solution is deliberately split so the platform does the heavy nf-core work
+and the scientist keeps an interactive downstream environment:
+
+1. **nf-core/viralrecon as an OmicsLab analysis job.** The five public FASTQ
+   pairs stay in the public OmicsLab bucket. `manifests/viralrecon.hbv.omxa.json`
+   launches viralrecon on public GreenNode compute using the marketplace GitHub
+   credential. The public workspace and credential UUIDs are fixed; only
+   `OMICSLAB_TOKEN` is needed.
+2. **Downstream analysis in OmicsLab Studio or on your local computer.** After
+   the analysis job completes, download its results with `omx download` and run
+   the alignment, phylogeny, variant table and figure steps interactively in a
+   Studio terminal (VS Code-like) or locally with `pixi shell`.
+
+No nf-core pipeline runs locally in the current model.
 
 ## What is in this solution
 
 ```text
 hbv-genome-short-read-analysis/
 ├── README.md
-├── pixi.toml / pixi.lock          # pinned environment (two envs)
-├── samplesheet.csv                # generated; absolute paths
+├── pixi.toml / pixi.lock          # pinned downstream environment
 ├── metadata/
 │   ├── selected_samples.tsv       # five runs and ENA/SRA metadata
+│   ├── samplesheet.platform.csv   # public-bucket viralrecon samplesheet
 │   ├── ena_run_metadata.tsv       # project metadata snapshot
 │   └── samplesheet.csv            # original nf-core/fetchngs-style sheet
 ├── references/
 │   ├── hbv_reference.fasta        # NC_003977.2 (genotype D, strain ayw)
-│   ├── hbv_reference.extended.fasta
 │   ├── hbv_public_genomes.fasta   # 10 public genomes, origin-normalised
 │   ├── hbv_metadata.tsv           # accessions, genotype, country, date, QC
 │   ├── reference_selection.md
 │   ├── fetch_manifest.json
 │   └── genbank/                   # cached GenBank flat files
-├── bin/                           # download, reference, circular, figure, report scripts
-├── workflow/
-│   ├── main.nf                    # DSL2 downstream workflow
-│   ├── nextflow.config
-│   └── README.md
 ├── conf/
-│   └── viralrecon.config          # local resources + custom genome entry
+│   └── viralrecon.platform.config # platform HBV reference
 ├── results/                       # full run outputs (git-ignored)
+├── reference_results/             # successful platform run (consensus, variants, MultiQC)
 ├── docs/
 │   ├── blog.md
 │   └── figures/                   # figures used in the blog
-└── manifests/                     # small committed summary tables/manifest
+└── manifests/                     # summary tables + platform job manifest
 ```
 
 ## Data
@@ -56,11 +102,11 @@ runs with the largest read counts.
 | B2719/2015 | SRR12535933 | D | Brazil | 2014-01-28 |
 | B364/2014 | SRR12535938 | D | Brazil | 2014-07-03 |
 
-Raw FASTQ files are not committed. They are downloaded from OmicsLab storage
-with `bin/download_fastq.sh`, which verifies every file against its ENA MD5;
-`bin/verify_fastq.sh` can re-check gzip integrity and MD5 at any time. The five
-runs are already staged in the workspace, so `nf-core/fetchngs` is not required
-for this solution. If an independent ENA/SRA re-download is wanted, the five SRR
+Raw FASTQ files stay in the public OmicsLab bucket and are read directly by the
+platform viralrecon job. Do not download them locally; download only the
+`viralrecon/hbv/results` output for the downstream analysis. The five runs are
+already staged in the workspace, so `nf-core/fetchngs` is not required for this
+solution. If an independent ENA/SRA re-download is wanted, the five SRR
 accessions above can be supplied to `nf-core/fetchngs` 1.13.0.
 The reference panel is ten complete GenBank genomes:
 
@@ -83,77 +129,161 @@ mapping coordinate frame. Public genomes were rotated to its origin by a unique
 
 ## Quick start
 
-Install pixi and the two environments:
+### A. Launch nf-core/viralrecon as an analysis job
+
+The **public** OmicsLab workspace holds the prepared, read-only material:
+
+```text
+s3://omicslab/data/analysis/PRJNA659786/
+├── samplesheet.csv
+├── viralrecon.config
+├── viralrecon.omxa.json
+├── metadata/
+│   ├── selected_samples.tsv
+│   └── ena_run_metadata.tsv
+└── references/
+    ├── hbv_reference.fasta
+    ├── hbv_public_genomes.fasta
+    ├── hbv_metadata.tsv
+    ├── accessions.txt
+    ├── reference_selection.md
+    ├── fetch_manifest.json
+    └── genbank/*.gb
+```
+
+Each user runs the job in **their own workspace**; the manifest uses the public
+samplesheet/config and a relative `outdir` (`viralrecon/hbv/results`), which the
+platform resolves to the user’s bucket. The large FASTQ files stay in the public
+bucket:
+
+```text
+s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/
+```
+
+The marketplace GitHub UUID (`521f11ad-4269-4d87-a047-701922bd98e4`) and
+GreenNode compute UUID (`c257676b-b5b6-42af-ac1c-84cd6e68b2c2`) are fixed in
+`manifests/viralrecon.hbv.omxa.json`.
+
+Use the OmicsLab SDK shell for the platform CLI (run this from your platform
+checkout):
+
+```bash
+pixi shell --manifest-path pixi.toml -e sdk
+```
+
+From this solution directory:
+
+```bash
+export OMICSLAB_TOKEN='<token>'
+export WORKSPACE='<workspace-uuid>'
+
+omx ws analysis config upload manifests/viralrecon.hbv.omxa.json \
+  --key analysis/PRJNA659786/viralrecon.omxa.json -w "$WORKSPACE"
+
+omx ws analysis config launch analysis/PRJNA659786/viralrecon.omxa.json \
+  -w "$WORKSPACE"
+```
+
+The manifest runs **8 CPU / 16 GB / 20 GB / 2 h** on public GreenNode compute
+with the marketplace GitHub credential. Results are written under:
+
+```text
+s3://<user-bucket>/data/viralrecon/hbv/results
+```
+
+Download them with:
+
+```bash
+omx download "viralrecon/hbv/results" results/viralrecon \
+  -w "$WORKSPACE" -y
+```
+
+If you prefer a local copy of the public config, download and re-upload the
+three small files into your workspace, then point the manifest paths at your
+workspace. The public copies remain the canonical templates.
+
+If the public prefix does not yet contain those small files, stage them once as
+an administrator in the public workspace
+(`c669cc81-d096-4679-a9a2-03329167b71f`):
+
+```bash
+PUBLIC_WORKSPACE='c669cc81-d096-4679-a9a2-03329167b71f'
+omx upload metadata/samplesheet.platform.csv \
+  analysis/PRJNA659786/samplesheet.csv -w "$PUBLIC_WORKSPACE" -y
+omx upload conf/viralrecon.platform.config \
+  analysis/PRJNA659786/viralrecon.config -w "$PUBLIC_WORKSPACE" -y
+omx upload references/hbv_reference.fasta \
+  analysis/PRJNA659786/references/hbv_reference.fasta -w "$PUBLIC_WORKSPACE" -y
+```
+
+The platform job uses `nf-core/viralrecon` at the pinned `dev` commit compatible
+with the platform Nextflow runtime. No nf-core pipeline runs locally.
+
+### B. Analyse the results with Python
+
+The platform job writes the consensus sequences to
+`results/viralrecon/variants/bcftools/consensus/bcftools/`. Install the local
+tools and run the commands below from the solution root:
 
 ```bash
 pixi install
+pixi shell
 ```
 
-Download the five FASTQ pairs (requires the OmicsLab CLI and the
-`datasets/gianglabs/PRJNA659786` storage prefix):
+Combine the five consensus sequences with the public reference panel:
 
 ```bash
-omx cd datasets/gianglabs/PRJNA659786   # if not already there
-bash bin/download_fastq.sh
-bash bin/verify_fastq.sh
+cat results/viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa \
+    references/hbv_public_genomes.fasta > comparative/all_hbv_sequences.fasta
 ```
 
-Build the reference panel and samplesheet:
+Align and build the tree:
 
 ```bash
-pixi run python bin/fetch_public_references.py --outdir references
-pixi run python bin/make_samplesheet.py
-pixi run python bin/make_extended_reference.py
+mafft --auto --reorder comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta
+iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo
 ```
 
-Run the stock nf-core/viralrecon 2.6.0 pipeline with the local pixi tools:
+Read the variants for one sample (change the sample name as needed):
 
 ```bash
-pixi run -e viralrecon nextflow run nf-core/viralrecon -r 2.6.0 \
-  -c conf/viralrecon.config \
-  --input samplesheet.csv --outdir results/viralrecon \
-  --platform illumina --protocol metagenomic --genome hbv \
-  --skip_assembly --skip_kraken2 --skip_pangolin --skip_nextclade \
-  --skip_snpeff --skip_variants_quast --skip_variants_long_table \
-  --skip_picard_metrics --skip_mosdepth --skip_consensus_plots \
-  --skip_asciigenome -resume
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%QUAL\t%FILTER\t[%GT\t%DP\t%AD]\n' \
+  results/viralrecon/variants/bcftools/HBV_A_B215_2014_norm.vcf.gz > variants_B215.tsv
 ```
 
-Run the HBV-specific downstream workflow:
+Plot the variants and write a simple HTML report:
 
-```bash
-pixi run nextflow run workflow/main.nf -profile local -resume
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+variants = pd.read_csv(
+    "variants_B215.tsv", sep="\t", header=None,
+    names=["chrom", "pos", "ref", "alt", "qual", "filter", "gt", "dp", "ad"],
+)
+
+variants["pos"].plot.hist(bins=50)
+plt.xlabel("Genome position")
+plt.ylabel("Variants")
+plt.tight_layout()
+plt.savefig("docs/figures/variants_B215.png", dpi=150)
+
+variants.to_html("results/analysis_summary.html", index=False)
 ```
 
-Regenerate the report/manifest after the workflow:
+## Reference run
 
-```bash
-pixi run python bin/combine_mapping_stats.py
-pixi run python bin/make_figures.py
-pixi run python bin/make_report.py
-pixi run bash bin/software_versions.sh
-pixi run python bin/make_manifest.py
-```
-
-The workflow writes to `results_nf/` by default; the committed run used
-`--outdir results`. See `workflow/README.md` for details.
-
-## Why there are two mapping branches
-
-`nf-core/viralrecon` uses Bowtie2 against a linear reference and is excellent
-for QC, mapping, BCFtools variant calling and consensus generation. A linear
-reference still loses reads that cross the arbitrary HBV origin. The downstream
-workflow therefore maps the same trimmed reads with BWA-MEM to an
-origin-extended reference (NC_003977.2 plus the first 500 bp duplicated at the
-3′ end), projects every position modulo 3,182 bp, and uses that circular pileup
-to:
-
-- report depth and breadth of coverage over the true circular genome;
-- count reads spanning the origin;
-- patch the viralrecon consensus at boundary positions that were `N` because
-  of the linear representation.
+The successful end-to-end platform run is preserved in `reference_results/`
+(job `75c29039-842d-49cf-b025-19566e03f976`, Vieomics workspace). It contains
+the five consensus genomes, VCFs, BCFtools/SAMtools statistics, FastP reports,
+the MultiQC report and the Nextflow execution report. See
+`reference_results/README.md` for the exact parameters and output paths.
 
 ## Key results from the committed run
+
+The table and bullets below describe the committed run, which used the earlier
+custom circular/annotation code. The walkthrough above reproduces the
+viralrecon consensus, MAFFT alignment, IQ-TREE phylogeny and variant table.
 
 | Sample | Genotype | BWA mapping | Mean depth | Breadth ≥10× | Consensus N | Status |
 |---|---|---:|---:|---:|---:|---|
@@ -193,16 +323,16 @@ to:
 
 ## Environment and container note
 
-The workspace used for the committed run has no usable Docker/Apptainer runtime
-(user namespaces are blocked), so the pipeline was executed with pinned pixi
-environments. `pixi.lock` records the exact tool versions. The nf-core step is
-pinned at viralrecon 2.6.0 and uses Nextflow 24.10.6; the downstream workflow
-uses Nextflow 26.10.6. The `workflow/nextflow.config` has a placeholder
-`apptainer` profile; only process-level container directives need to be added on
-a host with Apptainer.
+The upstream `nf-core/viralrecon` step now runs as an OmicsLab platform job on
+public GreenNode compute with the public GitHub credential. The local pixi
+environment only contains the downstream tools (BWA, SAMtools, BCFtools, MAFFT,
+IQ-TREE, PhiPack, Python), so the interactive analysis does not depend on a
+local Docker/Apptainer runtime.
 
-`stageInMode = 'copy'` is set in both Nextflow configs so that a process can
-never truncate the original FASTQ through a staged symlink.
+The platform job is pinned to the `nf-core/viralrecon` `dev` commit
+`31b9515f6e166542ca60358931351aa0f9a72b8a`, which is compatible with the
+platform Nextflow 26 runtime. Viralrecon 2.6.0 cannot be used there because its
+legacy `check_max()` config helper fails on Nextflow 26.
 
 ## Software versions
 

@@ -81,22 +81,24 @@ the arbitrary sequence origin differs between records.
 
 The analysis has two layers:
 
-1. **Stock nf-core/viralrecon 2.6.0** for FastQC, fastp trimming, Bowtie2
-   mapping, SAMtools statistics, BCFtools variant calling and consensus
-   generation. The pipeline was run in Illumina/metagenomic mode with a custom
-   HBV FASTA and SARS-CoV-2-specific steps disabled. It used Nextflow 24.10.6,
-   fastp 1.0.1, Bowtie2 2.5.4, SAMtools 1.21 and BCFtools 1.22.
+1. **Stock nf-core/viralrecon** for FastQC, fastp trimming, Bowtie2 mapping,
+   SAMtools statistics, BCFtools variant calling and consensus generation. The
+   pipeline now runs as an OmicsLab platform job on public GreenNode compute,
+   with the public GitHub credential. It is pinned to the platform-compatible
+   `dev` commit `31b9515f6e166542ca60358931351aa0f9a72b8a` in
+   Illumina/metagenomic mode with a custom HBV FASTA and SARS-CoV-2-specific
+   steps disabled.
 2. **A small DSL2 downstream workflow** for the HBV-specific parts: circular
    mapping to an origin-extended reference, depth/coverage projection, consensus
    boundary patching, MAFFT, IQ-TREE 2, recombination screening with PhiPack, and
-   annotation of overlapping reading frames. This used BWA-MEM 0.7.19, SAMtools
-   1.25, BCFtools 1.25, MAFFT 7.526 and IQ-TREE 2.4.0.
+   annotation of overlapping reading frames. This step remains local and
+   interactive, using BWA-MEM 0.7.19, SAMtools 1.25, BCFtools 1.25, MAFFT 7.526
+   and IQ-TREE 2.4.0.
 
-Everything is pinned by `pixi.lock`; the exact commands are in
-`results/reproducibility_manifest.json`. The current workspace has no usable
-Docker/Apptainer runtime, so the pipeline was executed with tools from the pixi
-environments. The same viralrecon and downstream commands are container-ready;
-only the profile needs to change on a host with Apptainer.
+Everything is pinned by `pixi.lock` and the platform job manifest; the exact
+commands are in `results/reproducibility_manifest.json`. The local environment
+contains only the downstream tools, so the interactive analysis does not depend
+on a local Docker/Apptainer runtime.
 
 ### Circular mapping and consensus
 
@@ -289,9 +291,11 @@ representative sample of global HBV diversity.
 
 ## 8. Reproducibility
 
-The environment is defined by `pixi.toml` and `pixi.lock`; the nf-core/viralrecon
-step is pinned at 2.6.0 and the downstream workflow is in `workflow/main.nf`. The
-main outputs are:
+The local environment is defined by `pixi.toml` and `pixi.lock`; the upstream
+nf-core/viralrecon step runs as an OmicsLab platform job (pin: `dev` commit
+`31b9515f6e166542ca60358931351aa0f9a72b8a`). The downstream steps are the
+Python and shell code blocks in the README. The main outputs from the
+committed run are:
 
 | Output | Path |
 |---|---|
@@ -306,24 +310,30 @@ main outputs are:
 | Manifest | `results/reproducibility_manifest.json` |
 | Software versions | `results/software_versions.tsv` |
 
-The workflow can be rerun with:
+The upstream `nf-core/viralrecon` step runs on OmicsLab and the downstream
+steps are local:
 
 ```bash
 pixi install
-pixi run -e viralrecon nextflow run nf-core/viralrecon -r 2.6.0 \
-  -c conf/viralrecon.config --input samplesheet.csv \
-  --outdir results/viralrecon --platform illumina --protocol metagenomic \
-  --genome hbv --skip_assembly --skip_kraken2 --skip_pangolin \
-  --skip_nextclade --skip_snpeff --skip_variants_quast \
-  --skip_variants_long_table --skip_picard_metrics --skip_mosdepth \
-  --skip_consensus_plots --skip_asciigenome -resume
+pixi shell
 
-pixi run nextflow run workflow/main.nf -profile local -resume
+# Upstream (from the OmicsLab SDK shell):
+export OMICSLAB_TOKEN='...'
+export WORKSPACE='<workspace-uuid>'
+omx ws analysis config upload manifests/viralrecon.hbv.omxa.json \
+  --key analysis/PRJNA659786/viralrecon.omxa.json -w "$WORKSPACE"
+omx ws analysis config launch analysis/PRJNA659786/viralrecon.omxa.json -w "$WORKSPACE"
+omx download "viralrecon/hbv/results" results/viralrecon -w "$WORKSPACE" -y
+
+# Downstream: combine consensus, align and build the tree.
+cat results/viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa \
+    references/hbv_public_genomes.fasta > comparative/all_hbv_sequences.fasta
+mafft --auto --reorder comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta
+iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo
 ```
 
-On a host with Apptainer, the same steps can be run with a container profile;
-the workflow has a placeholder `apptainer` profile and no scientific code depends
-on the local pixi execution mode.
+The local pixi environment contains only the downstream tools; the old
+`viralrecon` pixi environment has been removed.
 
 ## Software and data citations
 

@@ -2,6 +2,12 @@
 
 Generated: 2026-11-17T12:26:56.084543+00:00
 
+> **Current reproducibility path:** the upstream `nf-core/viralrecon` step is
+> submitted as an OmicsLab analysis job from
+> `manifests/viralrecon.hbv.omxa.json`, and its results are downloaded with
+> `omx download`. The numbers below document the original committed local run;
+> the downstream workflow and outputs are unchanged.
+
 ## Dataset
 
 - Five Illumina paired-end runs from PRJNA659786 (Brazil; three genotype A, two genotype D).
