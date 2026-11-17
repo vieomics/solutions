@@ -1,0 +1,14 @@
+Comparative HBV sequence set
+sequences: 15 (10 public + 5 study consensus)
+identifiers unique: yes
+length range: 3182-3221 bp
+maximum N fraction: 34.7580%
+genotype counts: A=4, B=2, C=2, D=5, E=1, F=1
+all sequences are represented 5'->3' in the NC_003977.2 coordinate frame
+public sequences were origin-normalised by a unique 25-mer vote (see references/hbv_metadata.tsv)
+study consensus sequences were generated against NC_003977.2 and boundary-patched with circular mapping
+HBV_A_B215_2014: 3182 bp, N=15 (0.5%), breadth>=10x=99.03%, mean depth=40107.30x
+HBV_A_B3392_2014: 3182 bp, N=16 (0.5%), breadth>=10x=97.93%, mean depth=25810.26x
+HBV_A_B575_2014: 3182 bp, N=1106 (34.8%), breadth>=10x=63.80%, mean depth=24824.05x
+HBV_D_B2719_2015: 3182 bp, N=0 (0.0%), breadth>=10x=100.00%, mean depth=49125.87x
+HBV_D_B364_2014: 3182 bp, N=535 (16.8%), breadth>=10x=83.19%, mean depth=44766.91x

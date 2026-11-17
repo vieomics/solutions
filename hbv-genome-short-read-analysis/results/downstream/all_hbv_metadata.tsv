@@ -1,0 +1,16 @@
+id	record_type	genotype	isolate	country	collection_date	accession	description
+HBV_A_B215_2014	study_consensus	A	B215/2014	Brazil	2014-04-15	SRR12535947	this study
+HBV_A_B575_2014	study_consensus	A	B575/2014	Brazil	2014-11-04	SRR12535935	this study
+HBV_A_B3392_2014	study_consensus	A	B3392/2014	Brazil	2014-10-03	SRR12535942	this study
+HBV_D_B2719_2015	study_consensus	D	B2719/2015	Brazil	2014-01-28	SRR12535933	this study
+HBV_D_B364_2014	study_consensus	D	B364/2014	Brazil	2014-07-03	SRR12535938	this study
+NC_003977.2	public_reference	D		not available	not available	NC_003977.2	Hepatitis B virus (strain ayw) genome
+KJ854710.1	public_reference	A	274-SE-BRA	Brazil	2007-01-01	KJ854710.1	Hepatitis B virus isolate 274-SE-BRA, complete genome
+MF674515.1	public_reference	B	VN05T0261	Vietnam	2014-06-19	MF674515.1	Hepatitis B virus isolate VN05T0261, complete genome
+LC456127.1	public_reference	B	CAM-HB25	Cambodia	2011	LC456127.1	HBV genotype B CAM-HB25 DNA, complete genome
+LC456135.1	public_reference	C	CAM-HB42	Cambodia	2013	LC456135.1	Hepatitis B virus genotype C CAM-HB42 DNA, complete genome
+LC535950.1	public_reference	C	C174538m	Cambodia	2017	LC535950.1	Hepatitis B virus genotype C C174538m DNA, complete genome
+MH724251.1	public_reference	D	BR44	Brazil	2004	MH724251.1	Hepatitis B virus isolate BR44, complete genome
+MH724252.1	public_reference	D	BR48	Brazil	2012	MH724252.1	Hepatitis B virus isolate BR48, complete genome
+PZ495693.1	public_reference	E	KENHBV146	Kenya	2023	PZ495693.1	Hepatitis B virus isolate KENHBV146, complete genome
+MK183647.1	public_reference	F	PY_90	Paraguay	2017	MK183647.1	Hepatitis B virus isolate PY_90, complete genome

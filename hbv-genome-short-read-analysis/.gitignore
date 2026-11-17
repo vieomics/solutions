@@ -1,0 +1,17 @@
+# Local-only generated data
+work/
+logs/
+.pixi/
+*.bwt
+*.pac
+*.ann
+*.amb
+*.sa
+Phi.*
+.nextflow*
+
+# Commit the reference results (no BAMs).
+!results/
+!results/**
+results/viralrecon/variants/bowtie2/*.bam
+results/viralrecon/variants/bowtie2/*.bai

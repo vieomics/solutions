@@ -1,0 +1,6 @@
+sample,fastq_1,fastq_2
+HBV_A_B215_2014,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025705_SRR12535947_1.fastq.gz,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025705_SRR12535947_2.fastq.gz
+HBV_A_B575_2014,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025717_SRR12535935_1.fastq.gz,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025717_SRR12535935_2.fastq.gz
+HBV_A_B3392_2014,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025710_SRR12535942_1.fastq.gz,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025710_SRR12535942_2.fastq.gz
+HBV_D_B2719_2015,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025719_SRR12535933_1.fastq.gz,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025719_SRR12535933_2.fastq.gz
+HBV_D_B364_2014,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025714_SRR12535938_1.fastq.gz,s3://omicslab/data/datasets/gianglabs/PRJNA659786/fastq/SRX9025714_SRR12535938_2.fastq.gz

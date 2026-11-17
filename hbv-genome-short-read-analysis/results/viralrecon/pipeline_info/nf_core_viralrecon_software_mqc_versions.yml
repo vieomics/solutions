@@ -1,0 +1,49 @@
+BCFTOOLS_CONSENSUS:
+  bcftools: 1.23.1
+BCFTOOLS_FILTER:
+  bcftools: 1.23.1
+BCFTOOLS_INDEX:
+  bcftools: 1.23.1
+BCFTOOLS_MPILEUP:
+  bcftools: 1.23.1
+BCFTOOLS_NORM:
+  bcftools: 1.23.1
+BCFTOOLS_STATS:
+  bcftools: 1.23.1
+BEDTOOLS_MASKFASTA:
+  bedtools: 2.31.1
+BEDTOOLS_MERGE:
+  bedtools: 2.31.1
+BOWTIE2_ALIGN:
+  bowtie2: 2.5.5
+  pigz: 2.8
+  samtools: 1.24
+BOWTIE2_BUILD:
+  bowtie2: 2.5.5
+CAT_FASTQ:
+  cat: 9.5
+FASTP:
+  fastp: 1.4.0
+HTSLIB_BGZIPTABIX:
+  htslib: 1.24
+  xz: 5.8.3
+MAKE_BED_MASK:
+  python: 3.9.5
+  samtools: 1.14 
+RENAME_FASTA_HEADER:
+  sed: 4.9
+SAMTOOLS_FAIDX:
+  samtools: 1.24
+SAMTOOLS_FLAGSTAT:
+  samtools: 1.24
+SAMTOOLS_IDXSTATS:
+  samtools: 1.24
+SAMTOOLS_INDEX:
+  samtools: 1.24
+SAMTOOLS_SORT:
+  samtools: 1.24
+SAMTOOLS_STATS:
+  samtools: 1.24
+Workflow:
+    nf-core/viralrecon: v3.1.0dev-g31b9515
+    Nextflow: 26.04.6

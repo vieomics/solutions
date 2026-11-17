@@ -1,0 +1,170 @@
+HBV_A_B215_2014:
+  duplicates_failed: 0
+  duplicates_passed: 0
+  flagstat_total: 1058770
+  mapped_failed: 0
+  mapped_failed_pct: .nan
+  mapped_passed: 1058770
+  mapped_passed_pct: 100.0
+  paired in sequencing_failed: 0
+  paired in sequencing_passed: 1058770
+  properly paired_failed: 0
+  properly paired_failed_pct: .nan
+  properly paired_passed: 1015176
+  properly paired_passed_pct: 95.88
+  read1_failed: 0
+  read1_passed: 529412
+  read2_failed: 0
+  read2_passed: 529358
+  secondary_failed: 0
+  secondary_passed: 0
+  singletons_failed: 0
+  singletons_failed_pct: .nan
+  singletons_passed: 5784
+  singletons_passed_pct: 0.55
+  supplementary_failed: 0
+  supplementary_passed: 0
+  total_failed: 0
+  total_passed: 1058770
+  with itself and mate mapped_failed: 0
+  with itself and mate mapped_passed: 1052986
+  with mate mapped to a different chr (mapQ >= 5)_failed: 0
+  with mate mapped to a different chr (mapQ >= 5)_passed: 0
+  with mate mapped to a different chr_failed: 0
+  with mate mapped to a different chr_passed: 0
+HBV_A_B3392_2014:
+  duplicates_failed: 0
+  duplicates_passed: 0
+  flagstat_total: 631763
+  mapped_failed: 0
+  mapped_failed_pct: .nan
+  mapped_passed: 631763
+  mapped_passed_pct: 100.0
+  paired in sequencing_failed: 0
+  paired in sequencing_passed: 631763
+  properly paired_failed: 0
+  properly paired_failed_pct: .nan
+  properly paired_passed: 602724
+  properly paired_passed_pct: 95.4
+  read1_failed: 0
+  read1_passed: 315957
+  read2_failed: 0
+  read2_passed: 315806
+  secondary_failed: 0
+  secondary_passed: 0
+  singletons_failed: 0
+  singletons_failed_pct: .nan
+  singletons_passed: 4261
+  singletons_passed_pct: 0.67
+  supplementary_failed: 0
+  supplementary_passed: 0
+  total_failed: 0
+  total_passed: 631763
+  with itself and mate mapped_failed: 0
+  with itself and mate mapped_passed: 627502
+  with mate mapped to a different chr (mapQ >= 5)_failed: 0
+  with mate mapped to a different chr (mapQ >= 5)_passed: 0
+  with mate mapped to a different chr_failed: 0
+  with mate mapped to a different chr_passed: 0
+HBV_A_B575_2014:
+  duplicates_failed: 0
+  duplicates_passed: 0
+  flagstat_total: 647107
+  mapped_failed: 0
+  mapped_failed_pct: .nan
+  mapped_passed: 647107
+  mapped_passed_pct: 100.0
+  paired in sequencing_failed: 0
+  paired in sequencing_passed: 647107
+  properly paired_failed: 0
+  properly paired_failed_pct: .nan
+  properly paired_passed: 612822
+  properly paired_passed_pct: 94.7
+  read1_failed: 0
+  read1_passed: 323651
+  read2_failed: 0
+  read2_passed: 323456
+  secondary_failed: 0
+  secondary_passed: 0
+  singletons_failed: 0
+  singletons_failed_pct: .nan
+  singletons_passed: 6393
+  singletons_passed_pct: 0.99
+  supplementary_failed: 0
+  supplementary_passed: 0
+  total_failed: 0
+  total_passed: 647107
+  with itself and mate mapped_failed: 0
+  with itself and mate mapped_passed: 640714
+  with mate mapped to a different chr (mapQ >= 5)_failed: 0
+  with mate mapped to a different chr (mapQ >= 5)_passed: 0
+  with mate mapped to a different chr_failed: 0
+  with mate mapped to a different chr_passed: 0
+HBV_D_B2719_2015:
+  duplicates_failed: 0
+  duplicates_passed: 0
+  flagstat_total: 1258869
+  mapped_failed: 0
+  mapped_failed_pct: .nan
+  mapped_passed: 1258869
+  mapped_passed_pct: 100.0
+  paired in sequencing_failed: 0
+  paired in sequencing_passed: 1258869
+  properly paired_failed: 0
+  properly paired_failed_pct: .nan
+  properly paired_passed: 1201842
+  properly paired_passed_pct: 95.47
+  read1_failed: 0
+  read1_passed: 629437
+  read2_failed: 0
+  read2_passed: 629432
+  secondary_failed: 0
+  secondary_passed: 0
+  singletons_failed: 0
+  singletons_failed_pct: .nan
+  singletons_passed: 9
+  singletons_passed_pct: 0.0
+  supplementary_failed: 0
+  supplementary_passed: 0
+  total_failed: 0
+  total_passed: 1258869
+  with itself and mate mapped_failed: 0
+  with itself and mate mapped_passed: 1258860
+  with mate mapped to a different chr (mapQ >= 5)_failed: 0
+  with mate mapped to a different chr (mapQ >= 5)_passed: 0
+  with mate mapped to a different chr_failed: 0
+  with mate mapped to a different chr_passed: 0
+HBV_D_B364_2014:
+  duplicates_failed: 0
+  duplicates_passed: 0
+  flagstat_total: 1166175
+  mapped_failed: 0
+  mapped_failed_pct: .nan
+  mapped_passed: 1166175
+  mapped_passed_pct: 100.0
+  paired in sequencing_failed: 0
+  paired in sequencing_passed: 1166175
+  properly paired_failed: 0
+  properly paired_failed_pct: .nan
+  properly paired_passed: 1122330
+  properly paired_passed_pct: 96.24
+  read1_failed: 0
+  read1_passed: 583091
+  read2_failed: 0
+  read2_passed: 583084
+  secondary_failed: 0
+  secondary_passed: 0
+  singletons_failed: 0
+  singletons_failed_pct: .nan
+  singletons_passed: 7
+  singletons_passed_pct: 0.0
+  supplementary_failed: 0
+  supplementary_passed: 0
+  total_failed: 0
+  total_passed: 1166175
+  with itself and mate mapped_failed: 0
+  with itself and mate mapped_passed: 1166168
+  with mate mapped to a different chr (mapQ >= 5)_failed: 0
+  with mate mapped to a different chr (mapQ >= 5)_passed: 0
+  with mate mapped to a different chr_failed: 0
+  with mate mapped to a different chr_passed: 0

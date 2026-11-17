@@ -1,0 +1,55 @@
+HBV_A_B215_2014:
+  Diff chr (mapQ >= 5): 0.0
+  Duplicates: 0.0
+  Mapped: 1.05877
+  Mate mapped to diff chr: 0.0
+  Paired in Sequencing: 1.05877
+  Properly Paired: 1.0151759999999999
+  Self and mate mapped: 1.052986
+  Singletons: 0.005784
+  Total Passed QC: 1.05877
+  Total Reads: 1.05877
+HBV_A_B3392_2014:
+  Diff chr (mapQ >= 5): 0.0
+  Duplicates: 0.0
+  Mapped: 0.631763
+  Mate mapped to diff chr: 0.0
+  Paired in Sequencing: 0.631763
+  Properly Paired: 0.6027239999999999
+  Self and mate mapped: 0.627502
+  Singletons: 0.004261
+  Total Passed QC: 0.631763
+  Total Reads: 0.631763
+HBV_A_B575_2014:
+  Diff chr (mapQ >= 5): 0.0
+  Duplicates: 0.0
+  Mapped: 0.647107
+  Mate mapped to diff chr: 0.0
+  Paired in Sequencing: 0.647107
+  Properly Paired: 0.612822
+  Self and mate mapped: 0.640714
+  Singletons: 0.006392999999999999
+  Total Passed QC: 0.647107
+  Total Reads: 0.647107
+HBV_D_B2719_2015:
+  Diff chr (mapQ >= 5): 0.0
+  Duplicates: 0.0
+  Mapped: 1.258869
+  Mate mapped to diff chr: 0.0
+  Paired in Sequencing: 1.258869
+  Properly Paired: 1.2018419999999999
+  Self and mate mapped: 1.2588599999999999
+  Singletons: 9.0e-06
+  Total Passed QC: 1.258869
+  Total Reads: 1.258869
+HBV_D_B364_2014:
+  Diff chr (mapQ >= 5): 0.0
+  Duplicates: 0.0
+  Mapped: 1.166175
+  Mate mapped to diff chr: 0.0
+  Paired in Sequencing: 1.166175
+  Properly Paired: 1.12233
+  Self and mate mapped: 1.1661679999999999
+  Singletons: 7.0e-06
+  Total Passed QC: 1.166175
+  Total Reads: 1.166175
