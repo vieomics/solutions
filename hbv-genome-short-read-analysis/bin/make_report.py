@@ -178,6 +178,8 @@ The table reports BWA mapping rate, mean depth, breadth at ≥10× and the numbe
 positions below 10× masked as N), then boundary Ns are patched with circular evidence. The two partial genomes below
 are reported as partial, not as complete genomes.</p>
 {metric_table(consensus, ['sample', 'genotype', 'consensus_length', 'n_bases', 'n_fraction', 'breadth_10x_pct', 'interpretation'])}
+<p class="small">Validation: the P, S, C and X reference coding sequences translate exactly to the
+GenBank <code>/translation</code> qualifiers (terminal stop excluded).</p>
 
 <h2>5. Phylogeny</h2>
 <img src="figures/phylogenetic_tree.png" alt="Maximum-likelihood HBV tree">
