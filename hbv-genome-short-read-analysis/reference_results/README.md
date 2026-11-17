@@ -54,3 +54,29 @@ kraken2_db            /dev/null
 
 The five BAM files (234 MB) are omitted from the repository. They remain in the
 workspace output prefix above.
+
+## Downstream public-genome analysis
+
+`downstream/` contains the 15-sequence comparison used for the phylogeny:
+
+| Path | Content |
+|---|---|
+| `downstream/all_hbv_sequences.fasta` | five consensus genomes + ten public genomes |
+| `downstream/all_hbv_metadata.tsv` | genotype, country, date and sample/reference labels |
+| `downstream/hbv_alignment.fasta` | MAFFT alignment (15 sequences) |
+| `downstream/hbv_phylogeny.treefile` | IQ-TREE maximum-likelihood tree |
+| `downstream/hbv_phylogeny.iqtree` | model and support values |
+| `figures/phylogenetic_tree.png` | tree figure, coloured by genotype |
+
+Commands:
+
+```bash
+mafft --auto --reorder downstream/all_hbv_sequences.fasta > downstream/hbv_alignment.fasta
+iqtree2 -s downstream/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix downstream/hbv_phylogeny -redo
+```
+
+The tree is rooted at the midpoint for display. Study samples are in bold and
+use the genotype colours; public references are labelled by accession and
+country/year. The same figure is copied to `docs/figures/phylogenetic_tree.png`
+for the blog.
+

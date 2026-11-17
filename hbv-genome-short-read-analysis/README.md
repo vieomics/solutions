@@ -198,23 +198,9 @@ omx download "viralrecon/hbv/results" results/viralrecon \
   -w "$WORKSPACE" -y
 ```
 
-If you prefer a local copy of the public config, download and re-upload the
-three small files into your workspace, then point the manifest paths at your
-workspace. The public copies remain the canonical templates.
-
-If the public prefix does not yet contain those small files, stage them once as
-an administrator in the public workspace
-(`c669cc81-d096-4679-a9a2-03329167b71f`):
-
-```bash
-PUBLIC_WORKSPACE='c669cc81-d096-4679-a9a2-03329167b71f'
-omx upload metadata/samplesheet.platform.csv \
-  analysis/PRJNA659786/samplesheet.csv -w "$PUBLIC_WORKSPACE" -y
-omx upload conf/viralrecon.platform.config \
-  analysis/PRJNA659786/viralrecon.config -w "$PUBLIC_WORKSPACE" -y
-omx upload references/hbv_reference.fasta \
-  analysis/PRJNA659786/references/hbv_reference.fasta -w "$PUBLIC_WORKSPACE" -y
-```
+The public material is read-only. To copy it into your own workspace, use the
+download + upload block under
+[Prepared material in the public workspace](#prepared-material-in-the-public-workspace).
 
 The platform job uses `nf-core/viralrecon` at the pinned `dev` commit compatible
 with the platform Nextflow runtime. No nf-core pipeline runs locally.
@@ -230,19 +216,209 @@ pixi install
 pixi shell
 ```
 
-Combine the five consensus sequences with the public reference panel:
+**Step 1 — combine the five consensus genomes with the ten public genomes.**
 
-```bash
-cat results/viralrecon/variants/bcftools/consensus/bcftools/*.consensus.fa \
-    references/hbv_public_genomes.fasta > comparative/all_hbv_sequences.fasta
+```python
+import csv
+from pathlib import Path
+from Bio import SeqIO
+
+outdir = Path("reference_results/downstream")
+outdir.mkdir(parents=True, exist_ok=True)
+
+# Five viralrecon consensus genomes plus ten public GenBank genomes.
+records = []
+for path in sorted(Path("reference_results/variants/bcftools/consensus/bcftools").glob("*.consensus.fa")):
+    for record in SeqIO.parse(path, "fasta"):
+        record.id = record.id.split()[0]
+        record.description = ""
+        records.append(record)
+for record in SeqIO.parse("references/hbv_public_genomes.fasta", "fasta"):
+    record.id = record.id.split()[0]
+    record.description = ""
+    records.append(record)
+SeqIO.write(records, outdir / "all_hbv_sequences.fasta", "fasta")
+
+# Metadata used to label and colour the tree.
+metadata = []
+with open("metadata/selected_samples.tsv") as handle:
+    for row in csv.DictReader(handle, delimiter="\t"):
+        metadata.append({
+            "id": row["sample"],
+            "record_type": "study_consensus",
+            "genotype": row["genotype"],
+            "isolate": row["alias"],
+            "country": row["country"],
+            "collection_date": row["collection_date"],
+            "accession": row["run_accession"],
+            "description": "this study",
+        })
+with open("references/hbv_metadata.tsv") as handle:
+    for row in csv.DictReader(handle, delimiter="\t"):
+        metadata.append({
+            "id": row["accession"],
+            "record_type": "public_reference",
+            "genotype": row["genotype"],
+            "isolate": row["isolate"],
+            "country": row["country"],
+            "collection_date": row["collection_date"],
+            "accession": row["accession"],
+            "description": row["description"],
+        })
+with open(outdir / "all_hbv_metadata.tsv", "w", newline="") as handle:
+    writer = csv.DictWriter(
+        handle,
+        fieldnames=["id", "record_type", "genotype", "isolate", "country",
+                    "collection_date", "accession", "description"],
+        delimiter="\t",
+    )
+    writer.writeheader()
+    writer.writerows(metadata)
+
+print(len(records), "sequences and", len(metadata), "metadata rows")
 ```
 
-Align and build the tree:
+**Step 2 — align and build the tree.**
 
 ```bash
-mafft --auto --reorder comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta
-iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo
+mafft --auto --reorder reference_results/downstream/all_hbv_sequences.fasta \
+  > reference_results/downstream/hbv_alignment.fasta
+
+iqtree2 -s reference_results/downstream/hbv_alignment.fasta \
+  -m MFP -B 1000 --alrt 1000 -nt AUTO -redo -quiet \
+  --prefix reference_results/downstream/hbv_phylogeny
 ```
+
+**Step 3 — draw the tree.**
+
+```python
+import csv
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from Bio import Phylo
+
+GENOTYPE_COLORS = {
+    "A": "#1f77b4", "B": "#ff7f0e", "C": "#d62728", "D": "#2ca02c",
+    "E": "#9467bd", "F": "#8c564b", "G": "#e377c2", "H": "#7f7f7f",
+}
+
+
+def read_tsv(path):
+    with open(path, newline="") as handle:
+        return list(csv.DictReader(handle, delimiter="\t"))
+
+
+def sample_labels(metadata_path):
+    labels = {}
+    for row in read_tsv(metadata_path):
+        ident = row["id"]
+        if row["record_type"] == "study_consensus":
+            labels[ident] = f"{row['isolate']} (this study)"
+        else:
+            year = row["collection_date"][:4] if row["collection_date"][:4].isdigit() else ""
+            country = row["country"].replace("_", " ")
+            if year:
+                labels[ident] = f"{row['accession']} ({country}, {year})"
+            elif country and country != "not available":
+                labels[ident] = f"{row['accession']} ({country})"
+            else:
+                labels[ident] = f"{row['accession']} (RefSeq)"
+    return labels
+
+
+def tree_layout(tree):
+    x_coords, y_coords = {}, {}
+    for index, terminal in enumerate(tree.get_terminals()):
+        y_coords[id(terminal)] = index
+
+    def assign(clade, x):
+        x_coords[id(clade)] = x
+        if clade.is_terminal():
+            return
+        for child in clade.clades:
+            assign(child, x + (child.branch_length or 0.0))
+        y_coords[id(clade)] = (y_coords[id(clade.clades[0])] + y_coords[id(clade.clades[-1])]) / 2
+
+    assign(tree.root, 0.0)
+    return x_coords, y_coords, max(x_coords.values())
+
+
+def plot_tree(tree_path, metadata_path, outpath):
+    tree = Phylo.read(tree_path, "newick")
+    tree.root_at_midpoint()
+    tree.ladderize()
+    x_coords, y_coords, max_x = tree_layout(tree)
+    meta = {row["id"]: row for row in read_tsv(metadata_path)}
+    labels = sample_labels(metadata_path)
+
+    fig, ax = plt.subplots(figsize=(11.5, 0.45 * len(tree.get_terminals()) + 2.2))
+    parent_map = {}
+
+    def build_parent_map(node):
+        for child in node.clades:
+            parent_map[id(child)] = node
+            build_parent_map(child)
+
+    build_parent_map(tree.root)
+    for clade in tree.find_clades(order="postorder"):
+        if clade is tree.root:
+            continue
+        parent = parent_map[id(clade)]
+        x0, x1 = x_coords[id(parent)], x_coords[id(clade)]
+        y = y_coords[id(clade)]
+        descendants = [t.name.split("|")[0] for t in clade.get_terminals()]
+        genotypes = {meta.get(ident, {}).get("genotype", "NA") for ident in descendants}
+        color = GENOTYPE_COLORS.get(next(iter(genotypes)), "#333333") if len(genotypes) == 1 else "#777777"
+        ax.plot([x0, x1], [y, y], color=color, linewidth=1.4)
+        if not clade.is_terminal():
+            children_y = [y_coords[id(child)] for child in clade.clades]
+            ax.plot([x1, x1], [min(children_y), max(children_y)], color=color, linewidth=1.0)
+            if clade.name and clade.name != "Root":
+                ax.text(x1 + max_x * 0.002, y + 0.12, clade.name, fontsize=6.5, color="#444444", va="bottom")
+
+    for index, terminal in enumerate(tree.get_terminals()):
+        ident = terminal.name.split("|")[0]
+        genotype = meta.get(ident, {}).get("genotype", "NA")
+        ax.text(
+            max_x * 1.01, index, labels.get(ident, terminal.name),
+            va="center", fontsize=8.2,
+            color=GENOTYPE_COLORS.get(genotype, "#333333"),
+            fontweight="bold" if meta.get(ident, {}).get("record_type") == "study_consensus" else "normal",
+        )
+
+    ax.set_xlim(-max_x * 0.01, max_x * 1.45)
+    ax.set_ylim(-0.8, len(tree.get_terminals()) - 0.2)
+    ax.set_yticks([])
+    ax.set_xlabel("Substitutions per site")
+    ax.set_title("HBV whole-genome phylogeny: 5 study samples + 10 public genomes", loc="left", fontsize=11)
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    scale = 0.02 if max_x > 0.08 else 0.01
+    ax.plot([0, scale], [-0.6, -0.6], color="black", linewidth=2)
+    ax.text(scale / 2, -0.45, f"{scale:.2f}", ha="center", fontsize=7)
+    handles = [
+        plt.Line2D([0], [0], color=color, lw=3, label=genotype)
+        for genotype, color in GENOTYPE_COLORS.items()
+        if any(row["genotype"] == genotype for row in meta.values())
+    ]
+    ax.legend(handles=handles, title="Genotype", frameon=False, loc="lower right", fontsize=7, title_fontsize=8)
+    fig.tight_layout()
+    Path(outpath).parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(outpath, dpi=300)
+    plt.close(fig)
+
+
+plot_tree(
+    "reference_results/downstream/hbv_phylogeny.treefile",
+    "reference_results/downstream/all_hbv_metadata.tsv",
+    "reference_results/figures/phylogenetic_tree.png",
+)
+```
+
+The resulting figure is `reference_results/figures/phylogenetic_tree.png` and is also
+copied to `docs/figures/phylogenetic_tree.png` for the blog.
 
 Read the variants for one sample (change the sample name as needed):
 
@@ -276,7 +452,9 @@ variants.to_html("results/analysis_summary.html", index=False)
 The successful end-to-end platform run is preserved in `reference_results/`
 (job `75c29039-842d-49cf-b025-19566e03f976`, Vieomics workspace). It contains
 the five consensus genomes, VCFs, BCFtools/SAMtools statistics, FastP reports,
-the MultiQC report and the Nextflow execution report. See
+the MultiQC report and the Nextflow execution report. The public-genome
+phylogeny is in `reference_results/figures/phylogenetic_tree.png`, with the
+alignment and tree files under `reference_results/downstream/`. See
 `reference_results/README.md` for the exact parameters and output paths.
 
 ## Key results from the committed run
