@@ -18,7 +18,7 @@ claims from a five-sample dataset.
 
 The five runs come from NCBI BioProject **PRJNA659786** (study SRP279096),
 “New method for next generation sequencing of the hepatitis B virus full genome.”
-All are Illumina MiSeq paired-end libraries from Brazil. The project contains 16
+All are Illumina MiSeq paired-end libraries from Brazil. The project contains 17
 runs annotated as genotype A or D; for this demonstration I selected the three
 genotype A and two genotype D runs with the highest read counts, giving a small
 balanced panel rather than an arbitrary subset.
@@ -32,8 +32,8 @@ balanced panel rather than an arbitrary subset.
 | B364/2014 | SRR12535938 | D | 2014-07-03 | 716,362 |
 
 The raw FASTQ files were downloaded from OmicsLab storage and checked against
-the ENA/SRA MD5 values before analysis. The five pairs are 0.8–1.3 million reads
-each, which is far more than needed for a 3.2 kb genome; the high depth is useful
+the ENA/SRA MD5 values before analysis. The five pairs contain 0.49–0.75 million read pairs
+(1.0–1.5 million reads) each, which is far more than needed for a 3.2 kb genome; the high depth is useful
 for detecting low-frequency variation, but it also means that mapping artefacts
 can look statistically impressive.
 
