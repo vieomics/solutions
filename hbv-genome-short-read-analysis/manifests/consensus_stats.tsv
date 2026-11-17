@@ -1,0 +1,6 @@
+sample	genotype	consensus_length	n_bases	n_fraction	mean_depth	breadth_10x_pct	origin_spanning_reads	consensus_source	interpretation
+HBV_A_B215_2014	A	3182	15	0.004714	40107.30	99.03	43093	used_viralrecon_patched_1	genome-wide coverage adequate
+HBV_A_B575_2014	A	3182	1106	0.347580	24824.05	63.80	41202	used_viralrecon_patched_3	partial genome: low-coverage block masked as N
+HBV_A_B3392_2014	A	3182	16	0.005028	25810.26	97.93	7312	used_viralrecon_patched_1	genome-wide coverage adequate
+HBV_D_B2719_2015	D	3182	0	0.000000	49125.87	100.00	47710	used_viralrecon_patched_0	genome-wide coverage adequate
+HBV_D_B364_2014	D	3182	535	0.168133	44766.91	83.19	38763	used_viralrecon_patched_2	partial genome: low-coverage block masked as N

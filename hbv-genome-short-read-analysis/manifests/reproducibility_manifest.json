@@ -1,0 +1,334 @@
+{
+  "project": "HBV whole-genome short-read analysis",
+  "generated_utc": "2026-11-17T12:16:06.493448+00:00",
+  "data_source": "OmicsLab storage: datasets/gianglabs/PRJNA659786/fastq",
+  "study": "PRJNA659786 / SRP279096 (Brazil; genotypes A and D)",
+  "samples": [
+    {
+      "sample": "HBV_A_B215_2014",
+      "accession": "SRR12535947",
+      "genotype": "A",
+      "country": "Brazil",
+      "collection_date": "2014-04-15"
+    },
+    {
+      "sample": "HBV_A_B3392_2014",
+      "accession": "SRR12535942",
+      "genotype": "A",
+      "country": "Brazil",
+      "collection_date": "2014-10-03"
+    },
+    {
+      "sample": "HBV_A_B575_2014",
+      "accession": "SRR12535935",
+      "genotype": "A",
+      "country": "Brazil",
+      "collection_date": "2014-11-04"
+    },
+    {
+      "sample": "HBV_D_B2719_2015",
+      "accession": "SRR12535933",
+      "genotype": "D",
+      "country": "Brazil",
+      "collection_date": "2014-01-28"
+    },
+    {
+      "sample": "HBV_D_B364_2014",
+      "accession": "SRR12535938",
+      "genotype": "D",
+      "country": "Brazil",
+      "collection_date": "2014-07-03"
+    }
+  ],
+  "public_reference_count": 10,
+  "public_references": [
+    "NC_003977.2",
+    "KJ854710.1",
+    "MF674515.1",
+    "LC456127.1",
+    "LC456135.1",
+    "LC535950.1",
+    "MH724251.1",
+    "MH724252.1",
+    "PZ495693.1",
+    "MK183647.1"
+  ],
+  "commands": [
+    "pixi install",
+    "bash bin/download_fastq.sh",
+    "pixi run python bin/fetch_public_references.py --outdir references",
+    "pixi run python bin/make_samplesheet.py",
+    "pixi run -e viralrecon nextflow run nf-core/viralrecon -r 2.6.0 -c conf/viralrecon.config --input samplesheet.csv --outdir results/viralrecon --platform illumina --protocol metagenomic --genome hbv --skip_assembly --skip_kraken2 --skip_pangolin --skip_nextclade --skip_snpeff --skip_variants_quast --skip_variants_long_table --skip_picard_metrics --skip_mosdepth --skip_consensus_plots --skip_asciigenome -resume",
+    "pixi run bash bin/run_circular.sh",
+    "pixi run python bin/combine_comparative.py",
+    "pixi run mafft --auto --reorder --thread 4 comparative/all_hbv_sequences.fasta > alignment/hbv_alignment.fasta",
+    "pixi run python bin/alignment_stats.py",
+    "pixi run iqtree2 -s alignment/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/hbv_phylogeny -redo",
+    "pixi run python bin/root_tree.py --tree results/phylogeny/hbv_phylogeny.treefile --out results/phylogeny/hbv_phylogeny.rooted.treefile",
+    "pixi run python bin/extract_alignment_regions.py",
+    "pixi run iqtree2 -s alignment/regions/hbv_S.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/S/hbv_S -redo",
+    "pixi run iqtree2 -s alignment/regions/hbv_P.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO --prefix results/phylogeny/P/hbv_P -redo",
+    "pixi run Phi -f alignment/hbv_alignment.fasta -t D -p 1000 -o -v > results/recombination/phipack.txt",
+    "pixi run python bin/annotate_variants.py",
+    "pixi run python bin/combine_mapping_stats.py",
+    "pixi run bash bin/software_versions.sh",
+    "pixi run python bin/make_figures.py",
+    "pixi run python bin/make_report.py",
+    "pixi run python bin/make_manifest.py"
+  ],
+  "validation": {
+    "study_samples": 5,
+    "public_references": 10,
+    "tree_taxa": 15,
+    "all_expected_taxa_present": true,
+    "bootstrap_support_labels": 12,
+    "bootstrap_present": true,
+    "consensus_rows": 5,
+    "partial_genomes": [
+      "HBV_A_B575_2014",
+      "HBV_D_B364_2014"
+    ],
+    "figures_present": true,
+    "figures": {
+      "results/figures/genome_coverage.png": 418408,
+      "results/figures/phylogenetic_tree.png": 221302,
+      "results/figures/mutation_summary.png": 388667,
+      "results/figures/hbv_genome_structure.png": 76724,
+      "results/figures/qc_summary.png": 186146
+    },
+    "reference_accessions": [
+      "NC_003977.2",
+      "KJ854710.1",
+      "MF674515.1",
+      "LC456127.1",
+      "LC456135.1",
+      "LC535950.1",
+      "MH724251.1",
+      "MH724252.1",
+      "PZ495693.1",
+      "MK183647.1"
+    ],
+    "reference_lengths": {
+      "NC_003977.2": "3182",
+      "KJ854710.1": "3221",
+      "MF674515.1": "3215",
+      "LC456127.1": "3215",
+      "LC456135.1": "3215",
+      "LC535950.1": "3215",
+      "MH724251.1": "3182",
+      "MH724252.1": "3182",
+      "PZ495693.1": "3212",
+      "MK183647.1": "3215"
+    },
+    "reference_n_bases": {
+      "NC_003977.2": "0",
+      "KJ854710.1": "0",
+      "MF674515.1": "0",
+      "LC456127.1": "0",
+      "LC456135.1": "0",
+      "LC535950.1": "0",
+      "MH724251.1": "0",
+      "MH724252.1": "3",
+      "PZ495693.1": "0",
+      "MK183647.1": "0"
+    }
+  },
+  "inputs": {
+    "data/fastq/HBV_A_B215_2014_R1.fastq.gz": {
+      "sha256": "b579f5a327728c5b3e538dc55529dc5b689c56d1e513682c5447506a8d96bc5a",
+      "bytes": 37648405
+    },
+    "data/fastq/HBV_A_B215_2014_R2.fastq.gz": {
+      "sha256": "b004fdd9e36dd0a7fa8a3677b0ea997fde033259d365b13199cf7afe97ad1742",
+      "bytes": 39485909
+    },
+    "data/fastq/HBV_A_B3392_2014_R1.fastq.gz": {
+      "sha256": "7b0b54117e2d148080f17a778d34dcb21140d00144edc07c2a819afa6c5a97c2",
+      "bytes": 24833478
+    },
+    "data/fastq/HBV_A_B3392_2014_R2.fastq.gz": {
+      "sha256": "8ac5cb3dda50b6ddc65942155b26039b8db884aab63f699f72193817271ff5b4",
+      "bytes": 27661696
+    },
+    "data/fastq/HBV_A_B575_2014_R1.fastq.gz": {
+      "sha256": "523c42bc5f474f4d9cff7b3b476b7044cadc5c756fe3a8d7ae50b75cf76cf0a7",
+      "bytes": 27187392
+    },
+    "data/fastq/HBV_A_B575_2014_R2.fastq.gz": {
+      "sha256": "12d421a61ecd71349981485c56b49aec345317ca6456fa0ed561e0aafb924072",
+      "bytes": 30620507
+    },
+    "data/fastq/HBV_D_B2719_2015_R1.fastq.gz": {
+      "sha256": "00516672ddfca155f1c3e89de239242d2c5088682618638a921bfbee3747f40a",
+      "bytes": 39523678
+    },
+    "data/fastq/HBV_D_B2719_2015_R2.fastq.gz": {
+      "sha256": "6dc5e823ccb3b420fd1429860c7760b83f18c69e73d956829ff25ab8da9c0f68",
+      "bytes": 43336320
+    },
+    "data/fastq/HBV_D_B364_2014_R1.fastq.gz": {
+      "sha256": "e49b095ae45e9c5d793acea55073bb6ab78fda72f68d7345834b82ecd84697ff",
+      "bytes": 36593465
+    },
+    "data/fastq/HBV_D_B364_2014_R2.fastq.gz": {
+      "sha256": "d964c5f1af9683679058f3a4ea540670dbbb003a46465f03a0abf0383b047f2f",
+      "bytes": 41898434
+    },
+    "references/hbv_reference.fasta": {
+      "sha256": "24d387c17decaf9241e5335bbbce5614afec490817d119f8278affe559c88138",
+      "bytes": 3293
+    },
+    "references/hbv_public_genomes.fasta": {
+      "sha256": "ec52fd6eb63fac2d21d8531a2611b320a18088647f9fabb51f9c6de5994dedaf",
+      "bytes": 32820
+    },
+    "references/hbv_metadata.tsv": {
+      "sha256": "18ef91d039d16c4882c6dd1c3498563c607f66d3395b26da00b6523962d88b8f",
+      "bytes": 2096
+    },
+    "references/fetch_manifest.json": {
+      "sha256": "c7c4490d4dfdea1de1580e9d88d9505024c4fc337f408278e0b89971fe9b0604",
+      "bytes": 1151
+    },
+    "metadata/selected_samples.tsv": {
+      "sha256": "8fc74da79aa28b1eb72be89f2ff8e6793e54b2294798414a4b64f7d6ae448f48",
+      "bytes": 1238
+    },
+    "metadata/ena_run_metadata.tsv": {
+      "sha256": "37f0a0896457707b50dcae95510b0debd575823a86590b7b77bef2d399bcabbd",
+      "bytes": 8279
+    },
+    "pixi.toml": {
+      "sha256": "bac733f1e921d7a9d463aca5654f66a492cd52fea4baca3769d5a072496f6093",
+      "bytes": 2091
+    },
+    "pixi.lock": {
+      "sha256": "10f02eca59dcc89b5bce448a6c9f08cbb4d3595f6c537181eebb526432363c9d",
+      "bytes": 173608
+    },
+    "references/genbank/KJ854710.1.gb": {
+      "sha256": "e01e914bd797087e3a04da254c3328f94ffafd0821c3b7f282f6188f40e73a24",
+      "bytes": 9231
+    },
+    "references/genbank/LC456127.1.gb": {
+      "sha256": "68fa6cbf5c6b26e2755c27d19a0a7f0105c69fe77ed493d9c8d4d143fd05115e",
+      "bytes": 9297
+    },
+    "references/genbank/LC456135.1.gb": {
+      "sha256": "a0d8176e413822d494cb3e8749d708a5a69a5a0cb017a68fcabc117a073d711d",
+      "bytes": 9335
+    },
+    "references/genbank/LC535950.1.gb": {
+      "sha256": "8c236c9e24906bf32d507983199e1989b380fc6a24c753211269e191f81d3219",
+      "bytes": 9328
+    },
+    "references/genbank/MF674515.1.gb": {
+      "sha256": "60a0a44b232b2724d9f5024d0e088361470dfdf84b022e6942c0b94b6a4dd5b8",
+      "bytes": 10907
+    },
+    "references/genbank/MH724251.1.gb": {
+      "sha256": "dbdbde09c3a9255dedbf713f841ea77a7287e60d263205ee3cbb7a344e09a140",
+      "bytes": 10663
+    },
+    "references/genbank/MH724252.1.gb": {
+      "sha256": "04f05ec335e58c8246255bca7cbe28e35afe0632b1004aee220f2cfcfd0aeeba",
+      "bytes": 11068
+    },
+    "references/genbank/MK183647.1.gb": {
+      "sha256": "e7841ebdcc5b93ec195bca1afa573b9587edd44009765550508ffcd2c02f1ca1",
+      "bytes": 11189
+    },
+    "references/genbank/NC_003977.2.gb": {
+      "sha256": "fc029dde709c58f70647eeb8ee0f5194e849a49febca952b8bd429b6a22ba16f",
+      "bytes": 16343
+    },
+    "references/genbank/PZ495693.1.gb": {
+      "sha256": "ea680ae34f4757b30bf2206ed539ed20fb2f004ee60406e9387092e37c6b2613",
+      "bytes": 10603
+    }
+  },
+  "outputs": {
+    "results/hbv_phylogeny.treefile": {
+      "sha256": "b33f1704ae4ed1041eb1b10b0a866b38590dc26fadbec11e4dcd2bea7390e764",
+      "bytes": 932
+    },
+    "results/hbv_phylogeny.rooted.treefile": {
+      "sha256": "3edcca74cb22dbfa9eaa4723c4259c2879b64a15061eb7cea48e0e84ee6ed9cd",
+      "bytes": 917
+    },
+    "results/hbv_phylogeny.iqtree": {
+      "sha256": "53fe672437edb8e171690f79cfb6d47bb80c3c5afe55c76df7febb33975c6064",
+      "bytes": 16441
+    },
+    "results/genome_coverage.png": {
+      "sha256": "dd3edb74b68834d0aab2bdf578dc74d5e482932d526e2377286ec242d4fc3100",
+      "bytes": 418408
+    },
+    "results/phylogenetic_tree.png": {
+      "sha256": "0e9043f4fc1cbf015108c692ecdd1ed94f59a675fd14abe3ce398617384c96db",
+      "bytes": 221302
+    },
+    "results/mutation_summary.png": {
+      "sha256": "ff16a53aa7caa9ced36cc078abb00e40b44eec75a15fb77f0a298c66d0234f4a",
+      "bytes": 388667
+    },
+    "results/hbv_genome_structure.png": {
+      "sha256": "4b6d538164b3c6a9f3fd55acb75d6cab8a148845b04676314de5a973ce7f697e",
+      "bytes": 76724
+    },
+    "results/analysis_summary.html": {
+      "sha256": "6ee6971056dc2266b43caf2c5cfbf89011587524177819e3ad6b95be8c85c564",
+      "bytes": 12764
+    },
+    "results/mapping/mapping_stats.tsv": {
+      "sha256": "022591e1bc8b8462716af3f6d890d51dcb458ee00fd64bf8c0ed05631476dfec",
+      "bytes": 1177
+    },
+    "results/mapping/depth.tsv": {
+      "sha256": "474fcb88d169e65f00cb94d2385c24405eeef0577b6157480fd0a3b191d81cee",
+      "bytes": 644933
+    },
+    "results/mapping/coverage.tsv": {
+      "sha256": "24d82538e9a59e6b438c3a1bbe33a651a91a5e2e3d41c3733d94e76137004609",
+      "bytes": 4689
+    },
+    "results/consensus/consensus_stats.tsv": {
+      "sha256": "1c6aad702563d45c34a0b335a7b19971c51f96e338080426d071b21bd3d4e4f3",
+      "bytes": 737
+    },
+    "results/comparative/all_hbv_sequences.fasta": {
+      "sha256": "32b4812bb7292ebd3bffa85d523a2ddae424672909000a52ebf6d92c39449242",
+      "bytes": 49139
+    },
+    "results/comparative/all_hbv_metadata.tsv": {
+      "sha256": "9eefcc6d3fb1183789713c584da4b0c781c38479320ea90c09228a4151253f8e",
+      "bytes": 2706
+    },
+    "results/alignment/hbv_alignment.fasta": {
+      "sha256": "207261f3e7213bf33ead669e6858d46fb49cfb324f53263742c5e3e0f546e495",
+      "bytes": 49609
+    },
+    "results/variants/nucleotide_variants.tsv": {
+      "sha256": "dc44b29b02d09fa189b5498dfa4265be67ef490518cf588b8e59bf466bd78679",
+      "bytes": 74387
+    },
+    "results/variants/amino_acid_variants.tsv": {
+      "sha256": "cf75921a2c826cfb4683def491734ab13932e4e48fd17ede5f9bf94c886e0ea1",
+      "bytes": 45975
+    },
+    "results/variants/indel_variants.tsv": {
+      "sha256": "be082632e60fd9a57b62a6a6f00da127bc36fc013dd20d5784a83eecb5b0da71",
+      "bytes": 616
+    },
+    "results/recombination/phipack.txt": {
+      "sha256": "533047c6aaa5c8f8e1b8f2f4d48e9fb1f2901c289b272739d3f585d4cfe18726",
+      "bytes": 1878
+    },
+    "results/software_versions.tsv": {
+      "sha256": "0ed87e6743b5d33cd0bbe06ceb25bb71a642cdad7cada7eb8654ce51dbdcfec3",
+      "bytes": 647
+    }
+  },
+  "software_versions": "results/software_versions.tsv",
+  "pixi_lock_sha256": "10f02eca59dcc89b5bce448a6c9f08cbb4d3595f6c537181eebb526432363c9d"
+}

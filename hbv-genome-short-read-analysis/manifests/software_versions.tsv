@@ -1,0 +1,27 @@
+tool	version	environment
+pixi	0.76.1	base
+nextflow	26.10.6	default
+nextflow	24.10.6	viralrecon
+nf-core/viralrecon	2.6.0	viralrecon
+fastqc	0.13.0	default
+fastqc	0.12.1	viralrecon
+fastp	1.4.0	default
+bwa	0.7.19-r1273	default
+samtools	1.25	default
+bcftools	1.25	default
+bowtie2	2.5.5	default
+bowtie2	2.5.4	viralrecon
+fastp	1.0.1	viralrecon
+samtools	1.21	viralrecon
+bcftools	1.22	viralrecon
+multiqc	1.35	default
+multiqc	1.31	viralrecon
+mafft	7.526 (2024/Apr/26)	default
+iqtree2	2.4.0	default
+bedtools	2.31.1	default
+seqkit	2.14.0	default
+phipack	1.1	default
+python	3.13.18	default
+biopython	1.88	default
+pysam	0.24.1	default
+matplotlib	3.11.2	default

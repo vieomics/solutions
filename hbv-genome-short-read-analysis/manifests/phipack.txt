@@ -1,0 +1,57 @@
+Reading sequence file hbv_alignment.fasta
+Found 15 sequences of length 3221
+Alignment looks like a valid DNA alignment.
+Estimated diversity is (pairwise deletion - ignoring missing/ambig):  8.9%
+Found 533 informative sites.
+Writing alignment of informative sites to: Phi.inf.sites
+Writing list of informative sites to:      Phi.inf.list
+Calculating all pairwise incompatibilities...
+Done:   0.0% 34.0% 61.0% 80.9% 93.8% 99.6%100.0%
+
+Distribution of scaled incompatibility scores:
+Score (%):
+ 0   (60.4): ooooooooooooooooooooooooooooooo
+ 1   (36.8): ooooooooooooooooooo
+ 2   ( 2.7): oo
+ 3   ( 0.1): o
+ 4   ( 0.0): o
+
+Using a window size of 100 with k as 17
+
+Calculating analytical mean and variance
+
+Doing permutation test for PHI
+
+Doing permutation test for NSS
+
+The Neighbour Similarity score is 6.3149e-01
+
+Doing Permutation test for MAXCHI
+
+Number of umabiguous polymorphic sites is 542
+Writing  alignment of polymorphic unambig sites to: Phi.poly.sites
+Window size is 361 polymorphic sites
+
+Best breakpoint for Max Chi found with sequences NC_003977.2|D|not_available|not_available and HBV_D_B364_2014|D|Brazil|2014-07-03. r and s are 28 and 33
+Value of maximum breakpoint is:    17.8
+
+Coordinates of breakpoint with only polymorphic sites (start,breakpoint,end) = (101, 282, 462)
+Coordinates of breakpoint with all sites (start,breakpoint,end)=(497, 1253, 2993)
+
+                      PHI Values
+                      ----------
+              Analytical    (1000) Permutations
+
+Mean:          4.25e-01          4.25e-01
+Variance:      2.29e-05          2.29e-05
+Observed:      3.95e-01          3.95e-01   
+
+
+     **p-Value(s)**     
+       ----------
+
+NSS:                 0.00e+00  (1000 permutations)
+Max Chi^2:           3.40e-02  (1000 permutations)
+PHI (Permutation):   0.00e+00  (1000 permutations)
+PHI (Normal):        1.12e-10
+
