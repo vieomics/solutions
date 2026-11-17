@@ -158,14 +158,15 @@ The marketplace GitHub UUID (`521f11ad-4269-4d87-a047-701922bd98e4`) and
 GreenNode compute UUID (`c257676b-b5b6-42af-ac1c-84cd6e68b2c2`) are fixed in
 `manifests/viralrecon.hbv.omxa.json`.
 
-Use the OmicsLab SDK shell for the platform CLI (run this from your platform
-checkout):
+Use the OmicsLab SDK shell for the platform CLI. Run this from your platform
+checkout, which defines the `sdk` environment; the pixi environment in this
+solution does not include the SDK:
 
 ```bash
-pixi shell --manifest-path pixi.toml -e sdk
+pixi shell -e sdk
 ```
 
-From this solution directory:
+Then run the following from this solution directory:
 
 ```bash
 export OMICSLAB_TOKEN='<token>'
@@ -224,11 +225,13 @@ outdir.mkdir(parents=True, exist_ok=True)
 records = []
 for path in sorted(Path("results/viralrecon/variants/bcftools/consensus/bcftools").glob("*.consensus.fa")):
     for record in SeqIO.parse(path, "fasta"):
-        record.id = record.id.split()[0]
+        record.id = record.id.replace(" ", "_")
         record.description = ""
         records.append(record)
 for record in SeqIO.parse("references/hbv_public_genomes.fasta", "fasta"):
-    record.id = record.id.split()[0]
+    # Keep the pipe-separated metadata, but replace spaces so the identifier
+    # survives Newick/FASTA parsing. "not available" becomes "not_available".
+    record.id = record.description.replace(" ", "_")
     record.description = ""
     records.append(record)
 SeqIO.write(records, outdir / "all_hbv_sequences.fasta", "fasta")
@@ -283,7 +286,37 @@ iqtree2 -s results/downstream/hbv_alignment.fasta \
   --prefix results/downstream/hbv_phylogeny
 ```
 
-**Step 3 — draw the tree.**
+**Step 3 — check the alignment before reading the tree.**
+
+```python
+from collections import Counter
+from Bio import AlignIO
+
+aln = AlignIO.read("results/downstream/hbv_alignment.fasta", "fasta")
+length = aln.get_alignment_length()
+gap = n = variable = informative = 0
+
+for i in range(length):
+    counts = Counter(aln[:, i].upper())
+    gap += counts.get("-", 0)
+    n += counts.get("N", 0)
+    bases = {base: count for base, count in counts.items() if base not in "-N"}
+    if len(bases) > 1:
+        variable += 1
+        if sum(1 for count in bases.values() if count >= 2) >= 2:
+            informative += 1
+
+nseq = len(aln)
+print(f"{nseq} sequences, {length} columns")
+print(f"{variable} variable, {informative} parsimony-informative")
+print(f"{100 * gap / (nseq * length):.3f}% gaps, {100 * n / (nseq * length):.3f}% N")
+```
+
+For the committed alignment this prints 15 sequences, 3,221 columns, 845
+variable sites, 535 parsimony-informative sites, 0.726% gaps and 3.481% `N`.
+If your numbers differ, you are probably reading an older alignment file.
+
+**Step 4 — draw the tree.**
 
 ```python
 import csv
@@ -413,6 +446,53 @@ plot_tree(
 
 The resulting figure is `results/figures/phylogenetic_tree.png`.
 
+The VCF below counts differences from the mapping reference NC_003977.2. For a
+genotype A sample, most of those differences are genotype-defining, not
+within-sample mutation. A fairer comparison is the closest curated genome:
+
+```python
+from pathlib import Path
+
+from Bio import SeqIO
+from Bio.Align import PairwiseAligner
+
+aligner = PairwiseAligner()
+aligner.mode = "global"
+aligner.match_score = 2
+aligner.mismatch_score = -1
+aligner.open_gap_score = -5
+aligner.extend_gap_score = -0.5
+
+public = {
+    record.id.split("|")[0]: str(record.seq).upper()
+    for record in SeqIO.parse("references/hbv_public_genomes.fasta", "fasta")
+}
+
+
+def identity(query, target):
+    alignment = aligner.align(query, target)[0]
+    compared = matches = 0
+    for x, y in zip(str(alignment[0]), str(alignment[1])):
+        if x in "-N" or y in "-N":
+            continue
+        compared += 1
+        matches += x == y
+    return matches / compared
+
+
+for path in sorted(Path("results/viralrecon/variants/bcftools/consensus/bcftools").glob("*.consensus.fa")):
+    record = next(SeqIO.parse(path, "fasta"))
+    query = str(record.seq).upper()
+    best = max(public, key=lambda accession: identity(query, public[accession]))
+    print(record.id, best, f"{identity(query, public[best]):.4f}")
+```
+
+This prints KJ854710.1 for the three genotype A samples (94.9–95.5% identity)
+and NC_003977.2 for the two genotype D samples (98.3–98.5%). The per-region and
+per-effect counts in `manifests/mutation_summary.tsv` use the same comparison
+and then translate each codon in the S, P, C and X reading frames; the region
+coordinates are taken from the NC_003977.2 GenBank annotation.
+
 Read the variants for one sample (change the sample name as needed):
 
 ```bash
@@ -464,15 +544,33 @@ variant table and figures.
 | B2719/2015 | D | 99.6% | 48,467× | 100.0% | 0.0% | complete coverage |
 | B364/2014 | D | 99.2% | 44,223× | 83.1% | 16.9% | partial |
 
-- MAFFT alignment: 15 sequences, 3,221 columns, 1,681 variable sites,
-  1,008 parsimony-informative sites, 0.73% gaps.
+Mapping, depth and breadth are from the platform viralrecon/Bowtie2 run
+(`results/downstream/sample_summary.tsv`). `manifests/mapping_stats.tsv` is a
+separate BWA validation run; its `bwa_*` depth and breadth columns should not be
+mixed with this table.
+
+- MAFFT alignment: 15 sequences, 3,221 columns, 845 variable sites,
+  535 parsimony-informative sites, 0.73% gaps and 3.48% `N`. Thirty-nine
+  gap-rich columns form two blocks (2,356–2,361 and 2,863–2,895); no columns
+  were trimmed.
 - IQ-TREE 2: best model TVM+F+I+G4, 1,000 UFBoot + 1,000 SH-aLRT.
-- The three genotype A samples group with KJ854710.1.
-- The two genotype D samples group with NC_003977.2 and the Brazilian D
-  references.
-- The B/C references form a clade; E and F provide outgroup context.
-- Variant calls: 1,942 SNP rows across the five samples (660, 571, 481, 123 and
-  107 per sample); no indels passed the DP≥10 filter.
+- The three genotype A samples form a clade with KJ854710.1 (100/100). B215 and
+  B575 pair, and B3392 branches next.
+- The two genotype D samples fall in the D clade with NC_003977.2 and the
+  Brazilian D references. The D pair itself has only 28.5/61 support, consistent
+  with the missing data in B364/2014.
+- The B/C references form a clade (97.4/92); B and C are each monophyletic
+  (100/100). E and F provide outgroup context.
+- VCF calls relative to NC_003977.2: 1,942 unique SNP positions across the five
+  samples (660, 571, 481, 123 and 107 per sample); the VCFs contain SNP records
+  only (no indels). `results/downstream/variant_summary.tsv` counts each record
+  once per overlapping ORF, so its S/P/C/X columns sum to more than 1,942.
+- Compared with the closest curated genome instead, there are 633
+  region-annotated nucleotide rows and 593 amino-acid rows across the five
+  samples (473 unique nucleotide positions before counting overlapping ORFs),
+  plus six deletion candidates. Closest-genome identity is 94.9–95.5% for the A
+  samples and 98.3–98.5% for the D samples. The full tables are
+  `manifests/nucleotide_variants.tsv` and `manifests/amino_acid_variants.tsv`.
 
 ## Important caveats
 
@@ -480,7 +578,21 @@ variant table and figures.
   samples and ten references cannot support transmission, geographic-origin or
   resistance claims.
 - B575/2014 and B364/2014 are **partial genomes**. Their low-coverage blocks are
-  reported and masked as `N`; they are not treated as complete genomes.
+  reported and masked as `N`; they are not treated as complete genomes. The three
+  genotype A samples also carry a short 16–17 bp `N` run at 2,856–2,872, which is
+  a zero-depth/deletion region rather than a complete assembly.
+- The consensus is **reference-guided and fixed to the 3,182 bp NC_003977.2
+  coordinate frame**. Indels are not applied; deletion candidates are reported
+  separately in `manifests/indel_candidates.tsv`. An `N` is not a gap, and the
+  consensus length is not an assembly length.
+- The 15-sequence alignment has two gap-rich blocks (2,356–2,361 and
+  2,863–2,895). They are retained rather than trimmed, so phylogenetic signal
+  around those blocks is alignment-uncertain.
+- The PhiPack screen was run on the earlier alignment (533 informative sites;
+  the committed alignment has 535) and the panel spans genotypes A–F. PHI and
+  NSS are below the 1,000-permutation resolution and Max χ² is p = 0.028. This
+  is a signal to investigate, not a recombination breakpoint claim. See
+  `manifests/recombination_screen.md`.
 - The public panel is a curated context set, not a representative global sample.
 - Raw variant counts are not a mutation rate, and no clinical HBV mutation
   database was queried. No variant is labelled drug resistant or immune escape.
@@ -489,9 +601,9 @@ variant table and figures.
 
 The upstream `nf-core/viralrecon` step now runs as an OmicsLab platform job on
 public GreenNode compute with the public GitHub credential. The local pixi
-environment only contains the downstream tools (BCFtools, MAFFT, IQ-TREE,
-Python, pandas, matplotlib), so the interactive analysis does not depend on a
-local Docker/Apptainer runtime.
+environment contains the downstream tools (BWA, SAMtools, BCFtools, MAFFT,
+IQ-TREE 2, PhiPack, Python, pandas, matplotlib), so the interactive analysis
+does not depend on a local Docker/Apptainer runtime.
 
 The platform job is pinned to the `nf-core/viralrecon` `dev` commit
 `31b9515f6e166542ca60358931351aa0f9a72b8a`, which is compatible with the

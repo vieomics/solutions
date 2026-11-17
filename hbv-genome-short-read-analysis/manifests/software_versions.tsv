@@ -25,3 +25,10 @@ python	3.13.18	default
 biopython	1.88	default
 pysam	0.24.1	default
 matplotlib	3.11.2	default
+nextflow	26.04.6	platform-viralrecon
+nf-core/viralrecon	v3.1.0dev-g31b9515	platform-viralrecon
+fastp	1.4.0	platform-viralrecon
+bowtie2	2.5.5	platform-viralrecon
+samtools	1.24	platform-viralrecon
+bcftools	1.23.1	platform-viralrecon
+bedtools	2.31.1	platform-viralrecon

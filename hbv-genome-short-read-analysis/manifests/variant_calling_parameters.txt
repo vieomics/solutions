@@ -1,0 +1,10 @@
+Variant annotation parameters
+mapping_reference: NC_003977.2 (3182 bp)
+comparison_reference: closest curated public genome by global nucleotide identity
+coordinate_system: NC_003977.2, 1-based, inclusive
+substitution_calling: sample base != closest-reference base at an aligned NC_003977.2 position
+minimum_depth_for_confidence: 10 (from the viralrecon depth track)
+regions: S, P, C, X; subregions preS1, preS2, preC are reported separately
+effect: synonymous, nonsynonymous, stop_gained, stop_lost, uncertain_indel, intergenic
+clinical_interpretation: none; variants are not classified as drug resistance or immune escape
+indels: called from the sample-vs-closest-reference global alignment; positions are approximate

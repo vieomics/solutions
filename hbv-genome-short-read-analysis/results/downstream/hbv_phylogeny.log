@@ -24,7 +24,7 @@ Analyzing sequences: done in 2.9881e-05 secs
    7  LC456135.1|C1|Cambodia|2013         0.25%    passed     91.00%
    8  LC535950.1|C1|Cambodia|2017         0.19%    passed     97.24%
    9  HBV_D_B2719_2015                    1.21%    passed     95.20%
-  10  NC_003977.2|D|not_available|not     1.21%    passed     99.43%
+  10  NC_003977.2|D|not_available|not_available     1.21%    passed     99.43%
   11  HBV_D_B364_2014                    17.88%    passed     61.52%
   12  MH724252.1|D1|Brazil|2012           1.30%    passed     99.59%
   13  MH724251.1|D4|Brazil|2004           1.21%    passed     93.51%
