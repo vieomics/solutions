@@ -450,31 +450,29 @@ phylogeny is in `results/figures/phylogenetic_tree.png`, with the
 alignment and tree files under `results/downstream/`. See
 `results/README.md` for the exact parameters and output paths.
 
-## Key results from the committed run
+## Key results from the reference run
 
-The table and bullets below describe the committed run, which used the earlier
-custom circular/annotation code. The walkthrough above reproduces the
-viralrecon consensus, MAFFT alignment, IQ-TREE phylogeny and variant table.
+The table and bullets below describe the platform reference run. The walkthrough
+above reproduces the viralrecon consensus, MAFFT alignment, IQ-TREE phylogeny,
+variant table and figures.
 
-| Sample | Genotype | BWA mapping | Mean depth | Breadth ≥10× | Consensus N | Status |
+| Sample | Genotype | Bowtie2 mapping | Mean depth | Breadth ≥10× | Consensus N | Status |
 |---|---|---:|---:|---:|---:|---|
-| B215/2014 | A | 89.3% | 40,107× | 99.0% | 0.5% | near-complete |
-| B575/2014 | A | 76.8% | 24,824× | 63.8% | 34.8% | partial |
-| B3392/2014 | A | 86.3% | 25,810× | 97.9% | 0.5% | near-complete |
-| B2719/2015 | D | 99.8% | 49,126× | 100.0% | 0.0% | complete coverage |
-| B364/2014 | D | 99.6% | 44,767× | 83.2% | 16.8% | partial |
+| B215/2014 | A | 84.3% | 40,310× | 99.5% | 0.5% | near-complete |
+| B575/2014 | A | 71.2% | 24,944× | 65.1% | 34.9% | partial |
+| B3392/2014 | A | 76.8% | 24,431× | 99.5% | 0.5% | near-complete |
+| B2719/2015 | D | 99.6% | 48,467× | 100.0% | 0.0% | complete coverage |
+| B364/2014 | D | 99.2% | 44,223× | 83.1% | 16.9% | partial |
 
-- MAFFT alignment: 15 sequences, 3,221 columns, 842 variable sites, 533
-  parsimony-informative sites, 0.73% gaps.
+- MAFFT alignment: 15 sequences, 3,221 columns, 1,681 variable sites,
+  1,008 parsimony-informative sites, 0.73% gaps.
 - IQ-TREE 2: best model TVM+F+I+G4, 1,000 UFBoot + 1,000 SH-aLRT.
-- The three genotype A samples form a clade with KJ854710.1 (100/100).
-- The two genotype D samples fall in the D clade with NC_003977.2 and Brazilian
-  D references (D sample pair support 28.8/56, limited by missing data).
-- B/C references form a well-supported clade (97.6/92).
-- PhiPack reports a recombination signal (PHI p=0, Max Chi² p=0.028); region-
-  specific S and P trees are provided, but no breakpoint is claimed.
-- Variant tables: 675 nucleotide rows and 625 amino-acid rows across five
-  samples (overlapping ORFs are annotated independently).
+- The three genotype A samples group with KJ854710.1.
+- The two genotype D samples group with NC_003977.2 and the Brazilian D
+  references.
+- The B/C references form a clade; E and F provide outgroup context.
+- Variant calls: 1,942 SNP rows across the five samples (660, 571, 481, 123 and
+  107 per sample); no indels passed the DP≥10 filter.
 
 ## Important caveats
 
@@ -483,21 +481,16 @@ viralrecon consensus, MAFFT alignment, IQ-TREE phylogeny and variant table.
   resistance claims.
 - B575/2014 and B364/2014 are **partial genomes**. Their low-coverage blocks are
   reported and masked as `N`; they are not treated as complete genomes.
-- The shared P W592* stop in the A samples is a high-confidence nucleotide call
-  but its biological meaning is unresolved. It is not labelled a resistance or
-  immune-escape mutation.
-- Recombination tests can be inflated by missing data. The recombination result
-  is reported as a limitation, not a breakpoint claim.
 - The public panel is a curated context set, not a representative global sample.
-- No clinical HBV mutation database was queried; effects are limited to
-  synonymous/nonsynonymous/stop/uncertain classes.
+- Raw variant counts are not a mutation rate, and no clinical HBV mutation
+  database was queried. No variant is labelled drug resistant or immune escape.
 
 ## Environment and container note
 
 The upstream `nf-core/viralrecon` step now runs as an OmicsLab platform job on
 public GreenNode compute with the public GitHub credential. The local pixi
-environment only contains the downstream tools (BWA, SAMtools, BCFtools, MAFFT,
-IQ-TREE, PhiPack, Python), so the interactive analysis does not depend on a
+environment only contains the downstream tools (BCFtools, MAFFT, IQ-TREE,
+Python, pandas, matplotlib), so the interactive analysis does not depend on a
 local Docker/Apptainer runtime.
 
 The platform job is pinned to the `nf-core/viralrecon` `dev` commit
@@ -507,10 +500,10 @@ legacy `check_max()` config helper fails on Nextflow 26.
 
 ## Software versions
 
-See `manifests/software_versions.tsv`. Main tools: fastp 1.0.1 (viralrecon env)
-and 1.4.0 (downstream), Bowtie2 2.5.4, BWA 0.7.19, SAMtools 1.21/1.25,
-BCFtools 1.22/1.25, MAFFT 7.526, IQ-TREE 2.4.0, PhiPack 1.1, MultiQC 1.31/1.35,
-Python 3.13, Biopython 1.88, pysam 0.24.1.
+Main tools: fastp 1.4.0, Bowtie2 2.5.5, SAMtools 1.24, BCFtools 1.23.1,
+bedtools 2.31.1, MAFFT 7.526, IQ-TREE 2.4.0, Python 3.13, Biopython 1.88,
+pysam 0.24.1. The platform job used nf-core/viralrecon v3.1.0dev and Nextflow
+26.04.6.
 
 ## Citations
 
