@@ -43,7 +43,7 @@ Coordinates of breakpoint with all sites (start,breakpoint,end)=(497, 1253, 2993
               Analytical    (1000) Permutations
 
 Mean:          4.25e-01          4.25e-01
-Variance:      2.29e-05          2.29e-05
+Variance:      2.29e-05          2.31e-05
 Observed:      3.95e-01          3.95e-01   
 
 
@@ -51,7 +51,7 @@ Observed:      3.95e-01          3.95e-01
        ----------
 
 NSS:                 0.00e+00  (1000 permutations)
-Max Chi^2:           3.40e-02  (1000 permutations)
+Max Chi^2:           2.80e-02  (1000 permutations)
 PHI (Permutation):   0.00e+00  (1000 permutations)
 PHI (Normal):        1.12e-10
 

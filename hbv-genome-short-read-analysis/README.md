@@ -168,9 +168,9 @@ to:
 - IQ-TREE 2: best model TVM+F+I+G4, 1,000 UFBoot + 1,000 SH-aLRT.
 - The three genotype A samples form a clade with KJ854710.1 (100/100).
 - The two genotype D samples fall in the D clade with NC_003977.2 and Brazilian
-  D references (D sample pair support 30/55, limited by missing data).
-- B/C references form a well-supported clade (98.6/92).
-- PhiPack reports a recombination signal (PHI p=0, Max Chi² p=0.034); region-
+  D references (D sample pair support 28.8/56, limited by missing data).
+- B/C references form a well-supported clade (97.6/92).
+- PhiPack reports a recombination signal (PHI p=0, Max Chi² p=0.028); region-
   specific S and P trees are provided, but no breakpoint is claimed.
 - Variant tables: 675 nucleotide rows and 625 amino-acid rows across five
   samples (overlapping ORFs are annotated independently).

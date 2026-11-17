@@ -1,6 +1,6 @@
 {
   "project": "HBV whole-genome short-read analysis",
-  "generated_utc": "2026-11-17T12:18:29.599363+00:00",
+  "generated_utc": "2026-11-17T12:26:56.084543+00:00",
   "data_source": "OmicsLab storage: datasets/gianglabs/PRJNA659786/fastq",
   "study": "PRJNA659786 / SRP279096 (Brazil; genotypes A and D)",
   "samples": [
@@ -91,10 +91,10 @@
     "figures_present": true,
     "figures": {
       "results/figures/genome_coverage.png": 418408,
-      "results/figures/phylogenetic_tree.png": 221302,
+      "results/figures/phylogenetic_tree.png": 220143,
       "results/figures/mutation_summary.png": 388667,
       "results/figures/hbv_genome_structure.png": 76724,
-      "results/figures/qc_summary.png": 186146
+      "results/figures/qc_summary.png": 186098
     },
     "reference_accessions": [
       "NC_003977.2",
@@ -206,8 +206,8 @@
       "bytes": 8279
     },
     "pixi.toml": {
-      "sha256": "bac733f1e921d7a9d463aca5654f66a492cd52fea4baca3769d5a072496f6093",
-      "bytes": 2091
+      "sha256": "239f4c6c000183141c0a1a119c24a355b24d40a221a8bcd367908f7ee663b2b4",
+      "bytes": 2127
     },
     "pixi.lock": {
       "sha256": "10f02eca59dcc89b5bce448a6c9f08cbb4d3595f6c537181eebb526432363c9d",
@@ -256,15 +256,15 @@
   },
   "outputs": {
     "results/hbv_phylogeny.treefile": {
-      "sha256": "b33f1704ae4ed1041eb1b10b0a866b38590dc26fadbec11e4dcd2bea7390e764",
+      "sha256": "ec341aebf4d288b389339e581f8f9f3fba4c2cac558eb1464f015d963723526a",
       "bytes": 932
     },
     "results/hbv_phylogeny.rooted.treefile": {
-      "sha256": "3edcca74cb22dbfa9eaa4723c4259c2879b64a15061eb7cea48e0e84ee6ed9cd",
+      "sha256": "2a331eeff37008473a26fe369791bfe5b9528e10b8aa3bf291ccca7278a320e1",
       "bytes": 917
     },
     "results/hbv_phylogeny.iqtree": {
-      "sha256": "53fe672437edb8e171690f79cfb6d47bb80c3c5afe55c76df7febb33975c6064",
+      "sha256": "865dc8a57a445b0008b1ea52b04e0b96a5c27c7c04f2732fbf11cb8872115333",
       "bytes": 16441
     },
     "results/genome_coverage.png": {
@@ -272,8 +272,8 @@
       "bytes": 418408
     },
     "results/phylogenetic_tree.png": {
-      "sha256": "0e9043f4fc1cbf015108c692ecdd1ed94f59a675fd14abe3ce398617384c96db",
-      "bytes": 221302
+      "sha256": "b39754c767552b87559eda0ffc10941974d7ed9d9893a6eb919178085350ad7d",
+      "bytes": 220143
     },
     "results/mutation_summary.png": {
       "sha256": "ff16a53aa7caa9ced36cc078abb00e40b44eec75a15fb77f0a298c66d0234f4a",
@@ -284,8 +284,8 @@
       "bytes": 76724
     },
     "results/analysis_summary.html": {
-      "sha256": "6ee6971056dc2266b43caf2c5cfbf89011587524177819e3ad6b95be8c85c564",
-      "bytes": 12764
+      "sha256": "aab96de229313a998eb8470f35e8a7a9bbd439309ebd250841087e6951f63f97",
+      "bytes": 12938
     },
     "results/mapping/mapping_stats.tsv": {
       "sha256": "022591e1bc8b8462716af3f6d890d51dcb458ee00fd64bf8c0ed05631476dfec",
@@ -328,7 +328,7 @@
       "bytes": 616
     },
     "results/recombination/phipack.txt": {
-      "sha256": "533047c6aaa5c8f8e1b8f2f4d48e9fb1f2901c289b272739d3f585d4cfe18726",
+      "sha256": "1b2c0c58436f9d261d130be15884967b7d068997339e97bec169e238185c52c3",
       "bytes": 1878
     },
     "results/software_versions.tsv": {

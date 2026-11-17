@@ -174,10 +174,10 @@ The major clades are clear:
 - The three study genotype A samples fall with the Brazilian A2 reference
   KJ854710.1 (100/100 support for the A clade).
 - The two genotype D samples fall in the D clade with NC_003977.2 and the
-  Brazilian D references. The D sample pair has only 30/55 support, reflecting
+  Brazilian D references. The D sample pair has only 28.8/56 support, reflecting
   the large missing blocks in B575/2014 and B364/2014.
 - Genotype B (Vietnam/Cambodia) and C (Cambodia) references form a
-  well-supported B/C grouping (98.6/92), with B and C each monophyletic.
+  well-supported B/C grouping (97.6/92), with B and C each monophyletic.
 - Genotype E and F sequences provide the expected outgroup context.
 
 The exact support values and branch lengths are in
@@ -188,7 +188,7 @@ The exact support values and branch lengths are in
 
 HBV recombination is common, and a single whole-genome tree can be misleading if
 a sequence is a recombinant. PhiPack was run on the 15-sequence alignment. The
-PHI permutation test and NSS test gave p = 0, and Max Chi² gave p = 0.034. The
+PHI permutation test and NSS test gave p = 0, and Max Chi² gave p = 0.028. The
 best Max Chi² breakpoint involved NC_003977.2 and B364/2014.
 
 That is a significant statistical signal, but it is not proof of a specific
