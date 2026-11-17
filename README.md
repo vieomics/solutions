@@ -6,7 +6,7 @@ write-up.
 
 | Solution | What it covers |
 |---|---|
-| [hbv-genome-short-read-analysis](hbv-genome-short-read-analysis/) | Reproducible whole-genome analysis of five Illumina HBV runs from PRJNA659786 plus ten curated GenBank references: nf-core/viralrecon, circular-genome mapping, MAFFT, IQ-TREE 2, recombination screening, overlapping-ORF variant annotation, figures and a [technical blog](hbv-genome-short-read-analysis/docs/blog.md). |
+| [hbv-genome-short-read-analysis](hbv-genome-short-read-analysis/) | Reproducible whole-genome analysis of five Illumina HBV runs from PRJNA659786 plus ten curated GenBank references: nf-core/viralrecon, circular-genome mapping, MAFFT, IQ-TREE 2, recombination screening, overlapping-ORF variant annotation, figures and summary tables. |
 | [ndm-truncation-reanalysis](ndm-truncation-reanalysis/) | Read-level reanalysis of the reported `blaNDM` truncations in Dung et al. (2025), *Annals of Clinical Microbiology and Antimicrobials* — [doi:10.1186/s12941-025-00818-3](https://doi.org/10.1186/s12941-025-00818-3). Includes `nf-core/bacass` assembly and a per-sample OmicsLab job workflow. |
 
 ## Layout

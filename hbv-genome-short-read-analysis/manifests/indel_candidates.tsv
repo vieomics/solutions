@@ -1,0 +1,7 @@
+sample	genotype	reference_used	type	position	reference_sequence	alternate_sequence	length	effect
+HBV_A_B215_2014	A	KJ854710.1	deletion	2356	CGGGAC	-	6	inframe_deletion
+HBV_A_B215_2014	A	KJ854710.1	deletion	2854	GCATGGGAGGTTGGTCATCAAAACCTCGCAAAG	-	33	inframe_deletion
+HBV_A_B3392_2014	A	KJ854710.1	deletion	2356	CGGGAC	-	6	inframe_deletion
+HBV_A_B3392_2014	A	KJ854710.1	deletion	2854	GCATGGGAGGTTGGTCATCAAAACCTCGCAAAG	-	33	inframe_deletion
+HBV_A_B575_2014	A	KJ854710.1	deletion	1285	TAGCCG	-	6	inframe_deletion
+HBV_A_B575_2014	A	KJ854710.1	deletion	2854	GCATGGGAGGTTGGTCATCAAAACCTCGCAAAG	-	33	inframe_deletion

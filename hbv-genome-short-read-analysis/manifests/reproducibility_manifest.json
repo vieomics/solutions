@@ -1,6 +1,8 @@
 {
   "project": "HBV whole-genome short-read analysis",
   "generated_utc": "2026-11-17T12:26:56.084543+00:00",
+  "revised_utc": "2026-11-18",
+  "revision_note": "Summary tables and README numbers were recomputed from the committed consensus and alignment. The earlier manifests had 15/1106/16/0/535 N bases and 842/533 variable/informative sites; the current values are 16/1109/17/0/537 and 845/535. The earlier variant annotation also used an older consensus; the current tables are 633 nucleotide rows and 593 amino-acid rows.",
   "data_source": "OmicsLab storage: datasets/gianglabs/PRJNA659786/fastq",
   "study": "PRJNA659786 / SRP279096 (Brazil; genotypes A and D)",
   "samples": [
@@ -12,18 +14,18 @@
       "collection_date": "2014-04-15"
     },
     {
-      "sample": "HBV_A_B3392_2014",
-      "accession": "SRR12535942",
-      "genotype": "A",
-      "country": "Brazil",
-      "collection_date": "2014-10-03"
-    },
-    {
       "sample": "HBV_A_B575_2014",
       "accession": "SRR12535935",
       "genotype": "A",
       "country": "Brazil",
       "collection_date": "2014-11-04"
+    },
+    {
+      "sample": "HBV_A_B3392_2014",
+      "accession": "SRR12535942",
+      "genotype": "A",
+      "country": "Brazil",
+      "collection_date": "2014-10-03"
     },
     {
       "sample": "HBV_D_B2719_2015",
@@ -61,6 +63,9 @@
     "omx download \"viralrecon/hbv/results\" results/viralrecon -w \"$WORKSPACE\" -y",
     "mafft --auto --reorder results/downstream/all_hbv_sequences.fasta > results/downstream/hbv_alignment.fasta",
     "iqtree2 -s results/downstream/hbv_alignment.fasta -m MFP -B 1000 --alrt 1000 -nt AUTO -redo -quiet --prefix results/downstream/hbv_phylogeny",
+    "python: follow README step 1 to combine the five consensus genomes and ten public genomes (replace spaces in FASTA headers with underscores)",
+    "python: follow README step 3 to compute the alignment summary (845 variable, 535 parsimony-informative)",
+    "python: follow the README variant section to find the closest public genome for each consensus",
     "bcftools query -f '%CHROM\\t%POS\\t%REF\\t%ALT\\t%QUAL\\t%FILTER\\t[%GT\\t%DP\\t%AD]\\n' results/viralrecon/variants/bcftools/HBV_A_B215_2014_norm.vcf.gz > variants_B215.tsv"
   ],
   "validation": {
@@ -77,10 +82,9 @@
     ],
     "figures_present": true,
     "figures": {
-      "results/figures/genome_coverage.png": 418408,
-      "results/figures/phylogenetic_tree.png": 220143,
-      "results/figures/mutation_summary.png": 388667,
-      "results/figures/hbv_genome_structure.png": 76724,
+      "results/figures/genome_coverage.png": 381958,
+      "results/figures/mutation_summary.png": 179585,
+      "results/figures/phylogenetic_tree.png": 240980,
       "results/figures/qc_summary.png": 186098
     },
     "reference_accessions": [
@@ -125,7 +129,51 @@
       "X": true,
       "C": true
     },
-    "cds_translation_check_passed": true
+    "cds_translation_check_passed": true,
+    "alignment": {
+      "sequences": 15,
+      "columns": 3221,
+      "variable_sites": 845,
+      "parsimony_informative_sites": 535,
+      "singleton_sites": 310,
+      "gap_fraction": 0.007265,
+      "n_fraction": 0.034813,
+      "gap_rich_positions": 39,
+      "columns_trimmed": 0
+    },
+    "consensus_n_bases": {
+      "HBV_D_B364_2014": "537",
+      "HBV_A_B3392_2014": "17",
+      "HBV_A_B575_2014": "1109",
+      "HBV_D_B2719_2015": "0",
+      "HBV_A_B215_2014": "16"
+    },
+    "variant_calls": {
+      "unique_snps": 1942,
+      "per_sample": {
+        "HBV_A_B215_2014": 660,
+        "HBV_A_B3392_2014": 571,
+        "HBV_A_B575_2014": 481,
+        "HBV_D_B2719_2015": 123,
+        "HBV_D_B364_2014": 107
+      },
+      "vcf_indels_after_filter": 0,
+      "annotation_vs_closest_genome": {
+        "nucleotide_rows": 633,
+        "unique_nucleotide_positions": 473,
+        "amino_acid_rows": 593,
+        "deletion_candidates": 6
+      }
+    },
+    "recombination_screen": {
+      "alignment_version": "earlier 15-sequence alignment, 533 informative sites",
+      "current_alignment_informative_sites": 535,
+      "phi_permutation_p": "<0.001",
+      "nss_p": "<0.001",
+      "maxchi_p": 0.028,
+      "breakpoint_claimed": false,
+      "note": "Panel spans genotypes A-F; two partial genomes have long N blocks. See manifests/recombination_screen.md."
+    }
   },
   "inputs": {
     "references/hbv_reference.fasta": {
@@ -133,15 +181,19 @@
       "bytes": 3293
     },
     "references/hbv_public_genomes.fasta": {
-      "sha256": "ec52fd6eb63fac2d21d8531a2611b320a18088647f9fabb51f9c6de5994dedaf",
+      "sha256": "5febcc0efee919a573f2b298d6609f385d8474ebba1d2d8eff1025ebbfb7b233",
       "bytes": 32820
+    },
+    "references/hbv_public_genomes.raw.fasta": {
+      "sha256": "44960ea2e3e5f81b2c58552fbd554d28f67dcda0e004783cc87f7b4190771092",
+      "bytes": 32696
     },
     "references/hbv_metadata.tsv": {
       "sha256": "18ef91d039d16c4882c6dd1c3498563c607f66d3395b26da00b6523962d88b8f",
       "bytes": 2096
     },
     "references/fetch_manifest.json": {
-      "sha256": "c7c4490d4dfdea1de1580e9d88d9505024c4fc337f408278e0b89971fe9b0604",
+      "sha256": "605b44cc80ee8ec805b3498ac94de858492ac25b638e3f8164d81d5b82915e9d",
       "bytes": 1151
     },
     "metadata/selected_samples.tsv": {
@@ -152,13 +204,25 @@
       "sha256": "37f0a0896457707b50dcae95510b0debd575823a86590b7b77bef2d399bcabbd",
       "bytes": 8279
     },
+    "metadata/samplesheet.platform.csv": {
+      "sha256": "2d23018d1f259b5edea3a70236fbdc0ef300a73e89b93e0a9b5b2db12537d846",
+      "bytes": 1005
+    },
     "pixi.toml": {
-      "sha256": "239f4c6c000183141c0a1a119c24a355b24d40a221a8bcd367908f7ee663b2b4",
-      "bytes": 2127
+      "sha256": "3226952ac7b6dfe6214b0dc1a06d031fe1cf89cadedeb9bf3b4a97e1430e1f1f",
+      "bytes": 576
     },
     "pixi.lock": {
-      "sha256": "10f02eca59dcc89b5bce448a6c9f08cbb4d3595f6c537181eebb526432363c9d",
-      "bytes": 173608
+      "sha256": "ce2286e838705563ebc2da824573c6a7daf4ac75d271e5ceb2f9db8e0d5ada24",
+      "bytes": 106058
+    },
+    "conf/viralrecon.platform.config": {
+      "sha256": "25266e4e7945f3dad6590dfddbe28f214bbd4e5011f2e8732253fb611abe4988",
+      "bytes": 2093
+    },
+    "manifests/viralrecon.hbv.omxa.json": {
+      "sha256": "fc732e7af15894cbfd35f4606948107c257e15a516c2845729b12bbe7f9cca03",
+      "bytes": 1161
     },
     "references/genbank/KJ854710.1.gb": {
       "sha256": "e01e914bd797087e3a04da254c3328f94ffafd0821c3b7f282f6188f40e73a24",
@@ -202,87 +266,151 @@
     }
   },
   "outputs": {
-    "results/hbv_phylogeny.treefile": {
-      "sha256": "ec341aebf4d288b389339e581f8f9f3fba4c2cac558eb1464f015d963723526a",
-      "bytes": 932
+    "results/downstream/all_hbv_sequences.fasta": {
+      "sha256": "ad535c26933aa597f85ea55aa5f966a563d4d52d35f244c2cb1b762da30cba5f",
+      "bytes": 49166
     },
-    "results/hbv_phylogeny.rooted.treefile": {
-      "sha256": "2a331eeff37008473a26fe369791bfe5b9528e10b8aa3bf291ccca7278a320e1",
-      "bytes": 917
+    "results/downstream/all_hbv_metadata.tsv": {
+      "sha256": "0e17896f9f85aff578abb977e11596802f0f1236f505419693a04c7d61078345",
+      "bytes": 1672
     },
-    "results/hbv_phylogeny.iqtree": {
-      "sha256": "865dc8a57a445b0008b1ea52b04e0b96a5c27c7c04f2732fbf11cb8872115333",
-      "bytes": 16441
+    "results/downstream/hbv_alignment.fasta": {
+      "sha256": "77875bba62362704e5b4ca1445dcab08bd3b6945edfacd8dbe243b7c9d4f46ee",
+      "bytes": 49517
     },
-    "results/genome_coverage.png": {
-      "sha256": "dd3edb74b68834d0aab2bdf578dc74d5e482932d526e2377286ec242d4fc3100",
-      "bytes": 418408
+    "results/downstream/hbv_phylogeny.treefile": {
+      "sha256": "7783d406b03fe1f0732f1900a134d2d3401ed27a6f2641456887c5b0aab16f5f",
+      "bytes": 839
     },
-    "results/phylogenetic_tree.png": {
-      "sha256": "b39754c767552b87559eda0ffc10941974d7ed9d9893a6eb919178085350ad7d",
-      "bytes": 220143
+    "results/downstream/hbv_phylogeny.contree": {
+      "sha256": "f1f6c03ddfdd683de46eb59606f53dfa548f5ca14efe779cbbb3ae483862a44d",
+      "bytes": 787
     },
-    "results/mutation_summary.png": {
-      "sha256": "ff16a53aa7caa9ced36cc078abb00e40b44eec75a15fb77f0a298c66d0234f4a",
-      "bytes": 388667
+    "results/downstream/hbv_phylogeny.iqtree": {
+      "sha256": "9858c4bc1f335ed4db5bc676af5030ca72316d5e44c72d1289144912e2782bcd",
+      "bytes": 16179
     },
-    "results/hbv_genome_structure.png": {
-      "sha256": "4b6d538164b3c6a9f3fd55acb75d6cab8a148845b04676314de5a973ce7f697e",
-      "bytes": 76724
+    "results/downstream/sample_summary.tsv": {
+      "sha256": "e4b38aab8cbb914185b0f4fac313c9ce6aacef20778ec3992e29bd36aafab903",
+      "bytes": 585
     },
-    "results/analysis_summary.html": {
-      "sha256": "aab96de229313a998eb8470f35e8a7a9bbd439309ebd250841087e6951f63f97",
-      "bytes": 12938
+    "results/downstream/variant_summary.tsv": {
+      "sha256": "cdcbea6f78e7e4a5ca5303f736577fac2da0fdc0d1ce54d70a0df9698b259a97",
+      "bytes": 229
     },
-    "results/mapping/mapping_stats.tsv": {
-      "sha256": "022591e1bc8b8462716af3f6d890d51dcb458ee00fd64bf8c0ed05631476dfec",
-      "bytes": 1177
+    "manifests/alignment_stats.txt": {
+      "sha256": "9bb549a950cb863e47a4674b6f57e8cba5cd60aa5d6d100abd02f4f9991b6083",
+      "bytes": 646
     },
-    "results/mapping/depth.tsv": {
-      "sha256": "474fcb88d169e65f00cb94d2385c24405eeef0577b6157480fd0a3b191d81cee",
-      "bytes": 644933
+    "manifests/alignment_stats.tsv": {
+      "sha256": "ebd009fe32a6df59491161736a793730ef170096ee4067a64d387b4ad96f6304",
+      "bytes": 221
     },
-    "results/mapping/coverage.tsv": {
-      "sha256": "24d82538e9a59e6b438c3a1bbe33a651a91a5e2e3d41c3733d94e76137004609",
-      "bytes": 4689
+    "manifests/per_sequence_stats.tsv": {
+      "sha256": "dcdd848dc824f5f467603cab042a53280d7b024413f13acbbafc91a642e22dac",
+      "bytes": 961
     },
-    "results/consensus/consensus_stats.tsv": {
-      "sha256": "1c6aad702563d45c34a0b335a7b19971c51f96e338080426d071b21bd3d4e4f3",
-      "bytes": 737
+    "manifests/variable_sites.tsv": {
+      "sha256": "d75235cf1a86ceca458d6de1c96814d9be7aeb70aa358c29b4e22d3f78a4d4fa",
+      "bytes": 18666
     },
-    "results/comparative/all_hbv_sequences.fasta": {
-      "sha256": "32b4812bb7292ebd3bffa85d523a2ddae424672909000a52ebf6d92c39449242",
-      "bytes": 49139
+    "manifests/closest_references.tsv": {
+      "sha256": "97b3e0ae53cac59c6939b14ddd3586ad90db79f91ad2bf472aac0c53ef7326ea",
+      "bytes": 288
     },
-    "results/comparative/all_hbv_metadata.tsv": {
-      "sha256": "9eefcc6d3fb1183789713c584da4b0c781c38479320ea90c09228a4151253f8e",
-      "bytes": 2706
+    "manifests/consensus_stats.tsv": {
+      "sha256": "63503fea9844271d25d4ca96e63341ed728316e72976f1169a2ef9c029b810fb",
+      "bytes": 1125
     },
-    "results/alignment/hbv_alignment.fasta": {
-      "sha256": "207261f3e7213bf33ead669e6858d46fb49cfb324f53263742c5e3e0f546e495",
-      "bytes": 49609
-    },
-    "results/variants/nucleotide_variants.tsv": {
-      "sha256": "dc44b29b02d09fa189b5498dfa4265be67ef490518cf588b8e59bf466bd78679",
-      "bytes": 74387
-    },
-    "results/variants/amino_acid_variants.tsv": {
-      "sha256": "cf75921a2c826cfb4683def491734ab13932e4e48fd17ede5f9bf94c886e0ea1",
-      "bytes": 45975
-    },
-    "results/variants/indel_variants.tsv": {
+    "manifests/indel_candidates.tsv": {
       "sha256": "be082632e60fd9a57b62a6a6f00da127bc36fc013dd20d5784a83eecb5b0da71",
       "bytes": 616
     },
-    "results/recombination/phipack.txt": {
+    "manifests/mapping_stats.tsv": {
+      "sha256": "bce6736b9ba47222854d90cdcbd4a0519a0b1bfeb2a5016b8c6a26368fe5a124",
+      "bytes": 1249
+    },
+    "manifests/mutation_summary.tsv": {
+      "sha256": "221d4ce41aad7c295099a611571aca61d56607c453d6f19fb41cc27aece16d22",
+      "bytes": 2256
+    },
+    "manifests/phipack.txt": {
       "sha256": "1b2c0c58436f9d261d130be15884967b7d068997339e97bec169e238185c52c3",
       "bytes": 1878
     },
-    "results/software_versions.tsv": {
-      "sha256": "0ed87e6743b5d33cd0bbe06ceb25bb71a642cdad7cada7eb8654ce51dbdcfec3",
-      "bytes": 647
+    "manifests/recombination_screen.md": {
+      "sha256": "528f57117a7d1df8c69fac7c9ede9e727680b7d4116b67f04dfc09f9effbfb81",
+      "bytes": 2290
+    },
+    "manifests/variant_calling_parameters.txt": {
+      "sha256": "418f4ab7e33afe3cf7fe7cf84baa9c861937e0c85aa36bb9d2d10c647a8198ac",
+      "bytes": 719
+    },
+    "manifests/software_versions.tsv": {
+      "sha256": "a05f7b275ff9fb1b7e74c35b6282cddcf7ad5e7f47bc4efeafe7edb2351ee5b1",
+      "bytes": 914
+    },
+    "manifests/reference_accessions.txt": {
+      "sha256": "efaa81540444efb6f8c3d8ad2ae5b38de46059cebc952651726c74fd2f90ab02",
+      "bytes": 111
+    },
+    "manifests/workflow_execution_report.md": {
+      "sha256": "caedcd81c1520ccf1b1430ca12f9260d291f86f94e5c392bda4f993ae9f1fc4f",
+      "bytes": 5055
+    },
+    "results/downstream/coverage/HBV_A_B215_2014.depth.tsv": {
+      "sha256": "0f8817472363495694f451695228becb34b172ebf44dcc26ec31c540dafd905c",
+      "bytes": 71941
+    },
+    "results/downstream/coverage/HBV_A_B3392_2014.depth.tsv": {
+      "sha256": "97abafb85be2de66357ada7863a6263708403ba83280ad3f748a96f4ee46a425",
+      "bytes": 71359
+    },
+    "results/downstream/coverage/HBV_A_B575_2014.depth.tsv": {
+      "sha256": "5c20cac87063b5156a1457a4d1e59181296b1eb5442cd56beb4a69b2657fa429",
+      "bytes": 67394
+    },
+    "results/downstream/coverage/HBV_D_B2719_2015.depth.tsv": {
+      "sha256": "4bf341d8e163211fbb29715baa34be0337a2cb7ff82baaf29403965f26af1f84",
+      "bytes": 72027
+    },
+    "results/downstream/coverage/HBV_D_B364_2014.depth.tsv": {
+      "sha256": "74f37a0e37a58cb72f82af615a52ff2266cd43c34c7460a3df0f669f877b8dfc",
+      "bytes": 70072
+    },
+    "results/figures/genome_coverage.png": {
+      "sha256": "7d4bd8fe4795bcc4f1a38cdf07e3b7175404a621d5f5e3ec93f8dd1531736e4d",
+      "bytes": 381958
+    },
+    "results/figures/mutation_summary.png": {
+      "sha256": "dbd798189c8a07051911dd4c1e8b7cf57a6dde7ca22a027ac34f622317880128",
+      "bytes": 179585
+    },
+    "results/figures/phylogenetic_tree.png": {
+      "sha256": "1674b1be289695abe788237b2ea907a00fabe4f0f0c032f639d3b95e65f9ac5e",
+      "bytes": 240980
+    },
+    "results/figures/qc_summary.png": {
+      "sha256": "0b12bf58f428b228b905657948e46137501801f066fda383772753519e884edb",
+      "bytes": 186098
+    },
+    "manifests/nucleotide_variants.tsv": {
+      "sha256": "1f0d6772c8e1d961bdad42f561562df429b85c5a06615eb72487fdf7d65418f6",
+      "bytes": 64380
+    },
+    "manifests/amino_acid_variants.tsv": {
+      "sha256": "e122ba2e8c640357c94e1a9227498f10c006613840e1da7c569073cd2437230f",
+      "bytes": 43623
     }
   },
-  "software_versions": "results/software_versions.tsv",
-  "pixi_lock_sha256": "10f02eca59dcc89b5bce448a6c9f08cbb4d3595f6c537181eebb526432363c9d"
+  "software_versions": "manifests/software_versions.tsv",
+  "pixi_lock_sha256": "ce2286e838705563ebc2da824573c6a7daf4ac75d271e5ceb2f9db8e0d5ada24",
+  "limitations": [
+    "Demonstration dataset: five study samples and ten curated references do not support epidemiological, transmission, geographic-origin or resistance claims.",
+    "The consensus is reference-guided and fixed to the 3,182 bp NC_003977.2 frame; indels are not applied and N is not a gap.",
+    "B575/2014 and B364/2014 are partial genomes; the three genotype A samples also have a 16-17 bp N run at 2,856-2,872.",
+    "The alignment retains two gap-rich blocks (2,356-2,361 and 2,863-2,895); phylogenetic signal around them is alignment-uncertain.",
+    "The PhiPack screen was not rerun on the current alignment and the panel spans genotypes A-F; no recombination breakpoint is claimed.",
+    "No clinical HBV mutation database was queried; no variant is classified as drug resistant or immune escape."
+  ]
 }

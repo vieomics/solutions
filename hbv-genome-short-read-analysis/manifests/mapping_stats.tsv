@@ -1,6 +1,6 @@
-sample	run_accession	alias	genotype	country	collection_date	bwa_total_reads	bwa_mapped_reads	bwa_mapping_rate	bwa_properly_paired_pct	bowtie2_overall_alignment_rate	mean_depth	median_depth	breadth_1x_pct	breadth_10x_pct	breadth_100x_pct	origin_spanning_reads	consensus_length	consensus_n_bases	consensus_source
-HBV_A_B215_2014	SRR12535947	B215/2014	A	Brazil	2014-04-15	1257581	1122366	89.25%	88.14%	84.32%	40107.30	33531.00	100.00	99.03	95.85	43093	3182	15	used_viralrecon_patched_1
-HBV_A_B575_2014	SRR12535935	B575/2014	A	Brazil	2014-11-04	908978	697766	76.76%	75.61%	71.21%	24824.05	18387.50	90.63	63.80	61.53	41202	3182	1106	used_viralrecon_patched_3
-HBV_A_B3392_2014	SRR12535942	B3392/2014	A	Brazil	2014-10-03	828069	714854	86.33%	85.60%	76.82%	25810.26	19871.00	99.56	97.93	97.80	7312	3182	16	used_viralrecon_patched_1
-HBV_D_B2719_2015	SRR12535933	B2719/2015	D	Brazil	2014-01-28	1273260	1271128	99.83%	98.98%	99.55%	49125.87	43741.00	100.00	100.00	100.00	47710	3182	0	used_viralrecon_patched_0
-HBV_D_B364_2014	SRR12535938	B364/2014	D	Brazil	2014-07-03	1182604	1177990	99.61%	98.92%	99.20%	44766.91	35847.00	94.78	83.19	83.12	38763	3182	535	used_viralrecon_patched_2
+sample	run_accession	alias	genotype	country	collection_date	bwa_total_reads	bwa_mapped_reads	bwa_mapping_rate	bwa_properly_paired_pct	bowtie2_overall_alignment_rate	bwa_mean_depth	bwa_median_depth	bwa_breadth_1x_pct	bwa_breadth_10x_pct	bwa_breadth_100x_pct	bwa_origin_spanning_reads	consensus_length	consensus_n_bases	consensus_n_pct	consensus_source
+HBV_A_B215_2014	SRR12535947	B215/2014	A	Brazil	2014-04-15	1257581	1122366	89.25%	88.14%	84.32%	40107.30	33531.00	100.00	99.03	95.85	43093	3182	16	0.503	used_viralrecon_patched_1
+HBV_A_B575_2014	SRR12535935	B575/2014	A	Brazil	2014-11-04	908978	697766	76.76%	75.61%	71.21%	24824.05	18387.50	90.63	63.80	61.53	41202	3182	1109	34.852	used_viralrecon_patched_3
+HBV_A_B3392_2014	SRR12535942	B3392/2014	A	Brazil	2014-10-03	828069	714854	86.33%	85.60%	76.82%	25810.26	19871.00	99.56	97.93	97.80	7312	3182	17	0.534	used_viralrecon_patched_1
+HBV_D_B2719_2015	SRR12535933	B2719/2015	D	Brazil	2014-01-28	1273260	1271128	99.83%	98.98%	99.55%	49125.87	43741.00	100.00	100.00	100.00	47710	3182	0	0.000	used_viralrecon_patched_0
+HBV_D_B364_2014	SRR12535938	B364/2014	D	Brazil	2014-07-03	1182604	1177990	99.61%	98.92%	99.20%	44766.91	35847.00	94.78	83.19	83.12	38763	3182	537	16.876	used_viralrecon_patched_2

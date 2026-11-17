@@ -53,6 +53,20 @@ kraken2_db            /dev/null
 | `viralrecon/pipeline_info/` | Nextflow execution report, timeline, trace, DAG and parameters |
 | `figures/` | QC, genome coverage, mutation summary and phylogeny figures |
 
+`skip_mosdepth` is `true` in the platform run. The mean depth and breadth values
+in `downstream/sample_summary.tsv` were therefore computed with `samtools depth`
+on the viralrecon BAM, not by mosdepth. They are the coverage numbers used in
+the root README table.
+
+The consensus is a **reference-guided base consensus**, not a de novo assembly.
+It keeps the 3,182 bp NC_003977.2 coordinate frame; indels are not applied.
+Positions below 10× (or with no covering read) are written as `N`. In the three
+genotype A samples this leaves a short `N` run at 2,856–2,872; B575/2014 and
+B364/2014 have much larger low-coverage blocks. The six deletion candidates
+relative to the closest public genome are listed in
+`manifests/indel_candidates.tsv` and are not represented as gaps in these
+consensus sequences.
+
 ## Downstream analysis
 
 | Path | Content |
@@ -64,9 +78,16 @@ kraken2_db            /dev/null
 | `downstream/hbv_phylogeny.iqtree` | model and support values |
 | `downstream/coverage/*.depth.tsv` | per-base depth for the five samples |
 | `downstream/sample_summary.tsv` | mapping rate, mean depth, breadth, consensus N |
-| `downstream/variant_summary.tsv` | variants by coding region and SNP/indel class |
+| `downstream/variant_summary.tsv` | VCF SNPs by coding region and SNP/indel class |
 
-The five BAM files (234 MB) are omitted from the repository. They remain in the
-workspace output prefix above. The figures in `figures/` were generated from
-these results; the tree figure is reproduced by the code block in the root
-README.
+`downstream/variant_summary.tsv` counts each VCF record once per overlapping
+open reading frame, so the S/P/C/X columns overlap and are larger than the
+1,942 unique SNP positions. The VCFs are relative to the mapping reference
+NC_003977.2. The separate `manifests/mutation_summary.tsv` is relative to the
+closest curated genome for each sample and should not be compared directly with
+the VCF counts.
+
+The five BAM files are omitted from the repository. They remain in the
+workspace output prefix above. The four figures in `figures/` were generated
+from these results; the phylogeny figure is reproduced by the code block in the
+root README.
