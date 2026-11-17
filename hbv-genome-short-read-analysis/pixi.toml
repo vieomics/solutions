@@ -1,0 +1,62 @@
+[workspace]
+authors = ["vieomics"]
+channels = ["conda-forge", "bioconda"]
+name = "hbv-genome-short-read-analysis"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[dependencies]
+nextflow = ">=25.10"
+fastqc = ">=0.12"
+fastp = ">=0.23"
+bwa = ">=0.7.17"
+samtools = ">=1.21"
+bcftools = ">=1.21"
+multiqc = ">=1.27"
+mafft = ">=7.525"
+iqtree = ">=2.3,<3"
+seqkit = ">=2.8"
+python = ">=3.12"
+biopython = ">=1.84"
+pysam = ">=0.22"
+matplotlib-base = ">=3.9"
+pandas = ">=2.2"
+numpy = ">=1.26"
+jq = ">=1.7"
+bowtie2 = ">=2.5.5,<3"
+bedtools = ">=2.31.1,<3"
+pigz = ">=2.8,<3"
+phipack = ">=1.1,<2"
+
+# nf-core/viralrecon 2.6.0 still uses the legacy check_max() config helper,
+# which newer Nextflow releases reject.  This separate environment pins the
+# pipeline's original tool versions and a compatible Nextflow release.
+[feature.viralrecon.dependencies]
+nextflow = "24.10.*"
+fastqc = "==0.12.1"
+fastp = "==1.0.1"
+bowtie2 = "==2.5.4"
+samtools = "==1.21"
+bcftools = "==1.22"
+bedtools = "==2.31.1"
+multiqc = "==1.31"
+pigz = "==2.8"
+htslib = "==1.22.1"
+python = "3.11.*"
+
+[environments]
+viralrecon = { features = ["viralrecon"], no-default-feature = true }
+
+[tasks]
+download = "bash bin/download_fastq.sh"
+references = "python bin/fetch_public_references.py --outdir references"
+samplesheet = "python bin/make_samplesheet.py"
+extended = "python bin/make_extended_reference.py"
+circular = "bash bin/run_circular.sh"
+viralrecon = "pixi run -e viralrecon nextflow run nf-core/viralrecon -r 2.6.0 -c conf/viralrecon.config --input samplesheet.csv --outdir results/viralrecon --platform illumina --protocol metagenomic --genome hbv --skip_assembly --skip_kraken2 --skip_pangolin --skip_nextclade --skip_snpeff --skip_variants_quast --skip_variants_long_table --skip_picard_metrics --skip_mosdepth --skip_consensus_plots --skip_asciigenome -resume"
+pipeline = "nextflow run workflow/main.nf -profile local -resume"
+stats = "python bin/combine_mapping_stats.py"
+figures = "python bin/make_figures.py"
+report = "python bin/make_report.py"
+manifest = "python bin/make_manifest.py"
+versions = "bash bin/software_versions.sh"

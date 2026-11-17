@@ -1,0 +1,48 @@
+{
+  "retrieved_utc": "2026-11-17",
+  "efetch_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
+  "reference_accession": "NC_003977.2",
+  "panel_size": 10,
+  "accessions": [
+    "NC_003977.2",
+    "KJ854710.1",
+    "MF674515.1",
+    "LC456127.1",
+    "LC456135.1",
+    "LC535950.1",
+    "MH724251.1",
+    "MH724252.1",
+    "PZ495693.1",
+    "MK183647.1"
+  ],
+  "files": {
+    "references/hbv_reference.fasta": {
+      "sha256": "24d387c17decaf9241e5335bbbce5614afec490817d119f8278affe559c88138",
+      "bytes": 3293
+    },
+    "references/hbv_public_genomes.raw.fasta": {
+      "sha256": "44960ea2e3e5f81b2c58552fbd554d28f67dcda0e004783cc87f7b4190771092",
+      "bytes": 32696
+    },
+    "references/hbv_public_genomes.fasta": {
+      "sha256": "ec52fd6eb63fac2d21d8531a2611b320a18088647f9fabb51f9c6de5994dedaf",
+      "bytes": 32820
+    },
+    "references/hbv_metadata.tsv": {
+      "sha256": "18ef91d039d16c4882c6dd1c3498563c607f66d3395b26da00b6523962d88b8f",
+      "bytes": 2096
+    }
+  },
+  "genotypes": {
+    "A": 1,
+    "B": 2,
+    "C": 2,
+    "D": 3,
+    "E": 1,
+    "F": 1,
+    "G": 0,
+    "H": 0,
+    "I": 0,
+    "J": 0
+  }
+}

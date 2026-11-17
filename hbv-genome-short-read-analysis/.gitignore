@@ -1,0 +1,20 @@
+# Local-only generated data
+data/fastq/
+/samplesheet.csv
+results_nf/
+work/
+logs/
+.pixi/
+*.bwt
+*.pac
+*.ann
+*.amb
+*.sa
+references/hbv_reference.extended.fasta
+Phi.*
+.nextflow*
+
+# The repository-level pattern **/work*/ is meant for Nextflow work dirs.
+# Re-include the committed pipeline definition.
+!workflow/
+!workflow/**
