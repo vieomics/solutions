@@ -34,8 +34,8 @@ Biopython 1.88. The exact commands are in the root README and in
 - Internal support labels in the tree: 12
 - Consensus rows: 5
 - Partial genomes (>5% `N`): HBV_A_B575_2014, HBV_D_B364_2014
-- Figures committed: 4 (`genome_coverage`, `mutation_summary`,
-  `phylogenetic_tree`, `qc_summary`)
+- Figures committed: 5 (`hbv_genome_forms`, `genome_coverage`,
+  `mutation_summary`, `phylogenetic_tree`, `qc_summary`)
 - CDS translations match the GenBank annotation after removing the terminal
   stop: P, S, X and C all true
 
@@ -100,5 +100,5 @@ immune escape.
 | `results/downstream/sample_summary.tsv` | mapping, depth, breadth and consensus `N` per sample |
 | `results/downstream/variant_summary.tsv` | VCF SNPs by coding region and SNP/indel class |
 | `results/downstream/coverage/*.depth.tsv` | per-base depth for the five samples |
-| `results/figures/` | QC, coverage, mutation and phylogeny figures |
+| `results/figures/` | genome-form schematic, QC, coverage, mutation and phylogeny figures |
 | `manifests/` | summary tables, annotation tables and this report |

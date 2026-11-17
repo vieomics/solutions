@@ -51,7 +51,7 @@ kraken2_db            /dev/null
 | `viralrecon/fastp/` | read trimming reports |
 | `viralrecon/multiqc/multiqc_report.html` | combined QC report |
 | `viralrecon/pipeline_info/` | Nextflow execution report, timeline, trace, DAG and parameters |
-| `figures/` | QC, genome coverage, mutation summary and phylogeny figures |
+| `figures/` | HBV genome-form schematic, QC, genome coverage, mutation summary and phylogeny figures |
 
 `skip_mosdepth` is `true` in the platform run. The mean depth and breadth values
 in `downstream/sample_summary.tsv` were therefore computed with `samtools depth`
@@ -88,6 +88,6 @@ closest curated genome for each sample and should not be compared directly with
 the VCF counts.
 
 The five BAM files are omitted from the repository. They remain in the
-workspace output prefix above. The four figures in `figures/` were generated
+workspace output prefix above. The five figures in `figures/` were generated
 from these results; the phylogeny figure is reproduced by the code block in the
 root README.

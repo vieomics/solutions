@@ -85,7 +85,8 @@
       "results/figures/genome_coverage.png": 381958,
       "results/figures/mutation_summary.png": 179585,
       "results/figures/phylogenetic_tree.png": 240980,
-      "results/figures/qc_summary.png": 186098
+      "results/figures/qc_summary.png": 186098,
+      "results/figures/hbv_genome_forms.png": 241024
     },
     "reference_accessions": [
       "NC_003977.2",
@@ -355,8 +356,8 @@
       "bytes": 111
     },
     "manifests/workflow_execution_report.md": {
-      "sha256": "caedcd81c1520ccf1b1430ca12f9260d291f86f94e5c392bda4f993ae9f1fc4f",
-      "bytes": 5055
+      "sha256": "71679aa6280f8b2a0358eaca7fcc69ff559586ba8a2e10ebe5ce537dbd2de7e8",
+      "bytes": 5098
     },
     "results/downstream/coverage/HBV_A_B215_2014.depth.tsv": {
       "sha256": "0f8817472363495694f451695228becb34b172ebf44dcc26ec31c540dafd905c",
@@ -401,6 +402,10 @@
     "manifests/amino_acid_variants.tsv": {
       "sha256": "e122ba2e8c640357c94e1a9227498f10c006613840e1da7c569073cd2437230f",
       "bytes": 43623
+    },
+    "results/figures/hbv_genome_forms.png": {
+      "sha256": "a9e6a20ef62f17b3fa87cb7c5fb4a34e7764b9ae58733fd9636ab53e7622326b",
+      "bytes": 241024
     }
   },
   "software_versions": "manifests/software_versions.tsv",

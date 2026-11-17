@@ -83,6 +83,51 @@ hbv-genome-short-read-analysis/
 └── manifests/                     # summary tables + platform job manifest
 ```
 
+## HBV genome biology: why this is not a bacterial chromosome
+
+HBV is a hepadnavirus, and its genome does not behave like a bacterial
+chromosome. The forms that matter for sequencing are:
+
+- **Virion rcDNA.** Most infectious virions carry a relaxed circular, partially
+  double-stranded DNA (rcDNA) of about 3.2 kb. The minus strand is complete and
+  has the viral polymerase (P) covalently attached at its 5' end; the plus strand
+  is incomplete and has a gap. The strands are not covalently closed, so the
+  molecule is circular in shape but not a closed circle.
+- **Nuclear cccDNA.** In the nucleus, rcDNA is repaired to covalently closed
+  circular DNA (cccDNA). cccDNA is the episomal transcriptional template that
+  persists in infected hepatocytes.
+- **Linear forms.** A minority of virions package linear double-stranded DNA
+  (dslDNA), and HBV DNA can integrate into the host genome as linear, often
+  fragmented sequence. Neither form is circular.
+- **The database sequence.** A GenBank/RefSeq complete-genome record is typically
+  a linear representation of the circular genome. The coordinate origin is a
+  database convention, not a single biological replication origin. In
+  NC_003977.2 the polymerase ORF crosses it (2,309–3,182 + 1–1,625), so a naïve
+  linear mapping or alignment cuts P into two pieces.
+
+Replication is also not bacterial. cccDNA is transcribed into pregenomic RNA
+(pgRNA), and pgRNA is reverse-transcribed into new rcDNA. The virion carries
+DNA, but the step that copies the genome is RNA-dependent.
+
+The 3.2 kb genome is compact and overlapping. The four ORFs are P
+(polymerase), S (surface; preS1/preS2/S from alternative start codons), C
+(precore/core) and X (HBx). P overlaps S, C and X, and C also overlaps X. A
+single nucleotide change can therefore be synonymous in one frame and
+nonsynonymous in another. This is why the annotation here translates each
+reading frame separately, and why an `N` in the consensus is not a gap: the
+consensus is a reference-guided base sequence, not a de novo assembly of a
+single circular molecule.
+
+![HBV genome forms](results/figures/hbv_genome_forms.png)
+
+*Figure 1 — HBV genome forms. rcDNA and cccDNA are circular in shape but differ
+in covalent closure; dslDNA and integrated HBV DNA are linear. The ORF map uses
+NC_003977.2 coordinates: P 2,309–3,182 + 1–1,625; S 157–837, with preS1
+2,850–3,173 and preS2 3,174–3,182 + 1–156; C 1,816–2,454, with preC
+1,816–1,902; X 1,376–1,840. Top panels are schematic; the ORF map is to scale.
+Sources: Seeger & Mason (2000), Nassal (2015), Revill et al. (2020), Tu et al.
+(2021), and the NC_003977.2 GenBank annotation.*
+
 ## Data
 
 Five runs were selected from PRJNA659786: the three genotype A and two genotype D
@@ -624,4 +669,14 @@ pysam 0.24.1. The platform job used nf-core/viralrecon v3.1.0dev and Nextflow
 - IQ-TREE 2: DOI 10.1093/molbev/msaa015
 - MAFFT: DOI 10.1093/molbev/mst010
 - PhiPack: DOI 10.1093/molbev/msj092
-- GenBank accessions are listed in `references/hbv_metadata.tsv` and above.
+- HBV genome biology: Seeger C, Mason WS. *Microbiol Mol Biol Rev.*
+  2000;64(1):51–68. DOI 10.1128/MMBR.64.1.51-68.2000.
+- HBV cccDNA: Nassal M. *Gut.* 2015;64(12):1972–1984. DOI
+  10.1136/gutjnl-2015-309809.
+- HBV genome diversity: Revill PA, Tu T, Netter HJ, Yuen LKW, Locarnini SA,
+  Littlejohn M. *Nat Rev Gastroenterol Hepatol.* 2020;17(10):618–634. DOI
+  10.1038/s41575-020-0296-6.
+- HBV dslDNA and integration: Tu T, Zhang H, Urban S. *Viruses.*
+  2021;13(2):180. DOI 10.3390/v13020180.
+- GenBank accessions are listed in `references/hbv_metadata.tsv` and above;
+  the ORF coordinates come from the NC_003977.2 GenBank annotation.
