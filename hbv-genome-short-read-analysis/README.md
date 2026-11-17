@@ -57,7 +57,11 @@ runs with the largest read counts.
 | B364/2014 | SRR12535938 | D | Brazil | 2014-07-03 |
 
 Raw FASTQ files are not committed. They are downloaded from OmicsLab storage
-with `bin/download_fastq.sh`, which verifies every file against its ENA MD5.
+with `bin/download_fastq.sh`, which verifies every file against its ENA MD5;
+`bin/verify_fastq.sh` can re-check gzip integrity and MD5 at any time. The five
+runs are already staged in the workspace, so `nf-core/fetchngs` is not required
+for this solution. If an independent ENA/SRA re-download is wanted, the five SRR
+accessions above can be supplied to `nf-core/fetchngs` 1.13.0.
 The reference panel is ten complete GenBank genomes:
 
 ```text
@@ -91,6 +95,7 @@ Download the five FASTQ pairs (requires the OmicsLab CLI and the
 ```bash
 omx cd datasets/gianglabs/PRJNA659786   # if not already there
 bash bin/download_fastq.sh
+bash bin/verify_fastq.sh
 ```
 
 Build the reference panel and samplesheet:

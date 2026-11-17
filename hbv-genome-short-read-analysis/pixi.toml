@@ -49,6 +49,7 @@ viralrecon = { features = ["viralrecon"], no-default-feature = true }
 
 [tasks]
 download = "bash bin/download_fastq.sh"
+verify = "bash bin/verify_fastq.sh"
 references = "python bin/fetch_public_references.py --outdir references"
 samplesheet = "python bin/make_samplesheet.py"
 extended = "python bin/make_extended_reference.py"
