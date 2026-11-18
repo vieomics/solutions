@@ -43,7 +43,9 @@ pa-st1971-amr-reanalysis/
 │   ├── 09_figures.py               # AMR gene map and class bar chart
 │   ├── 10_manifest.sh              # manifests/ comparison tables
 │   └── run_all.sh                  # run the whole workflow
+├── analysis/arg_heatmap/           # 13-genome Fig. 1B-style ARG heatmap
 ├── results/                        # committed reference run (README inside)
+│   └── heatmap/                    # 13-genome ARG matrix and figure
 ├── manifests/                      # committed summary tables (README inside)
 ├── data/                           # downloads (ignored)
 ├── db/                             # databases (ignored)
@@ -392,9 +394,32 @@ The committed run is preserved in `results/` (see
 | CARD unique ARO names | 62 (includes intrinsic pumps) | not reported |
 | VFDB | 284 hits / 265 unique genes | 213 virulence factors |
 
-The exact 18-ARG count depends on whether partial genes and the three `tmex`
-subunits are counted separately. Do not lower thresholds to force the number
-to 18; record the counting rule instead.
+The 19 non-point symbols include the partial `blaKBL` call; excluding it gives
+the paper's 18. Do not lower thresholds to force the number to 18; record the
+counting rule instead.
+
+## Public-genome ARG heatmap (13 of 25)
+
+The paper's Fig. 1B compares strain 71 with 24 public ST1971 genomes. Twelve of
+those are deposited only as raw reads (`SRR...`), so they need assembly before
+they can be plotted. The other twelve, plus strain 71 itself, are available as
+`GCA` assemblies. Those **13 genomes** are plotted here:
+
+![ARG heatmap for the 13 available ST1971 genomes](results/heatmap/arg_heatmap.png)
+
+The heatmap is an AMRFinderPlus presence/copy-number matrix, grouped by
+antibiotic class and clustered by ARG profile. It is deliberately separate from
+the single-sample workflow:
+
+```bash
+bash analysis/arg_heatmap/fetch_genomes.sh
+pixi run -e annotation bash analysis/arg_heatmap/run_amrfinder.sh
+pixi run -e viz python analysis/arg_heatmap/plot_heatmap.py
+```
+
+See [`analysis/arg_heatmap/README.md`](analysis/arg_heatmap/README.md) for the
+accession list, the 12 missing `SRR` genomes and the caveats. This is **13 of
+25**, not the paper's complete figure.
 
 ## Comparison with the paper
 
@@ -411,6 +436,44 @@ to 18; record the counting rule instead.
 | Colistin mutations | ⚠️ `pmrB_V15I` called non-wildtype | other variants appear as wildtype rows |
 | MobileElementFinder, PHASTER, ANI/SNP comparisons | ❌ not included | multi-genome or web-only analyses outside this AMR scope |
 | Illumina + Nanopore hybrid assembly | ❌ not possible | raw reads are not public |
+
+## What the paper did that this solution does not
+
+The public chromosome supports the single-sample AMR reanalysis, but several
+paper analyses need the reads, multiple genomes, or web services. The same list
+is in the `scope` block of `manifests/paper_comparison.tsv`:
+
+- **Clinical AST and MICs** — the 14-disc panel and MICs for imipenem,
+  meropenem, colistin, levofloxacin and tigecycline. The paper values are
+  recorded in `metadata/isolate.tsv`; they are not retested here.
+- **Read QC and hybrid assembly** — FastQC, trimming, Unicycler 0.5.1,
+  CheckM and QUAST 5.2.0. The raw Illumina/Nanopore reads are not public.
+- **COGclassifier 1.0.5** — functional classification of the Bakta CDS.
+- **Separate CARD/NDARO validation** — the paper validated calls against CARD
+  and NDARO at ≥50% coverage and ≥90% identity. AMRFinderPlus already uses an
+  NDARO-derived database, but there is no separate NDARO run here.
+- **MobileElementFinder 1.1.2** — the paper reports 19 mobile genetic
+  elements.
+- **PHASTER 1.0.1** — the paper reports six prophages.
+- **CRISPR arrays** — the paper reports three arrays.
+- **Pathogenicity islands** — the paper reports seven islands.
+- **Prophage context of `tmexCD2–toprJ2`** — the paper places the cluster
+  between Bacteriophage Lily (`NC_028841`) and Escherichia phage
+  `vB_EcoM-ep3` (`NC_025439`). The cluster is detected here, but the flanking
+  prophages were not annotated.
+- **ANI analysis** — 25 ST1971 genomes, six clusters at 99.90–99.99% ANI.
+- **Core-genome SNP analysis** — Parsnp + Gubbins, 34–57 SNP differences.
+- **GeneViewer / Proksee visualisation** — synteny plots and the circular
+  chromosome map (Fig. 2); Fig. 1A (ANI heatmap) is also not reproduced.
+- **Complete Fig. 1B heatmap** — the paper has 25 genomes. This solution has a
+  Fig. 1B-style heatmap for the **13 genomes available as GCA assemblies**;
+  the 12 `SRR`-only genomes need assembly first. See
+  [`analysis/arg_heatmap/README.md`](analysis/arg_heatmap/README.md).
+
+What *is* covered: genome integrity and size, ST1971, the acquired ARG calls,
+the `mutation_all` point-mutation table, the `tmexCD2–toprJ2` cluster, VFDB
+presence and categories, the exotoxin genotype, AMR gene maps and the
+13-genome ARG heatmap.
 
 ## Important caveats
 

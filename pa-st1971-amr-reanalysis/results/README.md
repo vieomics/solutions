@@ -56,6 +56,14 @@ The databases (`db/`), downloaded inputs (`data/`), pixi environments
 (`.pixi/`) and run logs (`logs/`) are not committed. The AMRFinderPlus and
 CARD databases can be staged again with `bin/00_stage_databases.sh`.
 
+## Multi-genome add-on
+
+`results/heatmap/` is a separate Fig. 1B-style ARG heatmap for the 13 ST1971
+genomes that are public as GCA assemblies (strain 71 + 12 public genomes). The
+other 12 paper genomes are raw-read-only and are not included yet. See
+`results/heatmap/README.md` and `analysis/arg_heatmap/` for the script and
+provenance.
+
 ## Annotation note
 
 The committed run uses the **authors' deposited GenBank annotation**, extracted

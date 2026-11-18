@@ -121,6 +121,50 @@ cp results/amrfinder/point_mutations.tsv "$OUTDIR/point_mutations.tsv"
     ' results/virulence/vfdb.tsv | sort -t$'\t' -k1,1
 } > "$OUTDIR/vfdb_genes.tsv"
 
+# VF category counts. The paper reports 213 VFs split across VFDB categories;
+# this table keeps the same comparison but with the committed VFDB snapshot.
+pixi run -e viz python - > "$OUTDIR/vfdb_categories.tsv" <<'PY'
+import csv
+import re
+from collections import defaultdict
+
+paper = {
+    "Effector delivery system": 88,
+    "Mobility": 35,
+    "Biofilm": 23,
+    "Adherence": 15,
+    "Nutritional/Metabolic factor": 15,
+    "Immune modulation": 7,
+    "Exotoxin": 2,
+    "Exoenzyme": 1,
+    "Others": 27,
+}
+
+observed = defaultdict(set)
+with open("results/virulence/vfdb.tsv", newline="") as handle:
+    for row in csv.DictReader(handle, delimiter="\t"):
+        category = "Unclassified"
+        for token in re.findall(r"\[([^\]]+)\]", row.get("PRODUCT", "")):
+            match = re.search(r"-\s*([^(\[]+?)\s*\(VFC\d+\)", token)
+            if match:
+                category = match.group(1).strip()
+        observed[category].add(row.get("GENE", ""))
+
+alias = {"Mobility": "Motility"}  # VFDB calls this category Motility.
+print("category\tpaper_count\tobserved_unique_genes\tnote")
+for category, count in paper.items():
+    observed_name = alias.get(category, category)
+    seen = len(observed.get(observed_name, ()))
+    note = ""
+    if category == "Mobility":
+        note = "VFDB uses the category name Motility; grouping is not identical."
+    elif category == "Others":
+        note = "VFDB assigns every committed hit to a VFC category."
+    print(f"{category}\t{count}\t{seen}\t{note}")
+for category in sorted(set(observed) - set(paper) - set(alias.values())):
+    print(f"{category}\tNA\t{len(observed[category])}\tVFDB category not named in the paper.")
+PY
+
 # ---------------------------------------------------------------------------
 # Paper vs observed comparison
 # ---------------------------------------------------------------------------
@@ -149,17 +193,47 @@ colistin_calls="$(awk -F'\t' '
 ' results/amrfinder/amrfinder.tsv | sort -u | paste -sd ';' -)"
 colistin_calls="${colistin_calls:-none}"
 
+exo_genotype=""
+for gene in exoT exoU exoY; do
+    if cut -f6 results/virulence/vfdb.tsv | grep -qx "$gene"; then
+        exo_genotype="${exo_genotype}${gene}+; "
+    else
+        exo_genotype="${exo_genotype}${gene}-; "
+    fi
+done
+if cut -f6 results/virulence/vfdb.tsv | grep -qx 'exoS'; then
+    exo_genotype="${exo_genotype}exoS+"
+else
+    exo_genotype="${exo_genotype}exoS-"
+fi
+exo_status="$([ "$exo_genotype" = "exoT+; exoU+; exoY+; exoS-" ] && echo PASS || echo CHECK)"
+
 {
     printf 'category\titem\tpaper_value\tobserved\tstatus\tnote\n'
     printf 'genome\tgenome_size_bp\t6589538\t%s\t%s\t\n' "$genome_size" "$([ "$genome_size" = 6589538 ] && echo PASS || echo CHECK)"
     printf 'genome\tgc_percent\t66.17\t%s\t%s\t\n' "$gc" "$([ "$gc" = 66.17 ] && echo PASS || echo CHECK)"
     printf 'typing\tsequence_type\tST1971\tST%s\t%s\t\n' "$mlst_st" "$([ "$mlst_st" = 1971 ] && echo PASS || echo CHECK)"
-    printf 'resistome\tamr_symbol_count\t18\t%s\tINFO\tNon-point AMR symbols; the paper count depends on whether partial genes and tmex subunits are counted separately.\n' "$amr_nonpoint"
+    printf 'resistome\tamr_symbol_count\t18\t%s\tINFO\t19 non-point symbols include the partial blaKBL call; excluding it gives 18.\n' "$amr_nonpoint"
     printf 'resistome\tnamed_ARGs\tblaPDC-142; blaPME-1; blaOXA-395\t\t%s\t\n' "$named_status"
     printf 'resistome\ttigecycline_cluster\ttmexCD2-toprJ2\ttmexC; tmexD2; toprJ\t%s\tDetected by AMRFinderPlus.\n' "$tmex_status"
     printf 'resistome\tcolistin_mutations\t10 reported variants\t%s\tINFO\tNon-wildtype AMRFinderPlus calls only; other paper variants appear in point_mutations.tsv as wildtype/considered rows.\n' "$colistin_calls"
-    printf 'virulence\tvirulence_factor_count\t213\t%s unique genes\tINFO\tABRicate VFDB release is newer than the paper analysis.\n' "$vf_count"
+    printf 'virulence\tvirulence_factor_count\t213\t%s unique genes\tINFO\tABRicate VFDB release is newer; see vfdb_categories.tsv.\n' "$vf_count"
+    printf 'virulence\texotoxin_genotype\texoT+; exoU+; exoY+; exoS-\t%s\t%s\t\n' "$exo_genotype" "$exo_status"
     printf 'resistome\tCARD_unique_ARO\tnot reported\t%s\tINFO\tCARD reports intrinsic efflux pumps as well as acquired genes.\n' "$rgi_count"
+    printf 'scope\tclinical_AST_MIC\t14-disc AST + MICs\tnot reproduced\tNOT_INCLUDED\tRequires the clinical isolate and phenotype testing; the paper values are recorded in metadata/isolate.tsv.\n'
+    printf 'scope\thigh_throughput_sequencing\tIllumina + Nanopore\tnot reproduced\tNOT_INCLUDED\tRaw reads are not public (ENA/SRA query returns zero runs).\n'
+    printf 'scope\tread_QC_and_hybrid_assembly\tFastQC, Unicycler, CheckM, QUAST\tnot reproduced\tNOT_INCLUDED\tNeeds raw reads.\n'
+    printf 'scope\tfunctional_annotation\tBakta 1.10.3 + COGclassifier 1.0.5\tBakta optional; COGclassifier missing\tPARTIAL\tDefault path uses the deposited GenBank annotation.\n'
+    printf 'scope\tNDARO_validation\tCARD + NDARO, >=50%% coverage, >=90%% identity\tAMRFinderPlus NDARO-derived DB\tPARTIAL\tNo separate NDARO run; tool defaults are used.\n'
+    printf 'scope\tmobile_genetic_elements\tMobileElementFinder 1.1.2 (19 MGEs)\tnot included\tNOT_INCLUDED\tOutside the single-sample AMR scope.\n'
+    printf 'scope\tprophages\tPHASTER 1.0.1 (6 prophages)\tnot included\tNOT_INCLUDED\tOutside the single-sample AMR scope.\n'
+    printf 'scope\tCRISPR_arrays\t3 arrays\tnot included\tNOT_INCLUDED\tOutside the single-sample AMR scope.\n'
+    printf 'scope\tpathogenicity_islands\t7 islands\tnot included\tNOT_INCLUDED\tOutside the single-sample AMR scope.\n'
+    printf 'scope\ttmex_prophage_context\tbetween Bacteriophage Lily and Escherichia phage vB_EcoM-ep3\tnot reproduced\tNOT_INCLUDED\tCluster detected, but flanking prophages were not annotated.\n'
+    printf 'scope\tANI_analysis\t25 ST1971 genomes, 6 clusters\tnot included\tNOT_INCLUDED\tMulti-genome analysis with 24 public ST1971 genomes.\n'
+    printf 'scope\tcore_genome_SNP\tParsnp + Gubbins, 34-57 SNPs\tnot included\tNOT_INCLUDED\tMulti-genome analysis.\n'
+    printf 'scope\tvisualization\tGeneViewer synteny + Proksee circular map\tAMR gene map + 13-genome ARG heatmap\tPARTIAL\tFig 1A and the circular Fig 2 are not reproduced; Fig 1B style is reproduced for 13 of 25 genomes.\n'
+    printf 'scope\tARG_heatmap\t25 genomes (Fig 1B)\t13 genomes (Fig 1B-style)\tPARTIAL\t12 SRR-only genomes need assembly; see analysis/arg_heatmap/.\n'
 } > "$OUTDIR/paper_comparison.tsv"
 
 # ---------------------------------------------------------------------------
@@ -174,6 +248,7 @@ for path in \
     results/amrfinder/point_mutations.tsv \
     results/rgi/strain71.txt \
     results/virulence/vfdb.tsv \
+    manifests/vfdb_categories.tsv \
     results/summary.tsv; do
     if [ -s "$path" ]; then
         entry="$(printf '    "%s": "%s"' "$path" "$(sha256sum "$path" | cut -d' ' -f1)")"
@@ -270,6 +345,7 @@ echo "[manifest] wrote $OUTDIR/amr_genes.tsv"
 echo "[manifest] wrote $OUTDIR/point_mutations.tsv"
 echo "[manifest] wrote $OUTDIR/rgi_calls.tsv"
 echo "[manifest] wrote $OUTDIR/vfdb_genes.tsv"
+echo "[manifest] wrote $OUTDIR/vfdb_categories.tsv"
 echo "[manifest] wrote $OUTDIR/paper_comparison.tsv"
 echo "[manifest] wrote $OUTDIR/reproducibility_manifest.json"
 echo "[manifest] wrote $OUTDIR/workflow_execution_report.md"

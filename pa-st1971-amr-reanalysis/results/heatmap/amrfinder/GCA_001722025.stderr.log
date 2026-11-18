@@ -1,0 +1,11 @@
+Running: amrfinder --nucleotide data/public_genomes/GCA_001722025.fna.gz --organism Pseudomonas_aeruginosa --database db/amrfinder --threads 16 --output results/heatmap/amrfinder/GCA_001722025.tsv
+The number of threads cannot be greater than 8 on this computer
+The current number of threads is 16, reducing to 8
+Software directory: /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/annotation/bin/
+Software version: 4.0.19
+Database directory: /repo/solutions/pa-st1971-amr-reanalysis/db/amrfinder
+Database version: 2025-07-16.1
+AMRFinder translated nucleotide and mutation search
+Running tblastn
+Making report
+amrfinder took 75 seconds to complete

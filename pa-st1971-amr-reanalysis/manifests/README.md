@@ -28,8 +28,12 @@ and diff.
   efflux pumps as well as acquired genes.
 - `vfdb_genes.tsv` — unique VFDB genes with product, database, hit count and
   best identity.
+- `vfdb_categories.tsv` — the paper's VF category counts (effector delivery,
+  mobility, biofilm, adherence, etc.) next to the committed VFDB snapshot.
 - `paper_comparison.tsv` — the paper's headline numbers next to the observed
-  values, with a status and a note explaining every non-exact match.
+  values, plus a `scope` block listing the analyses that are not reproduced
+  (AST/MIC, hybrid assembly, MGEs, prophages, CRISPR, islands, ANI/SNP,
+  GeneViewer/Proksee, the 12 raw-read-only heatmap genomes).
 
 ## Interpreting the comparison
 

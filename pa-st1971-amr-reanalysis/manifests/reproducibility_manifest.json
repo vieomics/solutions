@@ -1,6 +1,6 @@
 {
   "project": "Pseudomonas aeruginosa ST1971 AMR reanalysis",
-  "generated_utc": "2026-11-18T17:45:19Z",
+  "generated_utc": "2026-11-18T18:14:59Z",
   "paper_doi": "10.1016/j.jgar.2026.03.007",
   "input": {
     "accession": "CP196749.1",
@@ -29,6 +29,7 @@
     "results/amrfinder/point_mutations.tsv": "f6095484198cacd27c636e8ed83e8cda12429d94852a01be57cd547d23032688",
     "results/rgi/strain71.txt": "4c72134111cfcd9f9990d2deaf723b33c7624b51291caa2847f787f031b33cb3",
     "results/virulence/vfdb.tsv": "dbea5af8e33b1197913b659dae8921368eb4cd858f4a29b5d8ea730f8c0edd6b",
+    "manifests/vfdb_categories.tsv": "08a316b0740a9dfd1b72c527362b8737e62dd63256be42169b14f1850cf5ea15",
     "results/summary.tsv": "23667b4e866b26dd9fcb6cbba66fdc02580eb54637bc8854be1dbd062eee2d7d"
   }
 }

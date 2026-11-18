@@ -41,6 +41,7 @@ abricate = "==1.4.0"
 [feature.viz.dependencies]
 python = ">=3.11"
 matplotlib-base = ">=3.8"
+scipy = ">=1.11"
 
 [environments]
 default = ["core"]

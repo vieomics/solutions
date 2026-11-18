@@ -1,0 +1,10 @@
+category	paper_count	observed_unique_genes	note
+Effector delivery system	88	105	
+Mobility	35	46	VFDB uses the category name Motility; grouping is not identical.
+Biofilm	23	30	
+Adherence	15	34	
+Nutritional/Metabolic factor	15	37	
+Immune modulation	7	10	
+Exotoxin	2	2	
+Exoenzyme	1	1	
+Others	27	0	VFDB assigns every committed hit to a VFC category.

@@ -1,0 +1,8 @@
+metric	value
+genomes	13
+genes	40
+max_copies_capped_at	3
+ARG copies per genome (min)	12
+ARG copies per genome (max)	28
+study_sample	GCA_051905005
+study_sample_ARG_copies	21

@@ -869,9 +869,11 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pcre2-10.49-h8b3dc9c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pillow-13.0.0-py315hf58cf56_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pixman-0.46.4-h54a6638_3.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/pkgconf-3.0.11-pkg_config_hf2a7378_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/pthread-stubs-0.4-h7cc23a3_1004.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/python-3.15.2-h6e52b48_100_cp315.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/qhull-2020.2-haf43d43_6.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/scipy-1.18.1-py315h50affdf_3.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h1df4ec4_4.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/xorg-libice-1.1.2-h280c20c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/xorg-libsm-1.2.6-h0d788c3_1.conda
@@ -6264,6 +6266,21 @@ packages:
     - pixman >=0.46.4,<1.0a0
   size: 376704
   timestamp: 1786106621354
+- conda: https://conda.anaconda.org/conda-forge/linux-64/pkgconf-3.0.11-pkg_config_hf2a7378_0.conda
+  sha256: 7231904776e73ccb27d7c2e5e67086efcf92b3d4bae45d01dc7f7cea06bd91c9
+  md5: c319153d0a00b9f82d13d66d45560929
+  depends:
+  - libgcc >=15
+  - __glibc >=2.17,<3.0.a0
+  constrains:
+  - pkg-config <0a0
+  license: MIT
+  license_family: MIT
+  run_exports:
+    weak:
+    - pkgconf >=3.0.11,<4.0a0
+  size: 144527
+  timestamp: 1794734089449
 - conda: https://conda.anaconda.org/conda-forge/linux-64/psutil-6.0.0-py38hfb59056_0.conda
   sha256: d6d5f1ac1dc3bbddb50c093f89a425edae695754ad1ab1bc78bf720be11315ea
   md5: 14d8661ec0011b79081f8429c716f46f
@@ -6612,6 +6629,29 @@ packages:
   run_exports: {}
   size: 15279053
   timestamp: 1683901053914
+- conda: https://conda.anaconda.org/conda-forge/linux-64/scipy-1.18.1-py315h50affdf_3.conda
+  sha256: 5f3d47d9acd6bc611e7c6f4fede1f74ca40ce1d60f9865cbbf6a41f2ec0e304a
+  md5: 2ab438ecc088e52e80cffd31a9fe9f7f
+  depends:
+  - python
+  - numpy <2.8
+  - numpy >=2.0.0
+  - libgcc >=15
+  - libgfortran5 >=15.3.0
+  - libgfortran
+  - __glibc >=2.17,<3.0.a0
+  - libstdcxx >=15
+  - numpy >=1.25,<3
+  - python_abi 3.15.* *_cp315
+  - liblapack >=3.9.0,<4.0a0
+  - libcblas >=3.9.0,<4.0a0
+  - pkgconf >=3.0.11,<4.0a0
+  - libblas >=3.9.0,<4.0a0
+  license: BSD-3-Clause
+  license_family: BSD
+  run_exports: {}
+  size: 18142944
+  timestamp: 1794833020519
 - conda: https://conda.anaconda.org/conda-forge/linux-64/sed-4.10-h19d0853_0.conda
   sha256: b013d2085ce4ac01daec7b30472e9f3b6c2d69eb3a3a85a6cee3e01a3cb4f61a
   md5: e4a1ff2e59a5d9b38be71d15c93cf1bd
