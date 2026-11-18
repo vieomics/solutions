@@ -1,0 +1,37 @@
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/card/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/card/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ncbi/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ncbi/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/argannot/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/argannot/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/vfdb/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/vfdb/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/bacmet2/sequences
+Making prot BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/bacmet2/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/upec_expec_vf/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/upec_expec_vf/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/megares/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/megares/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ecoh/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ecoh/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/plasmidfinder/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/plasmidfinder/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/victors/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/victors/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ecoli_vf/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/ecoli_vf/sequences
+Removing old BLAST indices for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/resfinder/sequences
+Making nucl BLAST index for /repo/solutions/pa-st1971-amr-reanalysis/.pixi/envs/virulence/db/resfinder/sequences
+DATABASE	SEQUENCES	DBTYPE	DATE
+card	6052	nucl	2026-Nov-18
+ncbi	8232	nucl	2026-Nov-18
+argannot	2224	nucl	2026-Nov-18
+vfdb	4592	nucl	2026-Nov-18
+bacmet2	746	prot	2026-Nov-18
+upec_expec_vf	77	nucl	2026-Nov-18
+megares	6635	nucl	2026-Nov-18
+ecoh	597	nucl	2026-Nov-18
+plasmidfinder	488	nucl	2026-Nov-18
+victors	4545	nucl	2026-Nov-18
+ecoli_vf	2701	nucl	2026-Nov-18
+resfinder	3206	nucl	2026-Nov-18

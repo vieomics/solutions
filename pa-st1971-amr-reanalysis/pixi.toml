@@ -36,12 +36,19 @@ rgi = "==6.0.3"
 [feature.virulence.dependencies]
 abricate = "==1.4.0"
 
+# Optional figures from the result tables. Kept separate so the analysis
+# environments stay small and the paper's tool versions stay pinned.
+[feature.viz.dependencies]
+python = ">=3.11"
+matplotlib-base = ">=3.8"
+
 [environments]
 default = ["core"]
 annotation = ["annotation"]
 typing = ["typing"]
 resistome = ["resistome"]
 virulence = ["virulence"]
+viz = ["viz"]
 
 [activation.env]
 THREADS = "16"

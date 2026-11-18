@@ -1,0 +1,10 @@
+category	item	paper_value	observed	status	note
+genome	genome_size_bp	6589538	6589538	PASS	
+genome	gc_percent	66.17	66.17	PASS	
+typing	sequence_type	ST1971	ST1971	PASS	
+resistome	amr_symbol_count	18	19	INFO	Non-point AMR symbols; the paper count depends on whether partial genes and tmex subunits are counted separately.
+resistome	named_ARGs	blaPDC-142; blaPME-1; blaOXA-395		PASS	
+resistome	tigecycline_cluster	tmexCD2-toprJ2	tmexC; tmexD2; toprJ	PASS	Detected by AMRFinderPlus.
+resistome	colistin_mutations	10 reported variants	pmrB_V15I	INFO	Non-wildtype AMRFinderPlus calls only; other paper variants appear in point_mutations.tsv as wildtype/considered rows.
+virulence	virulence_factor_count	213	265 unique genes	INFO	ABRicate VFDB release is newer than the paper analysis.
+resistome	CARD_unique_ARO	not reported	62	INFO	CARD reports intrinsic efflux pumps as well as acquired genes.

@@ -1,0 +1,16 @@
+field	value
+isolate	Pseudomonas aeruginosa strain 71
+species	Pseudomonas aeruginosa
+sequence_type	ST1971
+genome_accession	CP196749.1
+refseq_accession	NZ_CP196749.1
+bioproject	PRJNA1285411
+biosample	SAMN49764163
+country	Vietnam
+city	Hanoi
+specimen	urine
+phenotype	XDR
+phenotype_details	imipenem 16, meropenem 32, colistin 32, levofloxacin >128, tigecycline 16 mg/L
+genome_size_bp	6589538
+paper_doi	10.1016/j.jgar.2026.03.007
+paper_citation	Nguyen QH, et al. J Glob Antimicrob Resist. 2026;48:127-130.

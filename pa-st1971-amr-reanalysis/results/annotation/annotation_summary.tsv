@@ -1,0 +1,8 @@
+metric	value
+source	GenBank flat file (authors' deposited annotation)
+accession	CP196749.1
+description	Pseudomonas aeruginosa strain 71 chromosome, complete genome
+cds_with_translation	6012
+protein_fasta	results/annotation/strain71.faa
+gff3	results/annotation/strain71.gff3
+note	Bakta mode is optional; see results/README.md

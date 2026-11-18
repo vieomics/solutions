@@ -1,0 +1,5 @@
+check	expected	observed	status
+number_of_sequences	1	1	PASS
+genome_length_bp	6589538	6589538	PASS
+gaps	0	0	PASS
+gc_percent	66.17	66.17	INFO

@@ -1,0 +1,34 @@
+{
+  "project": "Pseudomonas aeruginosa ST1971 AMR reanalysis",
+  "generated_utc": "2026-11-18T17:45:19Z",
+  "paper_doi": "10.1016/j.jgar.2026.03.007",
+  "input": {
+    "accession": "CP196749.1",
+    "genome_md5": "0a70bcde2b23a14b74033a6da8078b24",
+    "genome_sha256": "fc3b0d965bd6e7e752b87a2211ab6c85c24f40905c15672e377136adaab97041",
+    "genbank_sha256": "6008fbb5b7ab9572f8b4346a983a280ad9054792c8f21f63ba5c32a79e7e17f4"
+  },
+  "annotation": {
+    "source": "GenBank flat file (authors' deposited annotation)",
+    "translated_cds": 6012
+  },
+  "databases": {
+    "amrfinderplus": "2025-07-16.1",
+    "card": "4.0.2"
+  },
+  "commands": [
+    "pixi install --all",
+    "bash bin/00_stage_databases.sh",
+    "bash bin/run_all.sh"
+  ],
+  "checksums": {
+    "results/qc/seqkit_stats.tsv": "cf3c7619c5fd4fa17291ac2f9e7745e4da3e0bc7d2b3c1c64803e18fc2372b6d",
+    "results/mlst/mlst.tsv": "228a70de50e505a86bc6505f75dda2c7848bf57f9153b149e4569581884a2c7f",
+    "results/annotation/annotation_summary.tsv": "dc001d6b02c6daae9743108c1e964335a7880c7a97fba0309ccfa7a545bf764a",
+    "results/amrfinder/amrfinder.tsv": "ce924bbf808735f3d0da0855417e68d5f06aa54d6d64892c1f6cc02771e5e649",
+    "results/amrfinder/point_mutations.tsv": "f6095484198cacd27c636e8ed83e8cda12429d94852a01be57cd547d23032688",
+    "results/rgi/strain71.txt": "4c72134111cfcd9f9990d2deaf723b33c7624b51291caa2847f787f031b33cb3",
+    "results/virulence/vfdb.tsv": "dbea5af8e33b1197913b659dae8921368eb4cd858f4a29b5d8ea730f8c0edd6b",
+    "results/summary.tsv": "23667b4e866b26dd9fcb6cbba66fdc02580eb54637bc8854be1dbd062eee2d7d"
+  }
+}

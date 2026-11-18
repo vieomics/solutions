@@ -2,9 +2,11 @@
 **/.pixi/
 **/.apptainer-cache/
 **/results/
-# Commit the HBV reference results (curated, no BAMs).
+# Commit the HBV and PA reference results (curated, no databases/BAMs).
 !hbv-genome-short-read-analysis/results/
 !hbv-genome-short-read-analysis/results/**
+!pa-st1971-amr-reanalysis/results/
+!pa-st1971-amr-reanalysis/results/**
 **/work*/
 **/.nextflow/
 **/.nextflow.log*

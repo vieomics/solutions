@@ -1,0 +1,14 @@
+category	item	paper_value	check_here
+genome	genome_size_bp	6589538	results/qc/genome_check.tsv
+genome	gc_percent	66.17	results/qc/genome_check.tsv
+typing	sequence_type	ST1971	results/mlst/mlst_check.tsv
+resistome	acquired_ARG_count	18	results/amrfinder/amrfinder.tsv (unique AMR gene symbols)
+resistome	named_ARGs	blaPDC-142; blaPME-1; blaOXA-395	results/amrfinder/amrfinder.tsv
+resistome	colistin_associated_mutations	cprS_E386D; cprS_T16S; pmrB_A4T; pmrB_G68S; pmrB_S2P; pmrB_V15I; pmrB_Y345H; parR_L153R; parR_S170N; parS_H398R	results/amrfinder/point_mutations.tsv
+resistome	tigecycline_cluster	tmexCD2-toprJ2	results/amrfinder/amrfinder_plus.tsv; results/rgi/strain71.txt
+virulence	virulence_factor_count	213	results/virulence/vfdb.tsv (database-dependent)
+phenotype	imipenem_mg_per_L	16	metadata/isolate.tsv
+phenotype	meropenem_mg_per_L	32	metadata/isolate.tsv
+phenotype	colistin_mg_per_L	32	metadata/isolate.tsv
+phenotype	levofloxacin_mg_per_L	>128	metadata/isolate.tsv
+phenotype	tigecycline_mg_per_L	16	metadata/isolate.tsv

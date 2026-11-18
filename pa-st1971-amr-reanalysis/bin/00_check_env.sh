@@ -23,8 +23,9 @@ check "seqkit"     "pixi run seqkit version"
 check "bakta"      "pixi run -e annotation bakta --version"
 check "amrfinder"  "pixi run -e annotation amrfinder --version"
 check "mlst"       "pixi run -e typing mlst --version"
-check "rgi"        "pixi run -e resistome rgi --version"
+check "rgi"        "pixi run -e resistome rgi main --version"
 check "abricate"   "pixi run -e virulence abricate --version"
+check "python (viz)" "pixi run -e viz python --version"
 
 echo
 echo "All environments look good. Next: bash bin/run_all.sh"

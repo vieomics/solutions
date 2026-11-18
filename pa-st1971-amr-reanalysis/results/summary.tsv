@@ -1,0 +1,10 @@
+metric	value
+genome_length_bp	6589538
+gc_percent	66.17
+mlst_scheme	paeruginosa
+mlst_ST	1971
+amrfinder_unique_genes	23
+amrfinder_nonpoint_genes	19
+rgi_unique_genes	62
+vfdb_unique_genes	265
+tmex_toprJ_matches	2

@@ -34,18 +34,29 @@ if [ -s results/mlst/mlst.tsv ]; then
 fi
 
 amr_count="NA"
+amr_nonpoint_count="NA"
 if [ -s results/amrfinder/amrfinder.tsv ]; then
-    amr_count="$(awk -F'\t' '
+    # AMRFinderPlus 4.x renamed "Gene symbol" -> "Element symbol" and
+    # "Element type" -> "Type"; accept both names so old tables still work.
+    read -r amr_count amr_nonpoint_count < <(awk -F'\t' '
         NR == 1 {
             for (i = 1; i <= NF; i++) {
-                if ($i == "Gene symbol") gene = i
-                if ($i == "Element type") type = i
+                if ($i == "Gene symbol" || $i == "Element symbol") gene = i
+                if ($i == "Element type" || $i == "Type") type = i
+                if ($i == "Method") method = i
             }
             next
         }
-        gene && (type == 0 || $type == "AMR") && $gene != "" { seen[$gene] = 1 }
-        END { n = 0; for (g in seen) n++; print n }
-    ' results/amrfinder/amrfinder.tsv)"
+        gene && (type == 0 || $type == "AMR") && $gene != "" {
+            seen[$gene] = 1
+            if (method == 0 || $method !~ /^POINT/) nonpoint[$gene] = 1
+        }
+        END {
+            n = 0; for (g in seen) n++
+            m = 0; for (g in nonpoint) m++
+            print n, m
+        }
+    ' results/amrfinder/amrfinder.tsv)
 fi
 
 rgi_count="NA"
@@ -93,25 +104,26 @@ tmex_hits="$(grep -riE 'tmexCD|toprJ' results/amrfinder results/rgi results/viru
     echo "## AMRFinderPlus"
     echo
     echo "Unique AMR gene symbols: **$amr_count**"
+    echo "Non-point AMR gene symbols (acquired genes): **$amr_nonpoint_count**"
     echo
     if [ -s results/amrfinder/amrfinder.tsv ]; then
         awk -F'\t' '
             NR == 1 {
                 for (i = 1; i <= NF; i++) {
-                    if ($i == "Gene symbol") gene = i
+                    if ($i == "Gene symbol" || $i == "Element symbol") gene = i
                     if ($i == "Class") class = i
-                    if ($i == "Subclass") sub = i
+                    if ($i == "Subclass") subclass = i
                     if ($i == "Method") method = i
-                    if ($i == "Element type") type = i
+                    if ($i == "Element type" || $i == "Type") type = i
                 }
                 print "| gene | class | subclass | method |"
                 print "|---|---|---|---|"
                 next
             }
             gene && (type == 0 || $type == "AMR") && $gene != "" {
-                key = $gene "|" $class "|" $sub "|" $method
+                key = $gene "|" $class "|" $subclass "|" $method
                 if (!seen[key]++) {
-                    printf "| %s | %s | %s | %s |\n", $gene, $class, $sub, $method
+                    printf "| %s | %s | %s | %s |\n", $gene, $class, $subclass, $method
                 }
             }
         ' results/amrfinder/amrfinder.tsv
@@ -183,6 +195,7 @@ tmex_hits="$(grep -riE 'tmexCD|toprJ' results/amrfinder results/rgi results/viru
     printf 'mlst_scheme\t%s\n' "$mlst_scheme"
     printf 'mlst_ST\t%s\n' "$mlst_st"
     printf 'amrfinder_unique_genes\t%s\n' "$amr_count"
+    printf 'amrfinder_nonpoint_genes\t%s\n' "$amr_nonpoint_count"
     printf 'rgi_unique_genes\t%s\n' "$rgi_count"
     printf 'vfdb_unique_genes\t%s\n' "$vf_count"
     printf 'tmex_toprJ_matches\t%s\n' "$tmex_hits"

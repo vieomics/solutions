@@ -1,0 +1,1 @@
+WARNING 2026-11-18 17:43:35,528 : Exception: <class 'ValueError'> -> invalid literal for int() with base 10: '306Va' -> model_type: variant

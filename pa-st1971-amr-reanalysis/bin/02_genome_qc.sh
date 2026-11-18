@@ -18,6 +18,7 @@ fi
 
 seqkit stats -a -T "$FASTA" > "$OUTDIR/seqkit_stats.tsv"
 seqkit stats -a "$FASTA" > "$OUTDIR/seqkit_stats.txt"
+seqkit version > "$OUTDIR/seqkit.version.txt"
 
 # Pull values by column name so this keeps working if seqkit reorders columns.
 read -r NUM_SEQS SUM_LEN GC SUM_GAP < <(

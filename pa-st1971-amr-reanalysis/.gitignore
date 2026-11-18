@@ -1,11 +1,15 @@
-# Generated data, databases, environments and results
+# Generated data, databases, environments and run logs
 .pixi/
 data/
 db/
-results/
 logs/
 localDB/
 __pycache__/
 *.pyc
 .DS_Store
 *.swp
+
+# Commit the small reference results (see results/README.md).
+# Databases, reads and pixi environments stay ignored above.
+!results/
+!results/**

@@ -12,23 +12,25 @@ cd "$(dirname "$0")/.."
 
 THREADS="${THREADS:-16}"
 FASTA="data/CP196749.1.fasta"
-PROTEINS="results/bakta/strain71.faa"
-DB="db/amrfinder"
+PROTEINS="results/annotation/strain71.faa"
+GFF="results/annotation/strain71.gff3"
+DB="${AMRFINDER_DB:-db/amrfinder}"
 OUTDIR="results/amrfinder"
-mkdir -p "$DB" "$OUTDIR"
+mkdir -p "$OUTDIR"
 
 if [ ! -s "$FASTA" ]; then
     echo "[amrfinder] ERROR: $FASTA is missing; run bin/01_download_genome.sh first" >&2
     exit 1
 fi
-if [ ! -s "$PROTEINS" ]; then
-    echo "[amrfinder] ERROR: $PROTEINS is missing; run bin/03_annotate.sh first" >&2
+if [ ! -s "$PROTEINS" ] || [ ! -s "$GFF" ]; then
+    echo "[amrfinder] ERROR: annotation is missing; run bin/03_annotate.sh first" >&2
     exit 1
 fi
 
-# The conda package does not ship the database. Download it once into db/
-# instead of writing inside .pixi/ so a reinstall does not lose it.
-if [ ! -e "$DB/latest" ]; then
+# The conda package does not ship the database. Prefer the copy staged from
+# the public OmicsLab workspace (bin/00_stage_databases.sh); otherwise fetch
+# it once from NCBI into db/ so a pixi reinstall does not lose it.
+if [ ! -s "$DB/version.txt" ]; then
     echo "[amrfinder] downloading the AMRFinderPlus database (first run only) ..."
     amrfinder_update --database "$DB" --force_update
 fi
@@ -39,6 +41,7 @@ echo "[amrfinder] database: $DB_VERSION"
 COMMON=(
     --nucleotide "$FASTA"
     --protein "$PROTEINS"
+    --gff "$GFF"
     --organism Pseudomonas_aeruginosa
     --database "$DB"
     --mutation_all "$OUTDIR/point_mutations.tsv"

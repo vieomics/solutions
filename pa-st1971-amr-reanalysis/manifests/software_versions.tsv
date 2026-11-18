@@ -1,0 +1,8 @@
+tool	version	environment
+pixi	0.76.1	base
+seqkit	2.14.0	default
+mlst	2.35.0	typing
+amrfinder	4.0.19	annotation
+rgi	6.0.3	resistome
+abricate	1.4.0	virulence
+python	3.15.2	viz
